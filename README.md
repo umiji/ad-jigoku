@@ -13,7 +13,7 @@ Experience → Awareness → Evaluation → Improvement → Better UX
 **設計フェーズ。実装コードはまだ存在しない。**
 
 - 要件: 確定（`docs/requirements/`）
-- アーキテクチャ: **ドラフト v0.1 / レビュー待ち**（`docs/design/ARCHITECTURE.md`）
+- アーキテクチャ: v0.1 レビュー済み → **v0.2 決定（`docs/design/DECISIONS_v0.2.md`）**。各文書への反映は `docs/HANDOFF_DOC_UPDATE.md`
 - タスク分解: 完了（`docs/tasks/` に 51 タスク）
 - 実装: 未着手（TASK-001 から）
 
@@ -24,7 +24,7 @@ Experience → Awareness → Evaluation → Improvement → Better UX
 | 読みたいこと | ファイル |
 |---|---|
 | システム全体の設計 | [`docs/design/ARCHITECTURE.md`](docs/design/ARCHITECTURE.md) |
-| **未確定の論点（レビュー対象）** | [`docs/design/ARCHITECTURE.md#20-open-decisions`](docs/design/ARCHITECTURE.md) §20 |
+| **最新の決定事項（v0.2）** | [`docs/design/DECISIONS_v0.2.md`](docs/design/DECISIONS_v0.2.md) |
 | 何を作るか（タスク一覧） | [`docs/tasks/README.md`](docs/tasks/README.md) |
 
 ### 要件（source of truth）

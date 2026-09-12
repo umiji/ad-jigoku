@@ -2,6 +2,11 @@
 
 このリポジトリで作業するときの指針。
 
+## 0. 設計改訂の優先順位
+
+`docs/design/DECISIONS_v0.2.md` が v0.1 の設計・タスク文書と矛盾する場合、**v0.2 が優先**する。
+反映作業は `docs/HANDOFF_DOC_UPDATE.md` に従う。反映完了までこの節を残す。
+
 ## 1. まず読む
 
 - 実装タスクに着手する前: `docs/tasks/TASK-XXX-*.md` + `docs/design/ARCHITECTURE.md`
