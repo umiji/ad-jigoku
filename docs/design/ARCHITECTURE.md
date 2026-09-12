@@ -28,7 +28,7 @@
 | ID | Driver | 出典 | アーキテクチャへの影響 |
 |---|---|---|---|
 | AD-1 | 同一のパターン定義を Game / Audit / Improvement の3用途で共有する | CATALOG §Design Principle, GAME §26 | パターンカタログを **Shared Kernel** として独立パッケージ化。他の全モジュールがこれに依存し、逆方向の依存を禁止 |
-| AD-2 | ゲームは data-driven。パターン追加でエンジンを書き換えない | GAME §25.5 | `PatternDefinition` + `SimulatorRegistry` の二層。ステージ生成器はレジストリに登録済みのパターンのみを選択 |
+| AD-2 | ゲームは data-driven。パターン追加でエンジンを書き換えない | GAME §25.5 | `PatternDefinition` + `ShellRegistry`/`BehaviorRegistry` の二層（v0.2 §1）。ステージ生成器はレジストリに登録済みの shell/behavior を持つパターンのみを選択 |
 | AD-3 | 実行は seed で再現可能でなければならない | GAME §8.5, §25.2 | ゲームコアは **純粋・ヘッドレス・決定論的**。`Date.now()` / `Math.random()` / DOM へのアクセスを禁止。固定タイムステップ + シード分割RNG |
 | AD-4 | 評価は Evidence-First。「なぜこの点数か」を必ず説明できる | PRODUCT §8 | Evidence を不変データとして永続化し、Score を **evidence の純粋関数** にする。スコア再計算に再クロールを要求しない |
 | AD-5 | Evaluation Version で時系列比較の意味を保つ | PRODUCT §21 | `catalogVersion` / `detectorVersion` / `scoringVersion` を全 run に刻印。スコア関数はバージョン別に保持し過去分を壊さない |
@@ -134,6 +134,7 @@ pnpm workspaces + Turborepo による monorepo。
 ad-jigoku/
 ├── apps/
 │   ├── web/                    # Next.js: LP / Game / Audit / Ranking
+│   │   └── src/game/frame/     #   BrowserFrame（偽ブラウザ枠）実装。DECISIONS_v0.2.md §2
 │   └── evaluator-worker/       # Node + Playwright: 実サイト観測 + 検出 + 採点
 │
 ├── packages/
@@ -144,9 +145,10 @@ ad-jigoku/
 │   │
 │   ├── game-engine/            # ヘッドレス・純粋・決定論的なゲームコア
 │   │   ├── core/               #   reducer / fixed timestep / RNG
-│   │   ├── stage/              #   ステージ生成器
-│   │   ├── simulators/         #   PatternSimulator 実装群
-│   │   └── scoring/            #   score / combo / patience
+│   │   ├── stage/              #   ステージ生成器（エンカウンターテンプレート）
+│   │   ├── shell/              #   ShellRegistry（見た目）
+│   │   ├── behavior/           #   BehaviorRegistry（挙動）。旧 simulators/ を置き換え
+│   │   └── scoring/            #   score / combo / patience / threat
 │   │
 │   ├── evaluator-core/         # 純粋関数: Evidence → Finding → Score
 │   │   ├── detectors/
@@ -157,6 +159,7 @@ ad-jigoku/
 │   │
 │   ├── ui/                     # デザイントークン + canonical components
 │   │   ├── tokens/             #   DESIGN.md §4,5,6,14,15,16 の唯一の実体
+│   │   ├── shells/             #   Shell 実装（見た目）。1 shell = 1 独立モジュール。DECISIONS_v0.2.md §1.3
 │   │   └── components/         #   AdPopup, AdMeta, AdCountdown, ...
 │   │
 │   └── safety/                 # Safety Invariants のテストキット（LP/Game 共用）
@@ -189,7 +192,7 @@ apps/evaluator-worker → pattern-catalog, evaluator-core, hell-generator, playw
 
 # 6. Pattern Data Model (概要)
 
-詳細は `docs/design/PATTERN_SCHEMA.md`。ここでは構造だけ示す。
+詳細は `docs/design/PATTERN_SCHEMA.md`。ここでは構造だけ示す（v0.2 §1 反映済み）。
 
 ```ts
 type PatternDefinition = {
@@ -205,22 +208,25 @@ type PatternDefinition = {
   detect?: DetectFacet
   improve?: ImproveFacet
   fixture?: FixtureFacet
+  escape?: EscapeFacet                // ユーザー向け脱出ノウハウ。DECISIONS_v0.2.md §6
 }
 
 type GameFacet = {
-  mechanic: MechanicKind              // 'overlay' | 'sticky' | 'close-friction' | ...
+  shell: ShellId                                   // 見た目。ShellRegistry のキー
+  behaviors: Partial<Record<Slot, BehaviorSpec>>   // 挙動。スロット毎に最大1つ
+  creative?: CreativeSelector                      // 中身の抽選条件
+  frame?: FrameCapability[]                        // 必要な偽ブラウザ機能（§2）
+
   playerActions: PlayerAction[]       // 正解となる操作
   failureCondition: FailureCondition
   warning: 'none' | 'subtle' | 'explicit'
-  timing: { spawnAfterMs?: Range; durationMs?: Range; closableAfterMs?: Range }
   interactionComplexity: 1|2|3|4|5    // CATALOG §4
   uncertainty: 1|2|3|4|5
   timePressure: 1|2|3|4|5
   comboTags: ComboTag[]
   incompatibleWith: PatternId[]
-  scoreEffect: { clear: number; mistake: number }
-  patienceEffect: { onSpawn: number; onMistake: number; perSecond?: number }
-  simulatorId: SimulatorId            // レジストリのキー
+  patienceEffect: { onSpawn: number; onMistake: number; perSecondAlive: number }
+  // scoreEffect は削除。難易度3軸から導出する（GAME_ENGINE_DESIGN.md §9.1）
 }
 
 type DetectFacet = {
@@ -272,26 +278,46 @@ type StepResult = { state: GameState; effects: Effect[] }
 リプレイ = `{ seed, catalogVersion, engineVersion, intents: [stepIndex, Intent][] }`。
 これがそのまま Seed Challenge (GAME §8.5) と回帰テストの両方に使える。
 
-## 7.3 Simulator Registry (AD-2)
+## 7.3 パターン実装モデル: Shell × Behavior（DECISIONS_v0.2.md §1 により改訂）
+
+**v0.1 の `PatternSimulator`（1パターン = 1シミュレータ）は撤回する。** 挙動しか表現できず、
+見た目そのものが本質のカテゴリ E（偽装系）を表現できなかったため（v0.2 §1.1）。旧定義は git history 参照。
+
+```text
+広告インスタンス = Shell（見た目） × Behaviors（挙動。スロット毎に最大1） × Creative（中身）
+```
 
 ```ts
-interface PatternSimulator {
-  readonly id: SimulatorId
-  spawn(ctx: SpawnContext): AdInstance
-  onTick(ad: AdInstance, dtMs: number, ctx: SimContext): SimResult
-  onIntent(ad: AdInstance, intent: Intent, ctx: SimContext): SimResult
-  readonly view: ViewSpec          // 宿主が描画するための宣言的記述（DOMは書かない）
+interface Shell {
+  readonly id: ShellId
+  readonly parts: AdPart[]          // close / fake-close / cta / media / label ...
+  readonly supports: Slot[]         // 受け付ける挙動スロット
+  readonly frame?: FrameCapability[]
+}
+
+interface Behavior<S = unknown> {
+  readonly id: BehaviorId
+  readonly slot: Slot                // spawn/surface/close/persist/attention/instability/deception/hitbox
+  readonly friction: number          // 合成妥当性チェック用。GAME_ENGINE_DESIGN.md §8
+  readonly load: number              // 認知負荷予算用。同上
+  init(params, ctx): S
+  onTick(s, ctx): BehaviorResult<S>
+  onIntent(s, intent, ctx): BehaviorResult<S>
 }
 ```
 
-新パターン追加の手順は要件どおり1本道にする（GAME §25.5）:
+- 旧 `SimulatorRegistry` は **`ShellRegistry` + `BehaviorRegistry`** の2レジストリに置き換える
+- シェルは独立モジュール。`packages/ui/shells/<id>/` に HTML/CSS/JS をまとめて持ち、共通化しない
+- 生成器は `shell.supports ⊇ 使用スロット集合` を検証してから合成する（GAME_ENGINE_DESIGN.md §7, §8）
+
+新パターン追加の典型手順（コードゼロ）:
 
 ```text
-1. Markdown カタログに定義追加
-2. JSON に変換（CI が parity 検査）
-3. Simulator を1つ実装して registry に登録
+1. 既存シェル + 既存挙動の組み合わせをカタログ JSON に書く（Markdown 定義 → JSON、CI が parity 検査）
 → ステージ生成器が自動的に採用対象にする
 ```
+
+コードが要るのは「新しいシェル」または「新しい挙動」を追加するときだけ。
 
 ## 7.4 描画方式: DOM（Canvas / WebGL ではない）
 
@@ -346,6 +372,11 @@ advance条件 = 「そのステージの ad が全て close された」
 - ステージ定義はデータ（`lp/stages.ts`）。DESIGN_REQ §7 のエスカレーション表がそのまま設定値になる
 - **各ステージには必ず終了条件がある**（DESIGN_REQ §7）。無限ループは型レベルで作れないようにする（`AdConfig.action` に必ず終端がある）
 - スクロールは奪わない（DESIGN §11）。ad の出現は scroll threshold の observer で発火するだけ
+
+**BrowserFrame との関係:** LP はゲーム側の偽ブラウザ枠（`BrowserFrame`、DECISIONS_v0.2.md §2）を使わない。
+LP の「ページ」はそれ自体が本物のブラウザタブ内の1ページであり、偽ブラウザで入れ子にする必要がない。
+`BrowserFrame` は Game 領域（`apps/web/src/game/frame/`）専用の構造で、INT-06 Back-Intercept や
+ACC-06 Scroll Hijack のような「実ブラウザの機能を模倣するが実際には触らない」パターンを安全に成立させるために存在する（v0.2 §2.2）。
 
 ---
 
@@ -466,6 +497,8 @@ Tailwind CSS v4 の CSS-first 設定 (`@theme`) を `tokens.css` にバインド
 | SAFE-09 | ダウンロードを発生させない | Playwright の download イベント監視 |
 | SAFE-10 | 偽UIで入力を収集しない | fake form の submit ハンドラが存在しないことを静的検査 |
 | SAFE-11 | 外部スクリプトを読み込まない | CSP ヘッダ + ネットワークリクエストの allowlist assert |
+| SAFE-12 | `BrowserFrame` は実ブラウザ UI を模倣しない。偽 URL バーに実在ドメインを表示しない | Playwright: Safari/Chrome 既知セレクタとの視覚差分 + 偽 URL バーの表示文字列を allowlist（架空ドメインのみ）で assert（DECISIONS_v0.2.md §2.4） |
+| SAFE-13 | ゲーム / LP ルートに実広告ネットワークのスクリプトが存在しない | CSP + ルート単位の静的検査（DECISIONS_v0.2.md §8.2） |
 
 これは「後で気をつける」ものではなく、**TASK-028 で MVP 前に実装し、以降すべての PR で走らせる**。
 このプロダクトは広告UXを批判する立場なので、自分がダークパターンをやってしまうと信用が即死する。
@@ -578,27 +611,36 @@ WebGL は現時点で予算を割り当てない（DESIGN §20 / AMIX_REF §4）
 
 ---
 
-# 16. Deployment Topology
+# 16. Deployment Topology（DECISIONS_v0.2.md §8 により改訂）
+
+v0.1 の Vercel + Fly.io + pg-boss + S3 構成は撤回する。**Hobby プランの商用不可条項（広告掲載 = 商用）を回避し、
+public repo の無料枠を最大限使う**方針に切り替える。
+
+| 項目 | v0.1 | v0.2 |
+|---|---|---|
+| ホスティング | Vercel | **Cloudflare Pages** |
+| Phase 1 の形態 | Next.js 動的 | **Next.js 静的書き出し**（`output: 'export'`。アダプタ不要。Phase 3 で動的化を再判断） |
+| 診断ワーカー | Fly.io 常駐 + pg-boss | **GitHub Actions**（public repo で無制限。`workflow_dispatch` がキュー代わり） |
+| オブジェクトストレージ | S3 | **Cloudflare R2**（10GB 無料・egress 無料） |
+| DB | Neon | Neon または D1。**Phase 2 で決定**（OD-8、今は不要） |
+| AI 判定 | advisory | **有料診断のみで実行**。無料診断は決定論的検出のみ。API 費用は課金時のみ発生 |
+| 固定費 | — | 独自ドメイン（年 ¥2,000 程度）のみ推奨 |
 
 ```text
 ┌───────────────────────┐
-│  apps/web (Next.js)   │  Vercel 等。LP/Game は静的寄り、Audit UI は動的
+│  apps/web (Next.js)   │  Cloudflare Pages。Phase 1 は静的書き出し (output: 'export')
 └───────────┬───────────┘
-            │ HTTP (内部API)
+            │ workflow_dispatch (API 経由)
 ┌───────────┴───────────┐
-│  audit API            │  ジョブ登録 / 状態取得 / レポート取得
+│ GitHub Actions        │  診断ワーカー。public repo で実行時間無制限
+│  + Playwright/Chromium│  キューはワークフローディスパッチが代替（AD-11 の「常駐が要る」を解消）
 └───────────┬───────────┘
-            │ job queue (pg-boss on Postgres)
-┌───────────┴───────────┐
-│ apps/evaluator-worker │  常駐コンテナ (Fly.io / Railway)
-│  + Playwright/Chromium│  ※ serverless では Chromium 常駐と実行時間が厳しい (AD-11)
-└───────────┬───────────┘
-            ├─→ Postgres        (run / finding / score)
-            └─→ S3互換ストレージ (evidence / screenshot)
+            ├─→ Neon / D1        (run / finding / score。Phase 2 で確定)
+            └─→ Cloudflare R2    (evidence / screenshot)
 ```
 
-- Phase 1 では **web のみ**。Postgres も worker も存在しない
-- キューは専用ミドルウェア（Redis/SQS）を入れず、まず Postgres ベース（pg-boss）で始める。運用対象を増やさない
+- Phase 1 では **web のみ**。DB も診断ワーカーも存在しない（AD-12 は維持）
+- 実広告ポリシー（DECISIONS_v0.2.md §8.1、SAFE-13）: ゲーム/LP ルートは実広告禁止。記事/ランキング/図鑑/レポートのみ実広告可
 
 ---
 
@@ -647,58 +689,71 @@ Phase 1 と 2 の間に**インフラの断層がある**。ここを跨ぐ前�
 # 20. Open Decisions — レビューしてほしい点
 
 > **ここだけ読めばレビューできる。** 各項目は推奨案つき。異論がなければ推奨案で進める。
+> DECISIONS_v0.2.md（オーナーレビュー済み）により、OD-7 / OD-8 を除き全て決着済み。
 
 ### OD-1. スタイリング方式 ★最重要
 - A. **Tailwind v4 を tokens.css にバインド + 任意値禁止 lint**（推奨）
 - B. CSS Modules + トークンのみ、Tailwind を使わない
 - C. CSS-in-JS
 - 論点: `DESIGN.md` は「generic Tailwind aesthetics を使うな」と言っているが、これは見た目の話であってツールの話ではない。A なら速度を保ちつつ lint で規律を強制できる。B の方が契約は固いが実装速度は落ちる。
+- **決定: A で確定。**
 
 ### OD-2. Web フレームワーク
 - A. **Next.js 15 App Router 単一アプリ**（推奨）
 - B. LP/Game は Vite + 静的、Audit だけ別アプリ
 - 論点: Phase 1 にサーバは不要だが、Phase 3-4 で SSR/ISR が要る。最初から Next.js にしておく方が移行コストが低い。反面 Phase 1 には過剰。
+- **決定: A で確定。ただし Phase 1 は `output: 'export'` の静的書き出しとし、ホスティングは Vercel ではなく Cloudflare Pages（DECISIONS_v0.2.md §8, TASK-001）。**
 
 ### OD-3. ゲーム描画: DOM（ADR-003）
 - **DOM（推奨・ほぼ確定扱い）**。異論があればここで。
+- **決定: DOM で確定。異論なし。**
 
 ### OD-4. monorepo 採用
 - A. **pnpm workspaces + Turborepo**（推奨）
 - B. 単一 Next.js アプリ内のディレクトリ分割で始める
 - 論点: B の方が初速は速い。ただし AD-1/AD-3（依存方向の強制、エンジンの純粋性）が守られる保証が弱くなる。このプロジェクトは「境界を守ること」自体が要件なので A を推す。
+- **決定: A で確定。**
 
 ### OD-5. ゲームの目的（GAME §30 Q3）
 - 推奨: **D ハイブリッド** = 「記事を最後まで読む（Progress）」＋「記事内の設問に1つ答える（誤クリック耐性の検証）」
 - 論点: 「読む」だけだと待つゲームになりがち。設問があると Deception 系パターンが機能する。
+- **決定: D ハイブリッドで確定。**
 
 ### OD-6. 入力モデル（GAME §30 Q1）
 - 推奨: **C ハイブリッド** = 通常はポインタで直接操作、`SMASH` 等の対抗アクションは画面下の固定アクションバー（thumb-zone）から
 - 論点: モバイル片手操作 (DESIGN_REQ §13) と両立させるならアクションバーが要る。
+- **決定: C ハイブリッドで確定。**
 
 ### OD-7. Evaluator のホスティング
 - 推奨: **常駐コンテナ (Fly.io) + pg-boss**
 - 代替: Browserless / Browserbase 等のマネージド Chromium
 - 論点: MVP 段階では実行回数が少ないのでマネージドの方が安い可能性がある。コストを見てから決めても手遅れにならない（Probe は evaluator-core から分離されているので差し替え可能）。**Phase 2 開始時に再決定でよい。**
+- **未決のまま。** 診断の「実行環境」自体は GitHub Actions に決定した（DECISIONS_v0.2.md §8、D10）が、Postgres/Fly.io 前提だった常駐ワーカーの要否は Phase 2 で再検討する。
 
 ### OD-8. DB / ORM
 - 推奨: **Postgres (Neon) + Drizzle**
 - Phase 2 まで不要なので、**いま確定しなくてよい**。
+- **未決のまま。Phase 2 で決定（Neon または Cloudflare D1、DECISIONS_v0.2.md §8）。**
 
 ### OD-9. 言語
 - 推奨: **MVP は日本語のみ。i18n フレームワークを入れない。** ただしコピーはコンポーネントに直書きせずデータファイルに置く
 - 論点: 英語展開の予定があるなら最初から入れた方が安い。予定を教えてほしい。
+- **決定: 推奨どおり日本語のみで確定。**
 
 ### OD-10. 解析・計測
 - 推奨: **Cookie を使わない解析のみ**（自前イベント or Plausible 相当）。PRODUCT §20「不要なユーザー追跡データは収集しない」との整合
 - 論点: ただし PRODUCT §27 の Success Metrics（Second-run rate, Retry rate）を測るには何らかの計測が要る。どこまで許容するか。
+- **決定: 推奨どおり Cookie を使わない解析で確定。**
 
 ### OD-11. Severity 値の初期実装
 - 推奨: **カタログの仮説値をそのまま使い、`scoringVersion: 0.1` として明示する**
 - 論点: 「仮説値である」ことを UI に出すかどうか。出す方が誠実だがスコアの権威は下がる。
+- **決定: 推奨どおり確定。仮説値であることは UI にも明示する。**
 
 ### OD-12. LP とゲームの関係
 - 推奨: **LP はゲームエンジンを使わない**（§8.1）
 - 論点: 「LP の最後のカオスをゲームエンジンで作れば豪華になる」という誘惑がある。却下したい。
+- **決定: 推奨どおり確定。LP は BrowserFrame も使わない（§8.2 追記）。**
 
 ---
 
@@ -710,3 +765,21 @@ Phase 1 と 2 の間に**インフラの断層がある**。ここを跨ぐ前�
 - [ ] `docs/design/EVALUATOR_DESIGN.md` の Evidence スキーマが CATALOG §5 Layer 1 の全項目を保持できる
 - [ ] ADR が記録されている
 - [ ] `docs/tasks/` の TASK-001..003 がこの設計と矛盾しない
+
+---
+
+# 22. v0.2 変更履歴
+
+`docs/design/DECISIONS_v0.2.md`（オーナーレビュー済み）を反映した変更点。詳細な決定理由は同文書を参照。
+
+| 節 | 変更 | 根拠 |
+|---|---|---|
+| §5 | `packages/ui/shells/`、`apps/web/src/game/frame/` を追加 | v0.2 §1.3, §2 |
+| §6 | `GameFacet` 概要を Shell × Behavior × Creative モデルに差し替え。`escape?: EscapeFacet` を追加 | v0.2 §1, §6 |
+| §7.3 | `PatternSimulator` / `SimulatorRegistry` を撤回し、Shell × Behavior の2軸モデル（`ShellRegistry` + `BehaviorRegistry`）に差し替え | v0.2 §1 |
+| §8.2 | BrowserFrame との関係を追記（LP は使わない） | v0.2 §2, §8.1 |
+| §11 | SAFE-12（BrowserFrame の実ブラウザ模倣禁止）・SAFE-13（ゲーム/LP ルートの実広告禁止）を追加 | v0.2 §2.4, §8.2 |
+| §16 | Vercel / Fly.io+pg-boss / S3 構成を撤回し、Cloudflare Pages / GitHub Actions / R2 構成に差し替え | v0.2 §8 |
+| §20 | OD-1〜6, 9〜12 を決着。OD-7/8 は Phase 2 決定のまま維持 | v0.2 全体（オーナーレビューにより open decisions も解消） |
+
+ADR: ADR-008（改訂）、ADR-009〜012（新規）は `docs/design/adr/` 参照。

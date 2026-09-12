@@ -2,10 +2,8 @@
 
 このリポジトリで作業するときの指針。
 
-## 0. 設計改訂の優先順位
-
-`docs/design/DECISIONS_v0.2.md` が v0.1 の設計・タスク文書と矛盾する場合、**v0.2 が優先**する。
-反映作業は `docs/HANDOFF_DOC_UPDATE.md` に従う。反映完了までこの節を残す。
+> `docs/design/DECISIONS_v0.2.md`（Status: Absorbed）の内容は各設計文書・タスク文書に反映済み。
+> 反映履歴は `docs/design/ARCHITECTURE.md` §22、`docs/design/adr/README.md`（ADR-008改訂, ADR-009〜012）を参照。
 
 ## 1. まず読む
 
@@ -32,7 +30,7 @@ packages/*        → apps/* への依存は禁止
 このプロダクトは広告のダークパターンを批判する立場である。
 自分がダークパターンをやった瞬間に信用が死ぬ。
 
-SAFE-01..11 のテストを落としてまで通す実装は存在しない。
+SAFE-01..13 のテストを落としてまで通す実装は存在しない。
 落ちたら**実装を直す**。テストを緩めない。
 
 ### 2.3 デザイン契約（`DESIGN.md`）
@@ -66,6 +64,8 @@ SAFE-01..11 のテストを落としてまで通す実装は存在しない。
 - 「おしゃれだから」という理由で 3D / WebGL を入れる（AMIX_REF §4）
 - 実在企業の広告・ロゴ・コピーを模倣する（DESIGN §3）
 - ゲームの得点を UX severity に比例させる（GAME §9.1 の明示的な禁止）
+- ゲーム / LP ルートに実広告を入れる（DECISIONS_v0.2.md §8.1。記事/ランキング/図鑑/レポートは可）
+- サードパーティ広告ブロッカーを推奨する（DECISIONS_v0.2.md §6.4。案内するのはブラウザ標準機能のみ）
 
 ## 5. タスクの進め方
 
@@ -79,9 +79,17 @@ SAFE-01..11 のテストを落としてまで通す実装は存在しない。
 | 用語 | 意味 |
 |---|---|
 | Pattern | 広告UXの悪いパターン。カタログの定義単位 |
-| Simulator | ゲーム内でパターンを再現する実装 |
+| Simulator | （v0.1 用語。撤回済み → Shell / Behavior 参照。DECISIONS_v0.2.md §1） |
 | Detector | 実サイトでパターンを検出する実装 |
 | Evidence | 実サイトの観測データ。不変・永続 |
 | Finding | 検出結果。evidence への参照を必ず持つ |
-| Facet | 1つのパターンの `game` / `detect` / `improve` / `fixture` 側面 |
+| Facet | 1つのパターンの `game` / `detect` / `improve` / `fixture` / `escape` 側面 |
 | SAFE-XX | 安全性の不変条件。自動テストで強制 |
+| Shell | 広告の見た目。独立した HTML/CSS/JS モジュール |
+| Behavior | 広告の挙動。スロットに差す部品 |
+| Slot | 挙動の差し込み口。1 スロット 1 挙動 |
+| Creative | 広告の中身データ（コピー・架空ブランド・色） |
+| BrowserFrame | ゲーム領域を包む偽ブラウザ UI。ハイジャック系パターンの安全な作用先 |
+| Encounter Template | ステージを構成する役割スロットの列。生成器が埋める |
+| threat | 各広告の放置コスト。Prioritization の基礎 |
+| escape | パターン定義のユーザー向け脱出ノウハウ facet |

@@ -55,7 +55,7 @@ The game should:
 
 The MVP is NOT:
 
-- an actual ad network
+- an actual ad network **in-game**（コンテンツページでの実広告掲載は PRODUCT_REQUIREMENTS.md §18.5 参照。DECISIONS_v0.2.md §8.1）
 - a real advertisement deployment system
 - a browser ad blocker
 - a realistic simulation of every advertising technology
@@ -578,7 +578,7 @@ However:
 - game UI should remain readable
 - real brands should not be required
 - simulated ads should use fictional content
-- no real ad network code
+- **ゲーム内では**実広告ネットワークのコードを入れない（コンテンツページの実広告は PRODUCT_REQUIREMENTS.md §18.5 参照。DECISIONS_v0.2.md §8.1）
 - no real tracking scripts
 - no real deceptive outbound links
 

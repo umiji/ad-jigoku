@@ -3,6 +3,8 @@
 - Milestone: M4 / Phase 1
 - Depends on: 012, 023
 - Size: 1 session
+- **DECISIONS_v0.2.md §6.3-1 により追記**: culprit パターンの escape 技法表示を追加
+- **本タスク完了時点が「面白さゲート」の判定地点になる**（DECISIONS_v0.2.md §7、TASK-024B）
 
 ## Objective
 
@@ -22,6 +24,7 @@ apps/web/src/game/results/CulpritCard.tsx        「今回の主犯」
 apps/web/src/game/results/PatternList.tsx        遭遇/撃破したパターン
 apps/web/src/game/results/MasteryBadge.tsx       Seen / Survived / Clean / Perfect
 apps/web/src/game/results/mastery.ts             localStorage による mastery 管理
+apps/web/src/game/results/EscapeTips.tsx         DECISIONS_v0.2.md §6.3-1: culprit の escape 技法表示
 ```
 
 ## Implementation requirements
@@ -37,6 +40,9 @@ apps/web/src/game/results/mastery.ts             localStorage による mastery 
    - `culprit`（TASK-009 で特定済み）を使う
    - 説明文は `GameFacet.education` から。カタログが source of truth
    - **「あなたが下手だった」ではなく「このパターンが悪質だった」という語り口**にする
+   - **escape 表示（DECISIONS_v0.2.md §6.3-1、新設）**: `culprit` パターンの `escape.techniques` を
+     `EscapeTips` として「今すぐの逃げ方」を表示する。パターン固有の `escape.note` があれば併記する。
+     案内するのはブラウザ標準機能のみ（サードパーティ広告ブロッカーは推奨しない、v0.2 §6.4）
 4. Pattern Mastery（GAME §8.3）: Seen / Survived / Clean / Perfect。localStorage
 5. **実サービスへの導線**（GAME §22）:
    - 「じゃあ、実際のサイトはどうなの？」という自然な文脈で Audit CTA を出す
@@ -48,6 +54,7 @@ apps/web/src/game/results/mastery.ts             localStorage による mastery 
 ## Acceptance criteria
 
 - [ ] 失敗時に「何にやられたか」が必ず表示される
+- [ ] culprit の escape 技法（ブラウザ標準機能のみ）が表示される
 - [ ] 説明文がカタログから来ている（ハードコードでない）
 - [ ] mastery が記録・表示される
 - [ ] リスタートが1タップ、1秒以内
@@ -65,3 +72,5 @@ apps/web/src/game/results/mastery.ts             localStorage による mastery 
 
 - acceptance criteria を全て満たす
 - **この時点で「1本遊んで結果を見て、もう1回やる」が成立する**
+- **これが面白さゲート（DECISIONS_v0.2.md §7）の入口。** 本タスク完了後、実装を先に進める前に
+  TASK-024B（面白さゲート判定）を実施する

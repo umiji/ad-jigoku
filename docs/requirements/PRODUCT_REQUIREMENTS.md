@@ -414,6 +414,18 @@ Example:
 
 ---
 
+# 10.5 User-side Remedy（escape）
+
+運営者が直すまで待てないユーザーのための価値。パターン定義は運営者向け `improve` に加え、
+ユーザー向けの「逃げ方」を **`escape` facet** として持つ（DECISIONS_v0.2.md §6）。
+
+- 結果画面・図鑑ページ (`/patterns/[id]`)・診断レポートに表示する（同 §6.3）
+- 案内するのは**ブラウザ標準機能のみ**。サードパーティの広告ブロッカーは推奨しない（同 §6.4）
+
+詳細: `docs/design/DECISIONS_v0.2.md` §6、`docs/design/PATTERN_SCHEMA.md` §5.5 EscapeFacet。
+
+---
+
 # 11. Before / After
 
 プロダクトの重要機能。
@@ -644,6 +656,19 @@ Subscription modelと相性が良い。
 - Verification page
 
 を有料または一定条件で提供する可能性。
+
+## 18.5 Ad Placement Policy
+
+DECISIONS_v0.2.md §8.1 を参照。
+
+```text
+ゲーム / LP ルート                    : 実広告ネットワーク禁止（偽クリエイティブのみ）← SAFE-13
+記事 / ランキング / 図鑑 / レポート   : 実広告可。お行儀のよい配置のみ
+```
+
+- `AdSlot` コンポーネントは `provider: 'simulated' | 'network'` を持ち、ルート種別で `network` を型・テストで拒否する
+- ネットワーク広告より**アフィリエイト（自前クリエイティブ）を優先**（誤クリック BAN の仕組みがないため）
+- **自己診断スコアを公開する**: 自サイトを自分の診断にかけ、結果を掲げる（§31 の実演）
 
 ---
 

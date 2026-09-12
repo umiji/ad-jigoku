@@ -673,7 +673,13 @@ HellProgress
 EscapePanel
 GameEntry
 AuditEntry
+BrowserFrame
+AdSlot
+EscapeCard
 ```
+
+`BrowserFrame` / `AdSlot` / `EscapeCard` は DECISIONS_v0.2.md §2 / §8.1 / §6 で新設。定義は
+`docs/design/ARCHITECTURE.md` §8.2、`docs/design/PATTERN_SCHEMA.md` §5.5 を参照。
 
 If a new component is needed, first determine whether an existing canonical component can be extended.
 

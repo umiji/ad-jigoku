@@ -3,6 +3,8 @@
 - Milestone: M7 / Phase 2
 - Depends on: 037
 - Size: 1 session
+- **DECISIONS_v0.2.md §8 により改訂**: 実行環境は常駐ワーカーではなく **GitHub Actions**
+  （`workflow_dispatch` がキュー代わり）。Evidence の保存先は S3 ではなく **Cloudflare R2**
 
 > Phase 2 のタスクは概要レベル。
 
@@ -17,11 +19,12 @@ Playwright でシナリオを実行し、`EvidenceBundle` を出力する。**�
 
 ## Scope
 
-- `apps/evaluator-worker/src/probe/`
+- `apps/evaluator-worker/src/probe/`（GitHub Actions のジョブとして実行される想定。常駐プロセスにしない）
 - `Scenario` 型とシナリオ実行エンジン
 - MVP シナリオ `article-read-v1`（`EVALUATOR_DESIGN.md §3`）
 - mobile / desktop の2プロファイル
 - `attemptCloseAllOverlays` の実装（`§3.1`。CLS-* 群の測定の核心）
+- 収集した EvidenceBundle を Cloudflare R2 にアップロードする処理（`EVALUATOR_DESIGN.md §9`）
 
 ## Key requirements
 

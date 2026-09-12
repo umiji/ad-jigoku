@@ -1,8 +1,10 @@
-# TASK-020 — sticky / attention（OBS-03 / OBS-06 / ATT-01 / ATT-02）
+# TASK-020 — surface/attention behavior（OBS-03 / OBS-06 / ATT-01 / ATT-02）
 
 - Milestone: M3 / Phase 1
-- Depends on: 017
+- Depends on: 017, 013A, 013B（対応する Shell `stickyBanner` が存在すること）
 - Size: 1 session
+- **DECISIONS_v0.2.md §1 により改訂**: 「simulator」を「behavior」に読み替える。本タスクは主に
+  `attention` スロット（追従は `surface` スロットの追加パラメータ）の behavior 群を扱う
 
 ## Objective
 
@@ -16,9 +18,10 @@
 ## Files to create
 
 ```text
-packages/game-engine/src/simulators/sticky.ts
-packages/game-engine/src/simulators/attention.ts
-packages/game-engine/src/simulators/*.test.ts
+packages/game-engine/src/behaviors/surface-sticky.ts
+packages/game-engine/src/behaviors/attention-autoplay-video.ts
+packages/game-engine/src/behaviors/attention-fake-audio-badge.ts
+packages/game-engine/src/behaviors/*.test.ts
 apps/web/src/game/views/StickyView.tsx
 ```
 

@@ -1,9 +1,10 @@
 # DECISIONS_v0.2.md — 設計改訂（会話レビューの反映）
 
-- Status: **Accepted（オーナーレビュー済み）**
+- Status: **Absorbed**（`docs/HANDOFF_DOC_UPDATE.md` による反映作業が完了し、各設計文書・タスク文書に吸収済み）
 - Date: 2026-09-12
-- 優先順位: **本文書は v0.1 の設計文書・タスク文書と矛盾する場合、本文書が優先する。**
-  反映作業（`docs/HANDOFF_DOC_UPDATE.md`）完了後、本文書は各文書に吸収される。
+- 本文書はオーナーレビュー時点の決定記録として残す。実装・レビュー時は本文書ではなく、
+  反映先の各文書（`ARCHITECTURE.md` / `PATTERN_SCHEMA.md` / `GAME_ENGINE_DESIGN.md` /
+  `EVALUATOR_DESIGN.md` / `docs/tasks/*` / ADR-008〜012）を参照する。
 
 > 目的: オーナーとのレビューで決まった 10 件の決定と、それを成立させるための新設計を、
 > 実装に着手できる精度で記述する。細部の展開（タスク文書・ADR 本文）は別エージェントが行う。

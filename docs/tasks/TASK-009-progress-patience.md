@@ -20,6 +20,7 @@ GAME §5.1 の3リソース（Progress / Time / Patience）と、
 packages/game-engine/src/resource/progress.ts
 packages/game-engine/src/resource/patience.ts
 packages/game-engine/src/resource/outcome.ts     クリア/失敗の判定
+packages/game-engine/src/resource/threat.ts      DECISIONS_v0.2.md §5.2 の threat 計算
 ```
 
 ## Implementation requirements
@@ -41,6 +42,13 @@ packages/game-engine/src/resource/outcome.ts     クリア/失敗の判定
    - 直近 N 秒の `log` から、patience を最も削ったパターンを特定して `culprit` に記録
    - GAME §15.1「全ての失敗は説明可能」/ §20「今回の主犯」の根拠
 5. クリア/失敗後は intent を受け付けない（`phase` で制御）
+6. **threat 計算（DECISIONS_v0.2.md §5.2 により新設）**: 各アクティブ広告に毎 tick
+   `threat(ad) = drain(ad) + block(ad) - trapRisk(ad)` を計算する。
+   - `drain` = `patienceEffect.perSecondAlive`
+   - `block` = 本文を覆って progress を止めているか（0 or 定数）
+   - `trapRisk` = `onMistake` が大きいほど高い（焦って触ると大ダメージ＝後回しが正解）
+   - `GameState` に `ads[].threat: number` として持たせ、毎 tick 再計算する
+   - この値は TASK-010 の triage bonus 判定の入力になる（`GAME_ENGINE_DESIGN.md §9.4`）
 
 ## Acceptance criteria
 
@@ -50,6 +58,8 @@ packages/game-engine/src/resource/outcome.ts     クリア/失敗の判定
 - [ ] 失敗時に `culprit` が必ず1つ以上特定される
 - [ ] 「速く処理する」と「安全に処理する」で結果が変わる（テストで両方の戦略を模擬して差が出る）
 - [ ] `cleared` / `failed` 後に intent を送っても状態が変わらない
+- [ ] 自動音声（drain 高）が全画面オーバーレイ（block 高）より threat が高いなど、
+      §5.2 の表（DECISIONS_v0.2.md）と整合する threat 順位になる
 
 ## Test requirements
 

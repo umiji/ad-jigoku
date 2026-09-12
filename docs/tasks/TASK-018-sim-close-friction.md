@@ -1,12 +1,14 @@
-# TASK-018 — close-friction simulator（CLS-01 Tiny / CLS-03 Delayed / CLS-05 Moving）
+# TASK-018 — close behavior（CLS-01 Tiny / CLS-03 Delayed / CLS-05 Moving）
 
 - Milestone: M3 / Phase 1
-- Depends on: 017
+- Depends on: 017, 013A（対応する Shell `popup` が存在すること）
 - Size: 1 session
+- **DECISIONS_v0.2.md §1 により改訂**: 「simulator」を「behavior」に読み替える。本タスクは `close`
+  スロットの behavior 群を扱う
 
 ## Objective
 
-「閉じにくい」系パターンを1つの simulator で実装する。
+「閉じにくい」系パターンを `close` スロットの behavior 群として実装する。
 
 ## Context
 
@@ -16,8 +18,10 @@
 ## Files to create
 
 ```text
-packages/game-engine/src/simulators/close-friction.ts
-packages/game-engine/src/simulators/close-friction.test.ts
+packages/game-engine/src/behaviors/close-tiny.ts
+packages/game-engine/src/behaviors/close-delayed.ts
+packages/game-engine/src/behaviors/close-moving.ts
+packages/game-engine/src/behaviors/close-*.test.ts
 ```
 
 ## Implementation requirements

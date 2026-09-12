@@ -42,6 +42,9 @@ apps/web/                               (Next.js 初期化)
 2. TypeScript strict（`strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes` を有効）
 3. Turborepo のパイプライン: `build` / `typecheck` / `lint` / `test`
 4. `apps/web` は Next.js 15 App Router で初期化。トップページはプレースホルダでよい
+   **ホスティングは Cloudflare Pages（DECISIONS_v0.2.md §8、ADR-008 改訂）。** `next.config` に
+   `output: 'export'` を設定し、静的書き出しで成立させる（アダプタ不要）。CD は Pages の GitHub 連携を使い、
+   Vercel 向けの設定・シークレットは追加しない
 5. **依存検査スクリプト** `scripts/check-deps.ts` を実装する:
    - 各 package の `package.json` の `dependencies` を読み、`ARCHITECTURE.md §5.1` の
      許可マトリクスと突き合わせる
@@ -67,6 +70,7 @@ apps/web/                               (Next.js 初期化)
 - [ ] `packages/game-engine` に `import React from 'react'` を書くと lint が落ちる
 - [ ] `packages/game-engine` に `Math.random()` を書くと lint が落ちる
 - [ ] `apps/web` が `pnpm dev` で起動する
+- [ ] `apps/web` が `output: 'export'` で `pnpm build` → 静的ファイル一式を出力できる
 - [ ] CI が main への PR で自動実行される
 
 ## Test requirements

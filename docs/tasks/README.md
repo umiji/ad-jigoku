@@ -15,27 +15,36 @@
 |---|---|---|---|---|
 | M0 | Foundation | 001-004 | 1 | パターンカタログが型付きデータとして読み込める |
 | M1 | Game Core (headless) | 005-012 | 1 | ブラウザなしでゲームが1本通る。seed 再現可能 |
-| M2 | UI & Host | 013-016 | 1 | 画面上でゲームが動く |
-| M3 | Simulators | 017-022 | 1 | MVP 15 パターンが遊べる |
-| M4 | Game Loop | 023-028 | 1 | 開始→失敗/クリア→結果→再挑戦が成立する |
-| M5 | Safety & Quality | 029-032 | 1 | 安全性・a11y・性能が CI で保証される |
+| M2 | UI & Host | 013, 013A-D, 014, 014A, 015-016 | 1 | 画面上でゲームが動く（シェル・Creative・BrowserFrame 込み） |
+| M3 | Behaviors | 017-022 | 1 | MVP 15 パターンが遊べる |
+| M4 | Game Loop | 023-024, 024A-B, 025-028 | 1 | 開始→失敗/クリア→結果→再挑戦が成立し、**面白さゲート（024B）を通過している** |
+| M5 | Safety & Quality | 029-032 | 1 | 安全性（SAFE-01..13）・a11y・性能が CI で保証される |
 | M6 | Landing Page | 033-036 | 1.5 | LP 自体が広告地獄として成立する |
 | M7 | Evaluation Engine | 037-044 | 2 | フィクスチャに対する検出精度が測れる |
-| M8 | Public Audit | 045-048 | 3 | URL を入れるとレポートが出る |
+| M8 | Public Audit | 045-046, 046A, 047-048 | 3 | URL を入れるとレポートが出る |
 | M9 | Ranking & Trust | 049-051 | 4 | 公開ランキングと異議申立てが成立する |
 | M10 | Owner Product | (未分解) | 5 | Phase 4 完了後に分解する |
+
+> **DECISIONS_v0.2.md §7 により改訂**: M4 の完了条件に「面白さゲート通過」が追加された。
+> 通過しなければ M5/M6 に進まない（TASK-024B）。M3 は旧「Simulators」から「Behaviors」に改称
+> （DECISIONS_v0.2.md §1）。
 
 ## 2. クリティカルパス
 
 ```text
 001 → 002 ─┐
 001 → 003 → 004 ─┬→ 005 → 006 → 007 → 008 → 009 → 010 → 011 → 012
+            │      ┴→ 013D（Creative）
             │                  ↓
-002 ────────┴→ 013 → 014 → 015 → 016 → 017..022 → 023..028 → 029..032
+002 ────────┴→ 013 → 013A/013B/013C（Shell）→ 014 → 014A（BrowserFrame）→ 015 → 016
+                                                        ↓
+                                                   017..022（Behaviors）→ 023 → 024 → 024A → 024B（面白さゲート）
+                                                                                                ↓
+                                                                    025..028 → 029..032（面白さゲート通過が前提）
                                                         ↓
                                                    033 → 034 → 035 → 036
                                                         ↓
-                          037 → 038 → 039 → 040..042 → 043 → 044 → 045..048 → 049..051
+                          037 → 038 → 039 → 040..042 → 043 → 044 → 045..046 → 046A → 047..048 → 049..051
 ```
 
 **M1 は M2 と並行できる**（エンジンが DOM を持たないため / ADR-002）。
@@ -56,8 +65,8 @@
 |---|---|---|
 | [005](TASK-005-deterministic-primitives.md) | 決定論プリミティブ（RNG / 固定ステップ / state hash） | 001 |
 | [006](TASK-006-game-state-reducer.md) | GameState と step() reducer 骨格 | 004, 005 |
-| [007](TASK-007-simulator-registry.md) | SimulatorRegistry と ViewState 契約 | 006 |
-| [008](TASK-008-stage-generator.md) | ステージ生成器 | 007 |
+| [007](TASK-007-simulator-registry.md) | BehaviorRegistry + ShellRegistry と ViewState 契約 | 006 |
+| [008](TASK-008-stage-generator.md) | ステージ生成器（エンカウンターテンプレート） | 007 |
 | [009](TASK-009-progress-patience.md) | Progress / Patience / 勝敗判定 | 006 |
 | [010](TASK-010-score-system.md) | スコアシステム | 009 |
 | [011](TASK-011-combo-rage.md) | コンボと RAGE | 010 |
@@ -66,26 +75,33 @@
 ### M2 — UI & Host
 | ID | Title | Depends on |
 |---|---|---|
-| [013](TASK-013-ad-components.md) | canonical 広告コンポーネント群 | 002 |
+| [013](TASK-013-ad-components.md) | canonical 広告コンポーネント基盤（parts） | 002 |
+| [013A](TASK-013A-shell-generic.md) | Shell: popup / interstitial / stickyBanner / inlineRect | 013 |
+| [013B](TASK-013B-shell-media.md) | Shell: videoPlayer / densityStack | 013 |
+| [013C](TASK-013C-shell-disguise.md) | Shell: fakeDownload / fakePlay（専用デザイン） | 013 |
+| [013D](TASK-013D-creative-data.md) | Creative データ基盤（数百件 + 実在ブランド NG 検査） | 004 |
 | [014](TASK-014-game-host.md) | ゲームホスト（rAF / ViewState→DOM / 入力→Intent） | 007, 013 |
+| [014A](TASK-014A-browser-frame.md) | BrowserFrame | 014 |
 | [015](TASK-015-content-surface.md) | 偽記事コンテンツ面と読了・設問メカニクス | 014 |
 | [016](TASK-016-hud.md) | HUD（patience / progress / time / combo） | 014 |
 
-### M3 — Simulators
+### M3 — Behaviors（旧 Simulators）
 | ID | Title | Depends on |
 |---|---|---|
-| [017](TASK-017-sim-overlay.md) | overlay simulator（INT-01, OBS-01） | 014 |
-| [018](TASK-018-sim-close-friction.md) | close-friction simulator（CLS-01/03/05） | 017 |
-| [019](TASK-019-sim-deception.md) | fake-close / deceptive-cta（CLS-11, DEC-02, DEC-03） | 017 |
-| [020](TASK-020-sim-sticky-attention.md) | sticky / attention（OBS-03, OBS-06, ATT-01, ATT-02） | 017 |
-| [021](TASK-021-sim-persistence.md) | persistence（PER-01, PER-02） | 017 |
-| [022](TASK-022-sim-instability.md) | instability（LAY-01、transform 方式） | 017 |
+| [017](TASK-017-sim-overlay.md) | spawn/surface behavior（INT-01, OBS-01） | 014, 013A |
+| [018](TASK-018-sim-close-friction.md) | close behavior（CLS-01/03/05） | 017, 013A |
+| [019](TASK-019-sim-deception.md) | deception/hitbox behavior（CLS-11, DEC-02, DEC-03） | 017, 013A, 013C |
+| [020](TASK-020-sim-sticky-attention.md) | surface/attention behavior（OBS-03, OBS-06, ATT-01, ATT-02） | 017, 013A, 013B |
+| [021](TASK-021-sim-persistence.md) | persist behavior（PER-01, PER-02） | 017, 013A |
+| [022](TASK-022-sim-instability.md) | instability behavior（LAY-01、transform 方式） | 017, 013A |
 
 ### M4 — Game Loop
 | ID | Title | Depends on |
 |---|---|---|
 | [023](TASK-023-smash-catharsis.md) | SMASH とカタルシス演出 | 017-022 |
-| [024](TASK-024-results-screen.md) | 結果画面と教育表示 | 012, 023 |
+| [024](TASK-024-results-screen.md) | 結果画面と教育表示（escape 表示込み） | 012, 023 |
+| [024A](TASK-024A-escape-library-pattern-pages.md) | escape 技法ライブラリ + `/patterns/[id]` 図鑑ページ | 004, 024 |
+| [024B](TASK-024B-fun-gate.md) | 面白さゲート（プレイテスト実施・判定） | 024, 024A |
 | [025](TASK-025-tutorial.md) | プレイアブルチュートリアル | 024 |
 | [026](TASK-026-stage-progression.md) | Stage 1-5 のデータとプログレッション | 008, 024 |
 | [027](TASK-027-endless-mode.md) | Endless モード | 026 |
@@ -94,10 +110,10 @@
 ### M5 — Safety & Quality
 | ID | Title | Depends on |
 |---|---|---|
-| [029](TASK-029-safety-invariants.md) | Safety Invariants テストスイート（SAFE-01..11） | 022, 016 |
+| [029](TASK-029-safety-invariants.md) | Safety Invariants テストスイート（SAFE-01..13） | 022, 016, 014A |
 | [030](TASK-030-a11y-reduced-motion.md) | アクセシビリティと reduced-motion 対応 | 029 |
 | [031](TASK-031-audio-opt-in.md) | オプトイン音声と効果音 | 023 |
-| [032](TASK-032-performance-budget.md) | 性能予算の CI 強制 | 029 |
+| [032](TASK-032-performance-budget.md) | 性能予算の CI 強制（面白さゲート通過が前提） | 029, 024B |
 
 ### M6 — Landing Page
 | ID | Title | Depends on |
@@ -120,6 +136,7 @@
 | [044](TASK-044-accuracy-harness.md) | 検出精度ハーネス（precision/recall CI） | 043 |
 | [045](TASK-045-audit-pipeline.md) | 監査ジョブパイプラインと API | 043 |
 | [046](TASK-046-audit-ui.md) | 監査 UI（URL入力→進捗→レポート） | 045 |
+| [046A](TASK-046A-adslot-self-audit.md) | AdSlot + 自己診断バッジ | 046 |
 | [047](TASK-047-detailed-report.md) | 詳細レポートと改善提案 | 046 |
 | [048](TASK-048-reaudit-before-after.md) | 再評価と Before/After | 047 |
 | [049](TASK-049-ranking.md) | ランキングのデータモデルと公開ページ | 048 |

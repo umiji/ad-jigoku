@@ -1,12 +1,14 @@
-# TASK-019 — fake-close / deceptive-cta（CLS-11 / DEC-02 / DEC-03）
+# TASK-019 — deception/hitbox behavior（CLS-11 / DEC-02 / DEC-03）
 
 - Milestone: M3 / Phase 1
-- Depends on: 017
+- Depends on: 017, 013A, 013C（対応する Shell `popup` / `fakeDownload` が存在すること）
 - Size: 1 session
+- **DECISIONS_v0.2.md §1 により改訂**: 「simulator」を「behavior」に読み替える。本タスクは `deception` /
+  `hitbox` スロットの behavior 群を扱う
 
 ## Objective
 
-騙し系パターンを実装する。**このゲームで最も繊細な領域。**
+騙し系パターンを `deception` / `hitbox` スロットの behavior として実装する。**このゲームで最も繊細な領域。**
 
 ## Context
 
@@ -17,9 +19,10 @@ DESIGN.md §20「支援技術を騙してはいけない」。
 ## Files to create
 
 ```text
-packages/game-engine/src/simulators/fake-close.ts
-packages/game-engine/src/simulators/deceptive-cta.ts
-packages/game-engine/src/simulators/*.test.ts
+packages/game-engine/src/behaviors/deception-fake-close.ts
+packages/game-engine/src/behaviors/deception-disguise.ts     DEC-02/03 の deception behavior
+packages/game-engine/src/behaviors/hitbox-expanded.ts        DEC-02/03 の hitbox behavior
+packages/game-engine/src/behaviors/*.test.ts
 ```
 
 ## Implementation requirements

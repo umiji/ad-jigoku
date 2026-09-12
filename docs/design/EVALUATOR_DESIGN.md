@@ -304,6 +304,12 @@ const scorers: Record<string, Scorer> = {
 - 新バージョンを出したら、既存 run に対してもバッチで再計算し **両方保存**する
 - ランキングは常に単一 scoringVersion 内でのみ比較（ARCHITECTURE §13）
 
+## 6.3 Vision detector の実行条件（DECISIONS_v0.2.md §8 により追記）
+
+**Vision detector は有料診断のみで実行する。** 無料診断は決定論的検出（Layer 1/2）のみで完結させ、
+AI 判定の API 費用は課金時にのみ発生させる（v0.2 §8 表、D10）。§5.2 の advisory 方針とあわせて、
+無料 Basic Report のスコアには Vision Finding を一切含めない。
+
 ---
 
 # 7. 検出精度の検証
@@ -367,17 +373,22 @@ Re-audit     [再評価する]
 
 ---
 
-# 9. Job Pipeline
+# 9. Job Pipeline（DECISIONS_v0.2.md §8 により改訂）
+
+v0.1 の Postgres + pg-boss + 常駐ワーカー構成は撤回する。**GitHub Actions（public repo で実行時間無制限）を
+診断ワーカーとして使い、`workflow_dispatch` がキューの代わりを果たす。**
 
 ```text
-POST /api/audit          → audit_run(status=queued) を作成 + pg-boss に投入
+POST /api/audit          → audit_run(status=queued) を作成し、GitHub Actions を workflow_dispatch で起動
+Actions workflow          → probe → evidence を R2 に保存 → detect → score → status=done を書き戻す
 GET  /api/audit/:id      → status ポーリング
-worker                   → probe → evidence保存 → detect → score → status=done
 ```
 
 - 同一ドメインは同時1本、クールダウンあり
 - タイムアウト（90s）でハード打ち切り、部分 evidence でもレポートを出す
 - 失敗理由をユーザーに見せる（「robots.txt で拒否」「タイムアウト」「到達不能」）
+- Evidence の永続化先は S3 互換ストレージではなく **Cloudflare R2**（10GB 無料・egress 無料。ARCHITECTURE §16）
+- 常駐コンテナ（Fly.io 等）の要否は Phase 2 で再検討（ARCHITECTURE §20 OD-7、未決）
 
 ---
 

@@ -1,12 +1,14 @@
-# TASK-022 — instability（LAY-01 Layout Shift、transform 方式）
+# TASK-022 — instability behavior（LAY-01 Layout Shift、transform 方式）
 
 - Milestone: M3 / Phase 1
-- Depends on: 017
+- Depends on: 017, 013A（対応する Shell が存在すること。特定シェル専用ではなく既存シェルに `instability` を差す）
 - Size: 1 session
+- **DECISIONS_v0.2.md §1 により改訂**: 「simulator」を「behavior」に読み替える。本タスクは `instability`
+  スロットの behavior を扱う
 
 ## Objective
 
-レイアウト変動系のパターンを、**実際の reflow を起こさずに**実装する。
+レイアウト変動系のパターンを、`instability` スロットの behavior として**実際の reflow を起こさずに**実装する。
 
 ## Context
 
@@ -16,8 +18,8 @@
 ## Files to create
 
 ```text
-packages/game-engine/src/simulators/instability.ts
-packages/game-engine/src/simulators/instability.test.ts
+packages/game-engine/src/behaviors/instability-transform-shift.ts
+packages/game-engine/src/behaviors/instability-transform-shift.test.ts
 apps/web/src/game/views/ShiftContainer.tsx
 ```
 

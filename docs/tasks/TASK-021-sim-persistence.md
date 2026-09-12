@@ -1,12 +1,14 @@
-# TASK-021 — persistence（PER-01 Respawn / PER-02 Multi-layer）
+# TASK-021 — persist behavior（PER-01 Respawn / PER-02 Multi-layer）
 
 - Milestone: M3 / Phase 1
-- Depends on: 017
+- Depends on: 017, 013A（対応する Shell が存在すること。特定シェル専用ではなく既存シェルに `persist` を差す）
 - Size: 1 session
+- **DECISIONS_v0.2.md §1 により改訂**: 「simulator」を「behavior」に読み替える。本タスクは `persist`
+  スロットの behavior 群を扱う
 
 ## Objective
 
-「閉じても終わらない」系のパターンを実装する。
+「閉じても終わらない」系のパターンを `persist` スロットの behavior として実装する。
 **SAFE-01（必ず脱出できる）との両立が設計上の要点。**
 
 ## Context
@@ -18,8 +20,9 @@
 ## Files to create
 
 ```text
-packages/game-engine/src/simulators/persistence.ts
-packages/game-engine/src/simulators/persistence.test.ts
+packages/game-engine/src/behaviors/persist-respawn.ts
+packages/game-engine/src/behaviors/persist-multi-layer.ts
+packages/game-engine/src/behaviors/persist-*.test.ts
 ```
 
 ## Implementation requirements
@@ -30,8 +33,8 @@ packages/game-engine/src/simulators/persistence.test.ts
 2. **PER-02 Multi-layer Popup**: 閉じると下から次の広告が出る
    - 層の数は生成時に確定（`rng('stage')`）。**有限**
    - 層ごとに違うパターンを積める（ここでコンボが成立する）
-3. `SimResult.outcome: { kind: 'spawn', patternId }` でエンジンに次の生成を要求する。
-   simulator が直接 state に広告を足さない
+3. `BehaviorResult.outcome: { kind: 'spawn', patternId }` でエンジンに次の生成を要求する。
+   behavior が直接 state に広告を足さない
 4. 同時出現数の上限を超える場合は spawn を遅延させる（画面が壊れない）
 5. **脱出可能性の保証**:
    - 「respawn の総時間 + 全層の閉じる時間」が有限であることをステージ生成時に検証

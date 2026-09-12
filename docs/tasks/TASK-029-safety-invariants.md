@@ -1,12 +1,14 @@
-# TASK-029 — Safety Invariants テストスイート（SAFE-01..11）
+# TASK-029 — Safety Invariants テストスイート（SAFE-01..13）
 
 - Milestone: M5 / Phase 1
-- Depends on: 022, 016
+- Depends on: 022, 016, 014A（SAFE-12 の対象となる BrowserFrame が存在すること）
 - Size: 1 session
+- **DECISIONS_v0.2.md §2.4, §8.2 により追加**: SAFE-12（BrowserFrame の実ブラウザ模倣禁止）、
+  SAFE-13（ゲーム/LP ルートの実広告禁止）を追加
 
 ## Objective
 
-`ARCHITECTURE.md §11` の SAFE-01..11 を実装し、CI で常時実行する。
+`ARCHITECTURE.md §11` の SAFE-01..13 を実装し、CI で常時実行する。
 
 ## Context
 
@@ -41,6 +43,8 @@ packages/safety/playwright.config.ts
 | SAFE-09 | ダウンロードを発生させない | Playwright の download イベント監視 |
 | SAFE-10 | 偽UIで入力を収集しない | fake form に submit ハンドラがないことの静的検査 |
 | SAFE-11 | 外部スクリプトを読み込まない | CSP + ネットワーク allowlist |
+| SAFE-12 | BrowserFrame は実ブラウザ UI を模倣しない。偽 URL バーに実在ドメインを表示しない | 視覚差分 + 偽 URL バー文字列の allowlist（架空ドメインのみ） |
+| SAFE-13 | ゲーム / LP ルートに実広告ネットワークのスクリプトが存在しない | CSP + ルート単位の静的検査（`AdSlot.provider !== 'network'`） |
 
 1. **SAFE-01 と SAFE-07 はエンジンの property test**（ブラウザ不要、高速）
 2. 残りは Playwright。mobile / desktop 両プロファイルで実行
@@ -52,8 +56,8 @@ packages/safety/playwright.config.ts
 
 ## Acceptance criteria
 
-- [ ] SAFE-01..11 が全て実装され、通る
-- [ ] 意図的に違反を作ると、該当するテストだけが落ちる（11件すべてで確認）
+- [ ] SAFE-01..13 が全て実装され、通る
+- [ ] 意図的に違反を作ると、該当するテストだけが落ちる（13件すべてで確認）
 - [ ] エンジン系の property test が 60 秒以内に完了する
 - [ ] CSP ヘッダが設定されている
 - [ ] CI に組み込まれている

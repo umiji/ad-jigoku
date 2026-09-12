@@ -1,13 +1,17 @@
-# TASK-013 — canonical 広告コンポーネント群
+# TASK-013 — canonical 広告コンポーネント基盤（parts）
 
 - Milestone: M2 / Phase 1
 - Depends on: 002
 - Size: 1 session
+- **DECISIONS_v0.2.md §1.3 により改訂**: シェル本体（`popup` 等の完成した見た目コンポーネント）は
+  TASK-013A / 013B / 013C に分離する。本タスクは**シェルが共通して組み立てに使う部品（parts）**の
+  基盤に範囲を絞る
 
 ## Objective
 
-`DESIGN.md §21` の canonical component のうち、広告表現の中核となるものを実装する。
-**LP とゲームの両方がこれを使う**（ADR-005）。
+`DESIGN.md §21` の canonical component のうち、広告表現の**部品（parts）**となるものを実装する。
+**LP とゲームの両方がこれを使う**（ADR-005）。完成した見た目（Shell）は本タスクの成果物を
+組み合わせて TASK-013A/B/C が作る。
 
 ## Context
 
@@ -17,7 +21,6 @@
 ## Files to create
 
 ```text
-packages/ui/components/AdPopup.tsx
 packages/ui/components/AdMeta.tsx            PR / Sponsored ラベル
 packages/ui/components/AdHeadline.tsx
 packages/ui/components/AdCTA.tsx
@@ -27,15 +30,15 @@ packages/ui/components/CloseButton.tsx       real close
 packages/ui/components/FakeCloseButton.tsx
 packages/ui/components/AdCreative.tsx        抽象的なダミービジュアル
 packages/ui/components/index.ts              allowlist
-packages/ui/creatives/                       ダミー広告素材（架空）
+packages/ui/shells/                          TASK-013A/B/C が使う空ディレクトリ（各 shell は独立モジュール）
 ```
 
 ## Implementation requirements
 
-1. `AdPopup` は `DESIGN.md §8` の anatomy をそのまま実装:
-   ラベル / 見出し / 本文 / ビジュアル / CTA / 極小注意書き / 閉じるボタン
-2. **`AdPopup` は挙動を持たない。** 表示状態を props で受け取るだけの presentational component。
-   閉じるタイミング・移動・再出現は呼び出し側（ゲームエンジン / LpFlow）が決める
+1. 各 part は `DESIGN.md §8` の anatomy 要素（ラベル / 見出し / 本文 / ビジュアル / CTA / 極小注意書き /
+   閉じるボタン）に対応する。**parts を組み合わせて1つの Shell（例: `popup`）を作るのは TASK-013A 以降**
+2. **全ての part は挙動を持たない。** 表示状態を props で受け取るだけの presentational component。
+   閉じるタイミング・移動・再出現は呼び出し側（behavior / LpFlow）が決める
 3. 形状（DESIGN §16）: `popup_radius: 2px`、ハードエッジ、抑制された影。
    **角丸カード + でかいぼかし影にしない**
 4. `CloseButton` の実タップ領域は最小 44×44（DESIGN §19）。
@@ -46,15 +49,16 @@ packages/ui/creatives/                       ダミー広告素材（架空）
    - 視覚的に紛らわしくてよいが、**支援技術には嘘をつかない**
    - 押しても外部遷移しない（SAFE-05）
 6. `AdCreative`: 実在ブランドを模倣しない（DESIGN §3 MUST NOT 9）。
-   架空の商品名・抽象グラフィック・タイポグラフィで構成する
+   架空の商品名・抽象グラフィック・タイポグラフィで構成する。数百件の Creative データ本体は
+   TASK-013D で用意する。ここでは1つのプレースホルダ Creative を受け取って描画できれば足りる
 7. コピーは `DESIGN.md §13` の語彙から。データとして外出しする（ハードコードしない / OD-9）
 8. 全コンポーネントに Storybook 相当の確認ページ（`/dev/components`）を用意する
 
 ## Acceptance criteria
 
-- [ ] `DESIGN.md §8` の全要素が `AdPopup` に存在する
+- [ ] `DESIGN.md §8` の全要素が part として存在し、TASK-013A の `popup` シェルから組み立てられることを
+      サンプルで確認できる
 - [ ] 生の16進カラー・生の z-index がゼロ（lint が通る）
-- [ ] mobile 390px 幅で popup が `calc(100vw - 32px)` 以内に収まる
 - [ ] 全ての close ボタンの当たり判定が 44×44 以上（テストで実測）
 - [ ] `FakeCloseButton` の `aria-label` が本当の動作を説明している
 - [ ] キーボードだけで全コンポーネントを操作できる。フォーカスリングが見える
