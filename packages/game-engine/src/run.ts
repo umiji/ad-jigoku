@@ -9,6 +9,10 @@ import type { StepEnv } from './engine/context'
 import { checkOutcome } from './resource/outcome'
 import { applyAnswer, applyRead } from './resource/progress'
 import { computeThreats } from './resource/threat'
+import { updateEnemyCombo } from './combo/detect'
+import { updateRage } from './rage/rage'
+import { finalizeScore } from './score/score'
+import { getStage } from './stage/data'
 import { defaultRegistries, type Registries } from './sim/registries'
 import { DEFAULT_A11Y_PROFILE, type Intent } from './state/intent'
 import type { Effect } from './state/effect'
@@ -111,9 +115,22 @@ function onTick(env: StepEnv, state: GameState, effects: Effect[]): GameState {
   next = tickAds(env, next, effects)
   next = drainPatience(env, next)
   next = computeThreats(next, env.patternById, env.tuning)
+  next = updateEnemyCombo(next, env.patternById)
+  next = updateRage(next, env.tuning, effects)
   // 判定は毎 tick の最後に 1 回だけ（TASK-009 要件 3）
   next = checkOutcome(next, env.tuning, env.run.config.timeLimitMs, effects, env.patternById)
+  if (next.phase !== 'running') next = { ...next, score: finalizeScore(next, env.tuning, expectedDurationMs(env)) }
   return next
+}
+
+function expectedDurationMs(env: StepEnv): number {
+  const explicit = env.run.config.expectedDurationMs
+  if (explicit !== undefined) return explicit
+  try {
+    return getStage(env.run.config.stageId).durationMs
+  } catch {
+    return 60000
+  }
 }
 
 export function assertNever(x: never): never {

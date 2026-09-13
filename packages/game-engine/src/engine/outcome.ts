@@ -4,6 +4,8 @@ import type { Outcome } from '../sim/types'
 import type { StepEnv } from './context'
 import { patternOf } from './context'
 import { recoverOnCleanClear } from '../resource/patience'
+import { scoreOnChain, scoreOnHandled } from '../score/score'
+import { advanceChain } from '../combo/detect'
 
 /**
  * BehaviorResult.outcome をエンジンが解釈して state を更新する（TASK-007 要件 7）。
@@ -37,8 +39,13 @@ export function applyOutcome(env: StepEnv, state: GameState, ad: ActiveAd, outco
         // closing 状態は CLOSING_STEPS 後に除去される（tick 側）。closableAtStep を流用せず専用に記録
         closingAtStep: state.step,
       }))
+      // スコア: onClear（難易度 3 軸から導出。severity は使わない）+ triage bonus、プレイヤー側 chain
+      const scored = scoreOnHandled(state, ad, pattern, env.tuning)
+      const chained = advanceChain({ ...next, score: scored.score })
+      const withChain = { ...chained, score: scoreOnChain(chained.score, chained.combo.chain, env.tuning) }
+      const logs = [{ ...log, detail: scored.log }, ...(scored.triage ? [{ step: state.step, kind: 'triage' as const, patternId: ad.patternId, instanceId: ad.instanceId, detail: 'correct' }] : [])]
       // ミスなしで処理できたら微量回復（GAME_ENGINE_DESIGN §9.2）
-      return { state: recoverOnCleanClear({ ...next, log: [...next.log, log] }, ad, env.tuning), effects }
+      return { state: recoverOnCleanClear({ ...withChain, log: [...withChain.log, ...logs] }, ad, env.tuning), effects }
     }
     case 'mistake':
       return applyMistake(state, ad, outcome.reason, pe.onMistake, effects)

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "no-intention-to-close",
+    "name": { "ja": "閉じさせる気がない" },
+    "requires": ["popup", "fake-close", "delayed-close"]
+  },
+  {
+    "id": "no-escape",
+    "name": { "ja": "逃げても無駄" },
+    "requires": ["sticky", "popup", "respawn"]
+  },
+  {
+    "id": "what-are-you-pressing",
+    "name": { "ja": "何を押してるんだ" },
+    "requires": ["fake-download", "fake-play", "invisible-hitbox"]
+  },
+  {
+    "id": "ad-hell",
+    "name": { "ja": "広告地獄" },
+    "requires": ["fullscreen", "auto-sound", "moving-close", "respawn"]
+  }
+]

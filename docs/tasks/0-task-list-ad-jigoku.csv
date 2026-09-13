@@ -8,8 +8,8 @@ TASK-006,2026-09-12,2026-09-13,GameStateとstep() reducer骨格,完了,"TASK-004
 TASK-007,2026-09-12,2026-09-13,BehaviorRegistry + ShellRegistryとViewState契約,完了,TASK-006,docs/tasks/TASK-007-simulator-registry.md
 TASK-008,2026-09-12,2026-09-13,ステージ生成器（エンカウンターテンプレート+R1-R8）,完了,TASK-007,docs/tasks/TASK-008-stage-generator.md
 TASK-009,2026-09-12,2026-09-13,Progress/Patience/勝敗判定/threat計算,完了,TASK-006,docs/tasks/TASK-009-progress-patience.md
-TASK-010,2026-09-12,2026-09-13,スコアシステム（onClear導出+triage bonus）,未着手,TASK-009,docs/tasks/TASK-010-score-system.md
-TASK-011,2026-09-12,2026-09-12,コンボとRAGE,未着手,TASK-010,docs/tasks/TASK-011-combo-rage.md
+TASK-010,2026-09-12,2026-09-13,スコアシステム（onClear導出+triage bonus）,完了,TASK-009,docs/tasks/TASK-010-score-system.md
+TASK-011,2026-09-12,2026-09-13,コンボとRAGE,完了,TASK-010,docs/tasks/TASK-011-combo-rage.md
 TASK-012,2026-09-12,2026-09-12,リプレイ記録・再生と決定論回帰テスト,未着手,"TASK-008, TASK-011",docs/tasks/TASK-012-replay-determinism.md
 TASK-013,2026-09-12,2026-09-13,canonical広告コンポーネント基盤（parts）,未着手,TASK-002,docs/tasks/TASK-013-ad-components.md
 TASK-013A,2026-09-13,2026-09-13,Shell: popup/interstitial/stickyBanner/inlineRect,未着手,TASK-013,docs/tasks/TASK-013A-shell-generic.md

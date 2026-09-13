@@ -29,6 +29,8 @@ export type RunConfig = {
   questions?: readonly { id: string; correctChoice: number }[]
   /** 制限時間（従。GAME §30 Q4）。未指定なら無制限 */
   timeLimitMs?: number
+  /** speed bonus の基準時間。未指定ならステージ定義の durationMs */
+  expectedDurationMs?: number
 }
 
 /** 生成時に確定した 1 広告の出現予定（TASK-008 が埋める。以降、実行中に再抽選しない） */
