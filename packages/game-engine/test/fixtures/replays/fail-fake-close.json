@@ -1,0 +1,416 @@
+{
+  "version": {
+    "engine": "0.1.0",
+    "catalog": "mini-1"
+  },
+  "config": {
+    "seed": "fake-1",
+    "mode": "story",
+    "stageId": "stage-1",
+    "accessibility": {
+      "reducedMotion": false,
+      "pointerPrecision": "fine",
+      "audioEnabled": false,
+      "extendedTimeouts": false
+    },
+    "device": "desktop",
+    "contentTotalLines": 40,
+    "overrides": {
+      "PATIENCE_INITIAL": 30
+    }
+  },
+  "inputs": [
+    [
+      0,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      1,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      2,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      3,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      4,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      5,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      6,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      7,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      8,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      9,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      10,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      11,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      12,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      13,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      14,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      15,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      16,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      17,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      18,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      19,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      20,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      21,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      22,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      23,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      24,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      25,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      26,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      27,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      28,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      29,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      30,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      31,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      32,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      33,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      34,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      35,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      36,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      37,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      38,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      39,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      40,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      41,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      42,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      43,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      44,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      45,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      46,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      47,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      48,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      48,
+      {
+        "t": "point",
+        "target": {
+          "kind": "ad",
+          "instanceId": "e0-r0-0-0",
+          "part": "close"
+        }
+      }
+    ],
+    [
+      49,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      49,
+      {
+        "t": "point",
+        "target": {
+          "kind": "ad",
+          "instanceId": "e0-r0-0-0",
+          "part": "fake-close"
+        }
+      }
+    ],
+    [
+      50,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      50,
+      {
+        "t": "point",
+        "target": {
+          "kind": "ad",
+          "instanceId": "e0-r0-0-0",
+          "part": "cta"
+        }
+      }
+    ],
+    [
+      51,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      51,
+      {
+        "t": "point",
+        "target": {
+          "kind": "ad",
+          "instanceId": "e0-r0-0-0",
+          "part": "close"
+        }
+      }
+    ],
+    [
+      52,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      52,
+      {
+        "t": "point",
+        "target": {
+          "kind": "ad",
+          "instanceId": "e0-r0-0-0",
+          "part": "close"
+        }
+      }
+    ],
+    [
+      53,
+      {
+        "t": "read"
+      }
+    ],
+    [
+      53,
+      {
+        "t": "point",
+        "target": {
+          "kind": "ad",
+          "instanceId": "e0-r0-0-0",
+          "part": "fake-close"
+        }
+      }
+    ]
+  ],
+  "totalSteps": 54,
+  "finalStateHash": "4fe6670990ac1b37"
+}

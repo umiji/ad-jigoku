@@ -13,6 +13,7 @@ import { updateEnemyCombo } from './combo/detect'
 import { updateRage } from './rage/rage'
 import { finalizeScore } from './score/score'
 import { getStage } from './stage/data'
+import { generateStage } from './stage/generate'
 import { defaultRegistries, type Registries } from './sim/registries'
 import { DEFAULT_A11Y_PROFILE, type Intent } from './state/intent'
 import type { Effect } from './state/effect'
@@ -28,8 +29,13 @@ export type StepResult = { run: Run; effects: Effect[] }
 
 export const DEFAULT_CONTENT_TOTAL_LINES = 60
 
+/** ENGINE_VERSION: リプレイの互換性判定に使う。挙動（決定論に影響する変更）を変えたら上げる */
+export const ENGINE_VERSION = '0.1.0'
+
 export function createRun(config: RunConfig, registries: Registries = defaultRegistries): Run {
   const tuning = resolveTuning(config.overrides)
+  // schedule が明示されていなければステージ生成器で作る（seed → 同じ地獄）
+  const schedule = config.schedule ?? generateStage({ stageDef: getStage(config.stageId), catalog: config.catalog, registries, tuning, seed: config.seed, device: config.device, mode: config.mode === 'endless' ? 'loose' : 'fixed' }).spawns
   const state: GameState = {
     step: 0,
     phase: 'running',
@@ -41,7 +47,7 @@ export function createRun(config: RunConfig, registries: Registries = defaultReg
     score: { total: 0, completion: 0, speedBonus: 0, accuracyBonus: 0, comboBonus: 0, survivalBonus: 0, triageBonus: 0, damagePenalty: 0, timePenalty: 0, clearPoints: 0 },
     rage: { meter: 0, active: false, level: 0 },
     log: [],
-    schedule: [...(config.schedule ?? [])],
+    schedule: [...schedule],
     rng: {},
     a11y: { ...DEFAULT_A11Y_PROFILE, ...config.accessibility },
     mistakes: { 'too-early': 0, 'clicked-ad': 0, 'fake-close': 0, 'stray-click': 0, 'wrong-answer': 0, 'wrong-action': 0 },

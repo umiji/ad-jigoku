@@ -21,7 +21,8 @@
     "catalog:validate": "pnpm --filter @ad-jigoku/pattern-catalog catalog:validate",
     "catalog:coverage": "pnpm --filter @ad-jigoku/pattern-catalog catalog:coverage",
     "catalog:parity": "tsx scripts/catalog-parity.ts",
-    "game:preview-stage": "pnpm --filter @ad-jigoku/game-engine game:preview-stage"
+    "game:preview-stage": "pnpm --filter @ad-jigoku/game-engine game:preview-stage",
+    "game:simulate": "pnpm --filter @ad-jigoku/game-engine game:simulate"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

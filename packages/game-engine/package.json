@@ -13,7 +13,9 @@
     "typecheck": "tsc -p tsconfig.json",
     "lint": "pnpm -w exec eslint packages/game-engine",
     "test": "vitest run",
-    "game:preview-stage": "tsx bin/preview-stage.ts"
+    "game:preview-stage": "tsx bin/preview-stage.ts",
+    "game:simulate": "tsx bin/simulate.ts",
+    "replay:fixtures": "tsx bin/make-replay-fixtures.ts"
   },
   "dependencies": {
     "@ad-jigoku/pattern-catalog": "workspace:*"
