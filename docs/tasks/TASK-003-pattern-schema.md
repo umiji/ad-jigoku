@@ -74,3 +74,40 @@ packages/pattern-catalog/data/patterns/.gitkeep
 - acceptance criteria を全て満たす
 - カタログの最も複雑なパターン（`COM-12 Infinite Hell`、`CLS-11 Fake Close`）が
   スキーマで表現できることをサンプルデータで実証している
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）
+
+### 決定ログ
+
+#### 2026-09-13 escape facet もスキーマに含める
+- 決定: `PATTERN_SCHEMA.md §5.5`（v0.2 D6）の `EscapeFacet` / `EscapeTechnique` と V-14 を本タスクで実装
+- 却下案: 「V-01..V-12 のみ」（本タスク文書の記載）→ 設計文書側が §5.5 / V-13 / V-14 を既に定義しており、後回しにすると TASK-004 のデータ投入時にスキーマ変更が発生するため
+- 出典: PATTERN_SCHEMA.md §5.5, §8
+
+#### 2026-09-13 導出 gameDifficulty の正規化式
+- 決定: `round(cbrt(ic×unc×tp) × (0.5 + severity/20))` を 1..5 に clamp。乗法構造（CATALOG §4）を保ちつつ 1-5 のカタログ列と比較可能にする
+- 却下案: `severity/20 × ic × unc × tp` の生値（最大 125）→ カタログの 1-5 と直接比較できず V-10 が機能しない
+- 付帯条件: V-10 は warn のみ。式の妥当性は TASK-004 で 90 件に当てて確認する
+- 出典: session decision（`src/derived.ts` のコメントに記載）
+
+#### 2026-09-13 BehaviorId は `<slot>:<name>` 形式
+- 決定: BehaviorId にスロット名を接頭辞として持たせ、`behaviors` のキー（スロット）と一致することを zod で検査（R1 スロット排他の型+検証）
+- 却下案: 自由文字列 → スロット不一致を registry 解決まで検出できない
+- 出典: session decision
+
+### 作業ログ
+
+- 2026-09-13: zod v4 で §2-§6 + §5.5 のスキーマ、`parsePatterns`（パターンID + フィールドパス付きエラー）、query API、V-01..V-14（V-05/06/07/13 は registry 注入）、`catalog:validate` CLI、11 カテゴリ + CLS-11 / COM-12 のサンプルとテスト 38 件。
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/pattern-catalog typecheck lint test → 3 files, 38 tests passed
+$ pnpm catalog:validate → catalog:validate: 0 patterns, 0 errors, 0 warnings（データは TASK-004）
+$ pnpm check-deps → OK（pattern-catalog の dependencies は zod のみ）
+test/load-query.test.ts: 不正 JSON で "CLS-11 › severity" / "INT-01 › game.warning" を含むエラーを検証
+```

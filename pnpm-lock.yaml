@@ -118,6 +118,10 @@ importers:
         version: 3.2.7(@types/node@22.20.2)(jsdom@30.0.1)(tsx@4.23.13)
 
   packages/pattern-catalog:
+    dependencies:
+      zod:
+        specifier: ^4.6.4
+        version: 4.6.4
     devDependencies:
       '@types/node':
         specifier: ^22.20.2
@@ -125,6 +129,9 @@ importers:
       eslint:
         specifier: ^9.39.5
         version: 9.39.5
+      tsx:
+        specifier: ^4.23.13
+        version: 4.23.13
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1646,6 +1653,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
+  zod@4.6.4:
+    resolution: {integrity: sha512-AXSD6hvGdvRjajG/l1cC+d6IrhH+sjmPKtYeQdJIK8MFJl3LyClzS+o/YsVC+zQZPupAaeH5skwwm8YqYH7BqA==}
+
 snapshots:
 
   '@asamuzakjp/css-color@6.0.7':
@@ -2967,3 +2977,5 @@ snapshots:
   xmlchars@2.2.0: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@4.6.4: {}
