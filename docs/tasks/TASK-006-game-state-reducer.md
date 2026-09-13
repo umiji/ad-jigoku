@@ -57,3 +57,40 @@ packages/game-engine/src/index.ts
 
 - acceptance criteria を全て満たす
 - この時点でブラウザなしで「何も起きないゲーム」が 60 秒分回せる
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）
+
+### 決定ログ
+
+#### 2026-09-13 RNG 状態と a11y プロファイルを GameState に含める
+- 決定: `GameState.rng: RngState`（ストリーム毎の uint32）と `GameState.a11y` を state に持つ。`{ t: 'a11y' }` intent は state を部分更新する
+- 却下案: RNG を Run の外部閉包に置く → `hashState` に含められず途中スナップショットからの再生が不可能（TASK-005 の決定を踏襲）
+- 出典: GAME_ENGINE_DESIGN §3, §6
+
+#### 2026-09-13 ActiveAd は v0.2 の Shell × Behaviors 構造
+- 決定: 設計文書 §3 の `simulatorId` / `sim: unknown` を `shellId` + `behaviors: Partial<Record<Slot, { id, params, sim }>>` に置き換える（ADR-009 の 2 軸モデルに追従）。`closableAtStep` は `number`（null 不可）
+- 却下案: 文書どおり `simulatorId` → v0.1 の廃止済み概念
+- 出典: ADR-009 / PATTERN_SCHEMA §3
+
+#### 2026-09-13 RunConfig に device と schedule（テスト用）を追加
+- 決定: 同時出現上限・LOAD_BUDGET が端末別のため `device: 'mobile' | 'desktop'` を必須にし、生成器（TASK-008）を通さずに出現列を注入できる `schedule?` をテスト・デバッグ用に持つ
+- 却下案: なし
+- 出典: GAME_ENGINE_DESIGN §8.2 R5 / DESIGN §19
+
+### 作業ログ
+
+- 2026-09-13: `config.ts`（EngineTuning 集約）、`state/{types,intent,effect}.ts`、`sim/view.ts`（ViewState 契約。TASK-007 で確定）、`run.ts`（createRun / step / hashState。never 網羅チェック）、テスト 7 件。
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/game-engine typecheck lint test → 5 files, 28 tests passed
+  - createRun → tick×3600: elapsedMs=60000、phase running、ads []（60 秒分の「何も起きないゲーム」）
+  - deep-freeze した run に全 intent を投げても例外なし、元 hash 不変
+  - 同一 seed / intent 列で hashState 一致
+  - failed 後の tick は run をそのまま返す
+```
