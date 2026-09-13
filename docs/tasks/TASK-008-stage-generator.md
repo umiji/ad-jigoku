@@ -83,3 +83,48 @@ packages/game-engine/src/stage/data/stages/    stage-1.json .. stage-5.json の�
 - acceptance criteria を全て満たす
 - `pnpm game:preview-stage --seed=X --stage=1` で生成結果をテキスト表示できるデバッグ CLI がある
 - `FRICTION_CAP` / `LOAD_BUDGET` の初期値と、それが仮置きであることが `EngineTuning` のコメントに明記されている
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）
+
+### 決定ログ
+
+#### 2026-09-13 FRICTION_CAP=5 / LOAD_BUDGET mobile 5, desktop 8（仮置き、Q1）
+- 決定: `EngineTuning` に仮置き。behavior の friction/load 値（TASK-017〜022）と面白さゲート（TASK-024B）で調整する
+- 却下案: なし（設計文書が「実装時に仮置き」を指示）
+- 出典: DECISIONS_v0.2 §9 Q1
+
+#### 2026-09-13 「同時」の定義は出現後 LOAD_WINDOW_MS=6000ms
+- 決定: 生成時点では閉じられるタイミングが分からないので、出現から 6 秒間はその広告が存在するとみなして R5 と同時出現上限を判定する。判定は step 単位（浮動小数誤差を避ける）
+- 却下案: ±W の対称窓 → 2W 幅の過剰な制約になり、密集テンプレートで出現が不必要に遅れる
+- 出典: session decision
+
+#### 2026-09-13 パラメータ焼き込みはスロット固有 RNG
+- 決定: `makeRng(seed#salt:key:ci)` で Range を確定する。あるスロットのパターンが変わっても他スロットの確定値が動かない（HRW の安定性を timing 列にも波及させない）
+- 却下案: 共有 timing ストリーム → 1 スロットの変化で以降の全パラメータがずれる
+- 出典: GAME_ENGINE_DESIGN §8.4 の意図
+
+#### 2026-09-13 HRW 安定性の検証は per-slot
+- 決定: 「カタログ追加で既存 seed の > 80% が保存」はカタログが大きいときの目安。テストは「変わってよいのは新パターンが勝ったスロット（と同エンカウンター内の繰り上がり）だけ」という per-slot 不変性 + 保存率 > 75%（ミニカタログ、候補 4 件）で固定
+- 出典: 実測（候補 4 件では 1 スロット 20% が変わりうる）
+
+#### 2026-09-13 preview CLI は既定で「実装済みとみなす」スタブレジストリ
+- 決定: `--real` を付けない限り、カタログが参照する shell/behavior を全てスタブ登録して生成する（behavior 実装前にテンプレートを調整するため）
+- 出典: session decision
+
+### 作業ログ
+
+- 2026-09-13: stage/{types,rendezvous,rules,difficulty,generate,seed-url}.ts、data/templates/story.json + stages/stage-1.json、bin/preview-stage.ts、テスト 17 件。
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/game-engine test → generate.test.ts 17 tests passed（同 seed 一致 / 100 seed 重複 < 5% / 未実装・不公平・SAFE-01 違反・game facet なしを選ばない / R3 / R5 / R7 1000 seed 外れ < 3% / SAFE-01 1000 seed / forced / allowed / COM 展開 / 起承転結固定 / HRW per-slot）
+$ pnpm game:preview-stage --seed=demo --stage=stage-1
+  templates: opener → pressure-pair → opener / difficulty: 2.25 (target 1-2.5)
+    800  interrupt INT-01 popup spawn:immediate close:instant
+   8617  interrupt INT-01 …  11667 pressure OBS-09 densityStack persist:multi-layer{layers:4,…}
+```

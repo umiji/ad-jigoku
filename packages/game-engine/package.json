@@ -12,7 +12,8 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
     "lint": "pnpm -w exec eslint packages/game-engine",
-    "test": "vitest run"
+    "test": "vitest run",
+    "game:preview-stage": "tsx bin/preview-stage.ts"
   },
   "dependencies": {
     "@ad-jigoku/pattern-catalog": "workspace:*"
@@ -21,6 +22,7 @@
     "@types/node": "^22.20.2",
     "eslint": "^9.39.5",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.7"
+    "vitest": "^3.2.7",
+    "tsx": "^4.23.13"
   }
 }
