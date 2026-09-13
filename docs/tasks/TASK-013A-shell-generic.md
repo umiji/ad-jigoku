@@ -69,3 +69,35 @@ packages/ui/shells/registry.ts                 ShellRegistry への登録
 
 - acceptance criteria を全て満たす
 - TASK-013B / TASK-013C がこのファイルをテンプレートにして書ける状態
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-14）。実装はサブエージェント（opus）、検証・コミットはコントローラ
+
+### 決定ログ
+
+#### 2026-09-14 シェルは独立モジュール。共有は parts のみ、BaseShell は作らない
+- 決定: `packages/ui/src/shells/<id>/` に `<Name>.tsx` + `module.css` + `descriptor.ts` + テスト。`descriptor` の parts / supports はエンジンの `MVP_SHELLS` と文字列単位で一致（apps/web/src/game/shells.test.ts が検査）
+- 出典: DECISIONS_v0.2 §1.3 / TASK-013A 要件 1-2
+
+#### 2026-09-14 interstitial は常にダーク面（popup → popupDark、warning → danger）
+- 決定: 全画面が #080808 → #F4F1EA に反転するのは演出ではなく実害（DESIGN §20 の精神）。新しい色は足さず既存テーマの選び直しのみ
+- 出典: session decision（テストで固定）
+
+#### 2026-09-14 inlineRect / videoPlayer の見出しは media 面に焼き込む
+- 決定: 両シェルは `body` 部位を宣言しないため `AdHeadline`（data-target=body）を置くと未宣言部位の intent が出る。実際のバナーも文字は画像内。全シェルのテストで「描画した data-target ⊆ descriptor.parts」を不変条件にした
+- 出典: session decision
+
+#### 2026-09-14 ShellProps は apps/web/src/game/shellProps.ts の構造的な写し（ui は game-engine に依存できない）
+- 決定: `packages/ui/src/shells/types.ts`。型が合わなくなると `apps/web/src/game/shells.ts` の代入がコンパイルエラーになる。`parts` / `motion` は readonly 配列にしない（ComponentType の相互代入が通らないため）
+- 出典: ARCHITECTURE §5.1
+
+### 証拠
+
+```text
+$ pnpm verify → 18 tasks successful（ui 141 / web 39 / engine 151 / catalog 127 tests）、lint:css 0、check-deps OK、parity OK、creatives OK
+$ npx playwright test（apps/web）→ 42 passed（game 12 + parts 14 + shells 16）。全 29 個の × が 44.0×44.0、axe serious/critical 0、a[href]/download/audio/autoplay 0
+$ /game（seed e2e-trial-1）: popup と stickyBanner が本実装で描画、[data-generic-shell] 0 件、× で閉じられる
+```

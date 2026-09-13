@@ -1,0 +1,78 @@
+/*
+ * `/dev/shells`（シェルの確認ページ）のレイアウトだけ。
+ * シェルそのものの見た目は packages/ui 側が持つ。ここで上書きしない。
+ */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-24);
+  align-items: start;
+}
+
+.case {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-inline-size: 0;
+}
+
+/*
+ * 宿主のスロット（AdLayer）の代わり。幅だけ与えて、シェルに自分の箱を描かせる。
+ * 暗い地の上に置くのは、本番でもサイトの上に割り込むため（明るい紙の上では確認にならない）。
+ */
+.frame {
+  display: flex;
+  padding: var(--space-16);
+  overflow: hidden;
+  background-color: var(--color-bg-secondary);
+  border: 1px dashed var(--color-border-subtle);
+}
+
+.popup {
+  inline-size: 100%;
+}
+
+/* DESIGN.md §19: モバイルが主。390px は Playwright の mobile プロジェクトと同じ幅 */
+.mobile {
+  inline-size: 100%;
+  max-inline-size: calc(var(--space-192) * 2 + var(--space-4));
+}
+
+.wide {
+  inline-size: 100%;
+}
+
+/* 全画面シェルは「画面」を模した箱に入れる。暗幕はスロット側の役目なのでここで敷く */
+.full {
+  inline-size: 100%;
+  block-size: calc(var(--space-192) * 2);
+  padding: 0;
+  background-color: var(--color-surface-overlay);
+}
+
+/* densityStack を 3 つ重ねて「3 層」を見る。ずらし幅は 1 段 24px */
+.layers {
+  display: grid;
+  inline-size: 100%;
+  padding-block-end: var(--space-48);
+  padding-inline-end: var(--space-48);
+}
+
+.layers > * {
+  grid-area: 1 / 1;
+}
+
+.layers > :nth-child(2) {
+  translate: var(--space-24) var(--space-24);
+}
+
+.layers > :nth-child(3) {
+  translate: var(--space-48) var(--space-48);
+}
+
+@media (width >= 64rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

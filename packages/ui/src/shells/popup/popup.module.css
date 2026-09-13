@@ -1,0 +1,40 @@
+/*
+ * popup — 中央に浮く広告ウィンドウ（DESIGN.md §8 / §16 / §16.1 / §19）。
+ *
+ * 幅・位置・z 順はスロット（apps/web/src/game/adlayer.module.css）が決める。ここは箱の見た目だけ。
+ *   - 角丸 2px（--radius-popup）。SaaS のカードにしない（§16）
+ *   - 影は 1 段だけ（--shadow-popup）。巨大なぼかしを足さない（§16.1）
+ *   - 右上の × は CloseButton が絶対配置で置く → position: relative が要る
+ */
+
+.popup {
+  position: relative;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  font-family: var(--font-sans);
+  border-radius: var(--radius-popup);
+  box-shadow: var(--shadow-popup);
+}
+
+/* AdCreative は自分で地色と枠を持つ。ここでは角丸を箱と揃えるだけ */
+.creative {
+  border-radius: var(--radius-popup);
+}
+
+/* 偽の表示（「🔊 音声が再生されています」等）。地の accent を敷いて広告の一部に見せる */
+.badge {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  max-inline-size: 100%;
+  padding-block: var(--space-4);
+  padding-inline: var(--space-8);
+  overflow: hidden;
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  line-height: var(--text-ad-meta-line-height);
+  color: var(--ad-accent-ink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: var(--ad-accent);
+}

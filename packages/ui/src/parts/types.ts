@@ -10,8 +10,12 @@
  * 013D 側のデータ定義がこの形に構造的に一致していれば、そのまま渡せる。
  */
 
-/** engine: packages/game-engine/src/state/intent.ts の AdPart と同一 */
-export type AdPart = 'close' | 'fake-close' | 'cta' | 'body' | 'media' | 'label' | 'decoy'
+/**
+ * engine: packages/game-engine/src/state/intent.ts の AdPart と同一。
+ * `legal` は TASK-013A で追加（engine 側には最初からあり、写しだけが欠けていた。
+ * popup / interstitial の `parts` 宣言が engine と一致しないと R2 シェル互換検証が通らない）。
+ */
+export type AdPart = 'close' | 'fake-close' | 'cta' | 'body' | 'media' | 'label' | 'legal' | 'decoy'
 
 /** 0 = 目立たない / 1 = 通常 / 2 = 強調 */
 export type Emphasis = 0 | 1 | 2

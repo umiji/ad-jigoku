@@ -116,3 +116,27 @@ Behavior / LpFlow が決める）。各シェル（`src/shells/`）はこれら�
 `types.ts` の `AdPartState` / `MotionCue` は `packages/game-engine/src/sim/view.ts` の写し（ui は game-engine に依存できないため）。
 **視覚的な騙しはゲーム、支援技術への嘘はダークパターン** — 偽 UI は見た目だけ偽装し、aria / role は常に本当の動作を説明する。
 確認ページ: `/dev/components`。実測テスト: `apps/web/e2e/parts.spec.ts`（44px / axe / キーボード / 視覚回帰）。
+
+## shells — 広告の面（TASK-013A / 013B）
+
+`src/shells/<id>/`。DESIGN.md §8 / §9 の「広告そのもの」。**各シェルは独立モジュール**
+（`DECISIONS_v0.2.md §1.3`）で、共通の土台コンポーネントは作らない。共有するのは `src/parts/` の部位だけ。
+
+| shell | 見た目 | parts | supports |
+|---|---|---|---|
+| `popup` | 中央に浮く紙色の広告ウィンドウ（§8 anatomy そのもの） | label / body / media / cta / legal / close | spawn / close / deception / hitbox |
+| `interstitial` | 本文を覆う全画面の割り込み。必ず暗い面に倒す | label / body / media / cta / legal / close | spawn / surface |
+| `stickyBanner` | 画面下に貼り付く帯。モバイルで 96px を超えない | label / body / cta / close | spawn / persist |
+| `inlineRect` | 本文中の 300×250 レクタングル。`offset` は transform だけ（ADR-006） | label / media / cta | spawn / instability |
+| `videoPlayer` | 隅の偽プレイヤー。**動画も音源も読まない**（映像は CSS） | label / media / cta / close | spawn / persist / attention |
+| `densityStack` | ずれて重なる紙の束。下敷きは装飾（`aria-hidden`） | label / body / cta / close | spawn / persist |
+
+- `parts` / `supports` は `packages/game-engine/src/sim/shells.ts` の `MVP_SHELLS` と一致していなければならない
+  （生成器の R2 シェル互換検証の入力）。一致は `apps/web/src/game/shells.test.ts` が機械的に検査する
+- props は `src/shells/types.ts` の `ShellProps`（`apps/web/src/game/shellProps.ts` の写し）。
+  位置・z 順・出入りのモーションは宿主のスロット（`AdLayer`）の責務で、シェルは**自分の箱だけ**を描く
+- シェルは挙動を持たない。`parts[].visible / enabled / emphasis / hitboxScale / anchor` と
+  `countdown` / `badge` / `offset` / `creative` を、渡されたとおりに描くだけ
+- `fakeDownload` / `fakePlay` は TASK-013C（未実装。宿主が `GenericShell` にフォールバックする）
+
+確認ページ: `/dev/shells`。実測テスト: `apps/web/e2e/shells.spec.ts`（44px / axe / 外部遷移なし / 視覚回帰）。

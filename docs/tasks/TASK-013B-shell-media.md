@@ -53,3 +53,20 @@ packages/ui/shells/densityStack/densityStack.css
 ## Definition of Done
 
 - acceptance criteria を全て満たす
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-14）。TASK-013A と同じ書き方・検証（詳細は TASK-013A の進捗記録）
+
+### 決定ログ
+
+#### 2026-09-14 videoPlayer は動画ファイルを持たず CSS だけで「再生中」を表現
+- 決定: 流れるバンド + 偽プログレスバー + 44px の偽 ▶/❚❚（`data-target="media"`、aria-label は「実際には再生も音声もされません」と正直に）。`reducedMotion` では全アニメーションを止めた静止フレーム（テストで animationName === 'none' を検査）
+- 却下案: 実 `<video>` 素材 → 外部アセット・CSP・音声の懸念が増える割に得るものがない
+- 出典: TASK-013B 要件 1 / GAME_ENGINE_DESIGN §7.2
+
+#### 2026-09-14 densityStack は装飾の下層カード 2 枚 + 前面カード
+- 決定: 下層は `aria-hidden`、操作部位なし。実際の追加レイヤーはエンジンが別広告として出す（persist:multi-layer）
+- 出典: TASK-013B 要件 2
