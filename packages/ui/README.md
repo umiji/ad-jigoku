@@ -97,3 +97,22 @@ pnpm -w exec eslint packages/ui apps/web   # eslint
 pnpm dev
 # http://localhost:3000/dev/tokens
 ```
+
+## parts — シェル横断で再利用する部位（TASK-013）
+
+`src/parts/`。DESIGN.md §8 の anatomy を構成する presentational component。**挙動を持たない**（閉じるタイミング・移動・再出現は
+Behavior / LpFlow が決める）。各シェル（`src/shells/`）はこれらを組み合わせて作る。
+
+| part | 役割 | `data-target` |
+|---|---|---|
+| `AdMeta` | PR / Sponsored ラベル（§13 の語彙は `copy.ts`） | label |
+| `AdHeadline` / `AdBody` / `AdLegal` | 見出し（800）/ 短文 / 極小の注意書き | body / legal |
+| `AdCTA` | 広告風 CTA。`<button>`。外部遷移しない（SAFE-05） | cta |
+| `AdCountdown` | 「あと 2.7 秒」。必ず見せる（GAME §15.4） | — |
+| `CloseButton` | 本物の ×。`visualScale` で見た目を縮めても**当たり判定は 44×44 以上**（DESIGN §19 / DESIGN_REQ §5.3 C） | close |
+| `FakeCloseButton` | 偽の ×。見た目は紛らわしくてよいが `aria-label` は「広告のボタンです（閉じるボタンではありません）」と正直に書く | fake-close / decoy |
+| `AdCreative` | 架空 Creative（013D の `Creative` 型）を描く抽象ビジュアル。実在ブランドを模倣しない | media |
+
+`types.ts` の `AdPartState` / `MotionCue` は `packages/game-engine/src/sim/view.ts` の写し（ui は game-engine に依存できないため）。
+**視覚的な騙しはゲーム、支援技術への嘘はダークパターン** — 偽 UI は見た目だけ偽装し、aria / role は常に本当の動作を説明する。
+確認ページ: `/dev/components`。実測テスト: `apps/web/e2e/parts.spec.ts`（44px / axe / キーボード / 視覚回帰）。

@@ -7,6 +7,9 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { GENERATED_CSS_OUTPUTS } from '../tokens/build-css'
 import { colors } from '../tokens/colors'
+import { easing } from '../tokens/motion'
+import { shadow } from '../tokens/shadow'
+import { target } from '../tokens/spacing'
 import { zIndex } from '../tokens/zIndex'
 
 describe('CSS 生成は冪等', () => {
@@ -55,5 +58,24 @@ describe('DESIGN.md の値がそのまま CSS に出ている', () => {
     const css = GENERATED_CSS_OUTPUTS[0]?.build() ?? ''
     expect(css).toContain(`--z-popup: ${zIndex.popup};`)
     expect(css).not.toContain('9999')
+  })
+
+  it('easing は DESIGN.md §14.1 の値をそのまま持つ', () => {
+    const css = GENERATED_CSS_OUTPUTS[0]?.build() ?? ''
+    expect(css).toContain(`--ease-standard: ${easing.standard};`)
+    expect(css).toContain(`--ease-abrupt: ${easing.abrupt};`)
+    expect(css).toContain(`--ease-exit: ${easing.exit};`)
+  })
+
+  it('shadow は DESIGN.md §16.1 の値をそのまま持つ（巨大なぼかしを持たない）', () => {
+    const css = GENERATED_CSS_OUTPUTS[0]?.build() ?? ''
+    expect(css).toContain(`--shadow-popup: ${shadow.popup};`)
+    expect(css).toContain(`--shadow-sticky: ${shadow.sticky};`)
+  })
+
+  it('当たり判定の下限は DESIGN.md §19 の 44px を 1 箇所だけで持つ', () => {
+    const css = GENERATED_CSS_OUTPUTS[0]?.build() ?? ''
+    expect(css).toContain(`--target-tap-min: ${target.tapMin};`)
+    expect(target.tapMin).toBe('44px')
   })
 })

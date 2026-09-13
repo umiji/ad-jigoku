@@ -16,3 +16,16 @@ export const container = {
   paddingDesktop: '32px',
   maxWidth: '1280px',
 } as const
+
+/**
+ * DESIGN.md §19 Responsive Rules「minimum close target: 44px × 44px」。
+ *
+ * 見た目が小さい × （Tiny Close / CLS-xx）でも当たり判定はここを下回らない
+ * （DESIGN_REQUIREMENTS §5.3 Pattern C「ゲームとして不公平にしない」）。
+ * 各コンポーネントに 44 を直書きせず、必ずこのトークン（`--target-tap-min`）を経由する。
+ */
+export const target = {
+  tapMin: '44px',
+} as const
+
+export type TargetToken = keyof typeof target

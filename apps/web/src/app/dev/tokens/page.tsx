@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { colors, motion, shape, spacingScale, tokenCssGroups, zIndex } from '@ad-jigoku/ui/tokens'
+import { colors, easing, motion, shadow, shape, spacingScale, target, tokenCssGroups, zIndex } from '@ad-jigoku/ui/tokens'
 
 /**
  * 開発用のトークン一覧（TASK-002 acceptance criteria）。
@@ -36,6 +36,12 @@ const SHAPE_SAMPLES = [
   { name: 'popup', className: 'rounded-popup', value: shape.popupRadius },
   { name: 'button', className: 'rounded-button', value: shape.buttonRadius },
   { name: 'card', className: 'rounded-card', value: shape.cardRadius },
+] as const
+
+/** DESIGN.md §16.1（追記提案 / TASK-013） */
+const SHADOW_SAMPLES = [
+  { name: 'popup', className: 'shadow-popup', value: shadow.popup },
+  { name: 'sticky', className: 'shadow-sticky', value: shadow.sticky },
 ] as const
 
 function Section({ title, source, children }: { title: string; source: string; children: React.ReactNode }) {
@@ -138,13 +144,20 @@ export default function DevTokensPage() {
         <SpacingBars />
       </Section>
 
-      <Section title="Motion" source="DESIGN.md §14">
+      <Section title="Motion" source="DESIGN.md §14 / §14.1">
         <TokenTable
-          rows={Object.entries(motion).map(([key, value]) => ({
-            label: key,
-            value,
-            cssVar: `--motion-${key}`,
-          }))}
+          rows={[
+            ...Object.entries(motion).map(([key, value]) => ({
+              label: key,
+              value,
+              cssVar: `--motion-${key}`,
+            })),
+            ...Object.entries(easing).map(([key, value]) => ({
+              label: `easing.${key}`,
+              value,
+              cssVar: `--ease-${key}`,
+            })),
+          ]}
         />
       </Section>
 
@@ -158,7 +171,7 @@ export default function DevTokensPage() {
         />
       </Section>
 
-      <Section title="Border / Radius" source="DESIGN.md §16">
+      <Section title="Border / Radius / Shadow" source="DESIGN.md §16 / §16.1">
         <ul role="list" className="flex flex-wrap gap-24">
           {SHAPE_SAMPLES.map((sampleShape) => (
             <li key={sampleShape.name}>
@@ -168,6 +181,28 @@ export default function DevTokensPage() {
             </li>
           ))}
         </ul>
+        <ul role="list" className="mt-32 flex flex-wrap gap-48">
+          {SHADOW_SAMPLES.map((sampleShadow) => (
+            <li key={sampleShadow.name}>
+              <div className={`h-96 w-128 bg-bg-elevated rounded-popup ${sampleShadow.className}`} />
+              <p className="text-body mt-16">shadow.{sampleShadow.name}</p>
+              <p className={CODE}>{sampleShadow.value}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section title="Target size" source="DESIGN.md §19">
+        <TokenTable
+          rows={Object.entries(target).map(([key, value]) => ({
+            label: `target.${key}`,
+            value,
+            cssVar: '--target-tap-min',
+          }))}
+        />
+        <p className="text-body text-text-secondary mt-16">
+          見た目が小さい × でも当たり判定はこれを下回らない（DESIGN_REQUIREMENTS §5.3 Pattern C）。
+        </p>
       </Section>
     </main>
   )

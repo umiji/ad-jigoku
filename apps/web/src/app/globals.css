@@ -78,6 +78,34 @@
   transition-duration: var(--motion-escalation);
 }
 
+/*
+ * easing（DESIGN.md §14.1 / 追記提案 TASK-013）。
+ * duration と同じく theme namespace を使わず、トークンを参照するユーティリティにする。
+ */
+@utility ease-standard {
+  transition-timing-function: var(--ease-standard);
+}
+
+@utility ease-abrupt {
+  transition-timing-function: var(--ease-abrupt);
+}
+
+@utility ease-exit {
+  transition-timing-function: var(--ease-exit);
+}
+
+/*
+ * shadow（DESIGN.md §16.1 / 追記提案 TASK-013）。
+ * 「ハードなオフセット + 抑制されたぼかし」の 2 種類だけ。巨大なぼかしは持たない。
+ */
+@utility shadow-popup {
+  box-shadow: var(--shadow-popup);
+}
+
+@utility shadow-sticky {
+  box-shadow: var(--shadow-sticky);
+}
+
 /* コンテナ（DESIGN.md §6）。mobile 20px / desktop 32px の切り替えは base.css が持つ */
 @utility container-gutter {
   padding-inline: var(--container-gutter);

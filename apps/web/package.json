@@ -10,7 +10,8 @@
     "start": "npx serve out",
     "typecheck": "tsc -p tsconfig.json",
     "lint": "pnpm -w exec eslint apps/web",
-    "test": "vitest run"
+    "test": "vitest run",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@ad-jigoku/game-engine": "workspace:*",
@@ -22,7 +23,12 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4.3.3",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.10.0",
+    "@testing-library/react": "^16.3.3",
     "@types/node": "^22.20.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -30,9 +36,6 @@
     "jsdom": "^30.0.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.7",
-    "@testing-library/react": "^16.3.3",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/dom": "^10.4.1"
+    "vitest": "^3.2.7"
   }
 }

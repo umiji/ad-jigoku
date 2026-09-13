@@ -78,3 +78,35 @@ packages/ui/creatives/                       ダミー広告素材（架空）
 - acceptance criteria を全て満たす
 - 「安っぽいパロディになっていないか」を `DESIGN_REQ §22` の Visual チェックリストで自己評価し、
   結果を PR に書く
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-14）。実装はサブエージェント（opus。セッション切替で報告書は未出力）、検証・README・コミットはコントローラ
+
+### 決定ログ
+
+#### 2026-09-13 DESIGN.md に easing / shadow / font family を「追記提案」として追加してから実装
+- 決定: DESIGN.md §14.1 Easing（standard / abrupt / exit）、§16.1 Shadow（popup / sticky）、§5.1 Font family（M PLUS 2 Variable）を追記提案としてマークし、`tokens/motion.ts` / `tokens/shadow.ts` に反映。オーナーが差し戻せば tokens も戻す
+- 却下案: コンポーネント内に生の値を書く → DESIGN §4/§16 と CLAUDE.md §2.3 に反する
+- 出典: DESIGN_REQ §18（shadow / easing はトークン必須）/ CLAUDE.md §2.3
+
+#### 2026-09-13 parts は packages/ui/src/parts/ に置く
+- 決定: タスク文書の `packages/ui/components/` ではなく `src/parts/`（パッケージの配布ルートが src のため）。`data-target` 属性で宿主が Intent に変換する契約
+- 出典: TASK-014 の intentFromEvent との契約
+
+#### 2026-09-14 Playwright e2e は apps/web に集約、視覚回帰は CI では skip
+- 決定: `apps/web/playwright.config.ts`（mobile 390×844 / desktop 1440×900、webServer 3100）。視覚スナップショットは Windows ローカル基準で `test.skip(!!process.env.CI)`。CI には `e2e` ジョブを追加
+- 却下案: Linux ベースラインをコミット → 生成環境がない
+- 出典: session decision
+
+### 証拠
+
+```text
+$ pnpm turbo run typecheck lint test --filter=@ad-jigoku/ui --filter=@ad-jigoku/web → 8 successful（ui 84 tests / web 29 tests）
+$ pnpm lint:css → 0 / $ pnpm --filter @ad-jigoku/ui tokens:check → OK
+$ pnpm --filter @ad-jigoku/web build → ✓ Exporting、/dev/components 生成
+$ npx playwright test（apps/web）→ parts.spec 14 passed（mobile + desktop）: 44×44 実測（visualScale 0.5 でも）/ axe serious・critical 0 /
+  Tab 到達 + フォーカスリング / Enter・Space 発火 / 偽 × の aria-label が「広告のボタン」/ 視覚回帰
+```

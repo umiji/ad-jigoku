@@ -214,6 +214,19 @@ Do not use more than 3 font families.
 
 Do not use decorative display fonts for ordinary body copy.
 
+## 5.1 Font family（追記提案 2026-09-13 / TASK-002）
+
+> 実装で採用した値。`DESIGN.md` は「日本語対応 sans-serif を 3 ファミリ以下」としか定めて
+> いなかったため、実体を 1 つに固定して追記する。オーナーはレビューのうえ承認 / 差し戻しをする。
+
+```yaml
+font_family:
+  sans: "'M PLUS 2 Variable', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', Meiryo, system-ui, sans-serif"
+```
+
+可変フォント `M PLUS 2 Variable` を 1 ファミリだけ採用し、以降は OS 標準の日本語フォントへ
+フォールバックする（`DESIGN_REQUIREMENTS.md §3.3`）。ファミリを増やさない。
+
 ---
 
 # 6. Layout System
@@ -485,6 +498,26 @@ motion:
 
 The motion language should feel like **bad advertising**, executed with **good interaction design**.
 
+## 14.1 Easing（追記提案 2026-09-13 / TASK-013）
+
+> `DESIGN.md §14` は duration しか定義しておらず、`DESIGN_REQUIREMENTS.md §18` が要求する
+> "easing" のトークンが存在しなかった。popup の enter / close を実装するには必要なので追記を提案する。
+> オーナーはレビューのうえ承認 / 差し戻しをする。
+
+```yaml
+motion:
+  easing:
+    standard: "cubic-bezier(0.2, 0, 0, 1)"
+    abrupt: "cubic-bezier(0.4, 0, 1, 1)"
+    exit: "cubic-bezier(0.4, 0, 0.2, 1)"
+```
+
+- `standard`: 通常の出現・状態変化。終わりだけ強く減速する（premium 側の質感）
+- `abrupt`: 「広告が割り込んでくる」動き。加速したまま着地する（§14 abrupt slide-in）
+- `exit`: 閉じる / 消える。`close collapse` に使う
+
+3 つより増やさない。増やしたくなったら duration との組み合わせを疑う（§3 MUST 9）。
+
 ---
 
 # 15. Depth / Layering
@@ -535,6 +568,26 @@ over:
 - floating dashboard cards
 
 A popup should feel like a browser ad window, not a SaaS card.
+
+## 16.1 Shadow（追記提案 2026-09-13 / TASK-013）
+
+> `DESIGN.md §16` は shadow を「restrained」という方針だけで値を定義しておらず、
+> `DESIGN_REQUIREMENTS.md §18` が要求する shadow トークンが存在しなかった。
+> popup / sticky の浮きを実装するには必要なので追記を提案する。
+> オーナーはレビューのうえ承認 / 差し戻しをする。
+
+```yaml
+shadow:
+  popup: "0 2px 0 rgba(0,0,0,0.6), 0 12px 32px rgba(0,0,0,0.45)"
+  sticky: "0 -1px 0 rgba(255,255,255,0.08), 0 -8px 24px rgba(0,0,0,0.4)"
+```
+
+どちらも「ハードな 1-2px のオフセット + 抑制されたぼかし」の 2 層構成で、
+§16 の "borders, hard edges, subtle offsets, restrained shadows" に従う。
+`0 24px 80px` のような巨大なぼかしは追加しない（SaaS カードになる）。
+
+影は**色ではなく深度**の表現なので、`§4` の semantic color role は増やさない。
+この 2 つより増やさない。
 
 ---
 

@@ -1,0 +1,112 @@
+/*
+ * AdCreative — 架空の広告素材の面（DESIGN.md §8 anatomy / §16 shape / §17 imagery）。
+ *
+ * ブラウザ広告の枠に見えること。SaaS のカードに見えないこと。
+ *   - 角丸 2px（--radius-popup）。大きな角丸を使わない
+ *   - 枠線 1px。影はここでは付けない（影は「浮いている面」= シェルの責務 / §16.1）
+ *   - 余白は詰め気味。広告は情報密度が高い
+ */
+
+.creative {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-16);
+  color: var(--ad-ink, var(--color-text-primary));
+  background-color: var(--ad-surface, var(--color-surface-popup));
+  border: 1px solid var(--ad-border, var(--color-border-subtle));
+  border-radius: var(--radius-popup);
+}
+
+/* 上端の accent。広告主の色が細く出ているだけ、という体裁 */
+.creative::before {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: var(--space-4);
+  content: "";
+  background-color: var(--ad-accent, var(--color-accent-danger));
+}
+
+/*
+ * DESIGN.md §8 anatomy の 1 行目は `PR / Sponsored          ×`。
+ * 右上は閉じるボタン（シェルが置く）の席なので、ラベルはそこまで伸ばさない。
+ * 44px 空けておけば、どのシェルが × を置いても PR ラベルと重ならない（DESIGN.md §19）。
+ */
+.head {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: var(--target-tap-min);
+  padding-inline-end: var(--target-tap-min);
+}
+
+.brand {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  min-inline-size: 0;
+}
+
+/* ロゴは作らない。イニシャルの箱で「広告主がいる」ことだけ示す（§17 typography first） */
+.brand-mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--space-32);
+  block-size: var(--space-32);
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-display-weight);
+  line-height: 1;
+  color: var(--ad-accent-ink, var(--color-text-inverse));
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  background-color: var(--ad-accent, var(--color-accent-danger));
+}
+
+.brand-name {
+  overflow: hidden;
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  line-height: var(--text-ad-meta-line-height);
+  color: var(--ad-ink, var(--color-text-primary));
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  color: var(--ad-accent, var(--color-accent-danger));
+  background-color: var(--ad-media-bg, var(--color-bg-primary));
+  border-radius: var(--radius-popup);
+}
+
+.graphic {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* 広告ビジュアルの上に乗る偽の惹句。図像だけだと「素材」に見えないため */
+.media-tag {
+  position: absolute;
+  inset-block-end: var(--space-8);
+  inset-inline-start: var(--space-8);
+  padding-block: var(--space-4);
+  padding-inline: var(--space-8);
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  line-height: var(--text-ad-meta-line-height);
+  color: var(--ad-accent-ink, var(--color-text-inverse));
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  background-color: var(--ad-accent, var(--color-accent-danger));
+}
+
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}

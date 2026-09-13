@@ -1,0 +1,90 @@
+/*
+ * AdCTA（DESIGN.md §12 CTA System / §16 shape）。
+ *
+ * ピル型にしない。角丸 2px の矩形に、下辺だけ太い枠。わずかに傾ける。
+ * 「安いネット広告のボタン」の記号だが、作りは本物のボタン（§20）。
+ * 影ではなく境界線で厚みを出す（§16「borders, hard edges」。§16.1 の影は面（popup）用）。
+ */
+
+.cta {
+  display: inline-flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--target-tap-min);
+  padding-block: var(--space-12);
+  padding-inline: var(--space-24);
+  font-family: inherit;
+  font-size: var(--text-body-size);
+  font-weight: var(--text-h2-weight);
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1px 1px var(--space-4);
+  border-radius: var(--radius-button);
+  transition:
+    transform var(--motion-fast) var(--ease-standard),
+    filter var(--motion-fast) var(--ease-standard);
+  transform: rotate(-0.5deg);
+}
+
+/* 主 CTA: accent を敷く（DESIGN.md §12 primary: accent.danger / text.inverse） */
+.primary {
+  color: var(--ad-accent-ink, var(--color-text-inverse));
+  background-color: var(--ad-accent, var(--color-accent-danger));
+  border-color: var(--ad-ink, var(--color-text-primary));
+}
+
+/* 副 CTA: 透明 + border.subtle（DESIGN.md §12 secondary） */
+.secondary {
+  color: var(--ad-ink, var(--color-text-primary));
+  background-color: transparent;
+  border-color: var(--ad-border, var(--color-border-subtle));
+}
+
+.quiet {
+  padding-block: var(--space-8);
+  padding-inline: var(--space-16);
+  font-size: var(--text-ad-meta-size);
+  border-bottom-width: 1px;
+  transform: none;
+}
+
+.loud {
+  padding-block: var(--space-16);
+  padding-inline: var(--space-32);
+  font-size: var(--text-ad-headline-size);
+  transform: rotate(-1deg);
+}
+
+.cta:hover {
+  filter: brightness(1.08);
+}
+
+.cta:active {
+  transform: translateY(var(--space-4)) rotate(-0.5deg);
+}
+
+.loud:active {
+  transform: translateY(var(--space-4)) rotate(-1deg);
+}
+
+/*
+ * enabled=false: 押せるが、押しても無駄だと見た目で分かる（判定はエンジン）。
+ * 透明度で落とさないのは、accent の上の文字がコントラスト基準を割るため（DESIGN.md §20）。
+ * 「地を抜いて破線にする」で不活性を表す。
+ */
+.inert {
+  color: var(--ad-ink, var(--color-text-primary));
+  cursor: default;
+  background-color: transparent;
+  border-color: var(--ad-border, var(--color-border-subtle));
+  border-style: dashed;
+}
+
+.inert:hover,
+.inert:active {
+  filter: none;
+  transform: rotate(-0.5deg);
+}

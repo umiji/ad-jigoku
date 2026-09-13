@@ -67,7 +67,10 @@
   --space-128: 128px;
   --space-192: 192px;
 
-  /* Motion — DESIGN.md §14 */
+  /* Motion — DESIGN.md §14 / §14.1 */
+  --ease-abrupt: cubic-bezier(0.4, 0, 1, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --motion-dramatic: 420ms;
   --motion-escalation: 700ms;
   --motion-fast: 120ms;
@@ -82,9 +85,14 @@
   --z-sticky: 100;
   --z-system: 1000;
 
-  /* Border / Radius — DESIGN.md §16 */
+  /* Border / Radius / Shadow — DESIGN.md §16 / §16.1 */
   --radius-base: 4px;
   --radius-button: 2px;
   --radius-card: 6px;
   --radius-popup: 2px;
+  --shadow-popup: 0 2px 0 rgba(0,0,0,0.6), 0 12px 32px rgba(0,0,0,0.45);
+  --shadow-sticky: 0 -1px 0 rgba(255,255,255,0.08), 0 -8px 24px rgba(0,0,0,0.4);
+
+  /* Target size — DESIGN.md §19 */
+  --target-tap-min: 44px;
 }

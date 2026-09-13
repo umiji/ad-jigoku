@@ -8,9 +8,10 @@
  * 出力は決定論的（グループ順は固定、グループ内は自然順ソート、LF、末尾改行 1 つ）。
  */
 import { colors } from './colors'
-import { motion } from './motion'
+import { easing, motion } from './motion'
+import { shadow } from './shadow'
 import { shape } from './shape'
-import { container, spacingScale } from './spacing'
+import { container, spacingScale, target } from './spacing'
 import { fontFamily, type } from './type'
 import { zIndex } from './zIndex'
 
@@ -89,6 +90,21 @@ function motionVars(): CssVar[] {
   return Object.entries(motion).map(([key, value]) => ({ name: `--motion-${kebab(key)}`, value }))
 }
 
+/** DESIGN.md §14.1（追記提案 / TASK-013） */
+function easingVars(): CssVar[] {
+  return Object.entries(easing).map(([key, value]) => ({ name: `--ease-${kebab(key)}`, value }))
+}
+
+/** DESIGN.md §16.1（追記提案 / TASK-013） */
+function shadowVars(): CssVar[] {
+  return Object.entries(shadow).map(([key, value]) => ({ name: `--shadow-${kebab(key)}`, value }))
+}
+
+/** DESIGN.md §19。当たり判定の下限は 1 箇所だけに持つ */
+function targetVars(): CssVar[] {
+  return Object.entries(target).map(([key, value]) => ({ name: `--target-${kebab(key)}`, value }))
+}
+
 /** DESIGN.md §15 */
 function zIndexVars(): CssVar[] {
   return Object.entries(zIndex).map(([key, value]) => ({
@@ -140,9 +156,10 @@ export function tokenCssGroups(): CssGroup[] {
     { title: 'Color — DESIGN.md §4', vars: colorVars() },
     { title: 'Typography — DESIGN.md §5', vars: [...fontVars(), ...typeVars()] },
     { title: 'Spacing / Layout — DESIGN.md §6', vars: [...spacingVars('--space-'), ...containerVars()] },
-    { title: 'Motion — DESIGN.md §14', vars: motionVars() },
+    { title: 'Motion — DESIGN.md §14 / §14.1', vars: [...motionVars(), ...easingVars()] },
     { title: 'Depth / Layering — DESIGN.md §15', vars: zIndexVars() },
-    { title: 'Border / Radius — DESIGN.md §16', vars: radiusVars() },
+    { title: 'Border / Radius / Shadow — DESIGN.md §16 / §16.1', vars: [...radiusVars(), ...shadowVars()] },
+    { title: 'Target size — DESIGN.md §19', vars: targetVars() },
   ].map((group) => ({ ...group, vars: sortVars(group.vars) }))
 }
 
