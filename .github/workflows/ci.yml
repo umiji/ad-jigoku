@@ -82,7 +82,7 @@ jobs:
       - name: Install Playwright browser (chromium only)
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: E2E (parts: 44px hit area / axe / keyboard)
+      - name: "E2E (parts: 44px hit area / axe / keyboard)"
         run: pnpm --filter @ad-jigoku/web e2e
 
       - name: Upload Playwright report
