@@ -1,0 +1,137 @@
+/*
+ * AdLayer — ViewState[] → DOM。挙動判断はしない。surface / stackIndex / motion の反映だけ（TASK-014 要件 5）。
+ * z-index はトークン（popup / popup-stack / critical）。
+ */
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-popup);
+}
+
+.slot {
+  position: absolute;
+  pointer-events: auto;
+
+  --ad-x: 50%;
+  --ad-y: 50%;
+}
+
+.slot[data-surface='overlay'] {
+  left: var(--ad-x);
+  top: var(--ad-y);
+  transform: translate(-50%, -50%);
+  width: min(calc(100% - var(--space-32)), 28rem);
+}
+
+.slot[data-surface='overlay'][data-size='small'] {
+  width: min(calc(100% - var(--space-48)), 20rem);
+}
+
+.slot[data-surface='overlay'][data-size='large'] {
+  width: min(calc(100% - var(--space-32)), 36rem);
+}
+
+.slot[data-surface='corner'] {
+  right: var(--space-12);
+  bottom: calc(var(--space-64) + env(safe-area-inset-bottom, 0px));
+  width: min(calc(100% - var(--space-32)), 20rem);
+}
+
+.slot[data-surface='sticky-bottom'] {
+  left: 0;
+  right: 0;
+  bottom: calc(var(--space-64) + env(safe-area-inset-bottom, 0px));
+}
+
+.slot[data-surface='sticky-top'] {
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.slot[data-surface='fullscreen'] {
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--color-surface-overlay);
+}
+
+.slot[data-surface='inline'] {
+  /* inline は本文中のスロットに描く（ArticleSurface の inlineSlot）。ここでは overlay 相当にフォールバック */
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  width: min(calc(100% - var(--space-32)), 28rem);
+}
+
+/* z 順: stackIndex はトークンの段階（popup / popup-stack / critical）に丸める。具体値は書かない */
+.slot[data-stack='0'] {
+  z-index: var(--z-popup);
+}
+
+.slot[data-stack='1'],
+.slot[data-stack='2'] {
+  z-index: var(--z-popup-stack);
+}
+
+.slot[data-stack='3'],
+.slot[data-stack='4'],
+.slot[data-stack='5'] {
+  z-index: var(--z-critical);
+}
+
+/* motion（DESIGN §14）。reducedMotion では useEngine 側の a11y で cue を落とすが、CSS でも保険 */
+.slot[data-motion~='enter-scale'] {
+  animation: enter-scale var(--motion-normal) var(--ease-standard) both;
+}
+
+.slot[data-motion~='enter-slide'] {
+  animation: enter-slide var(--motion-normal) var(--ease-abrupt) both;
+}
+
+.slot[data-motion~='close-collapse'] {
+  animation: close-collapse var(--motion-normal) var(--ease-exit) both;
+  pointer-events: none;
+}
+
+.slot[data-motion~='shake'] {
+  animation: shake var(--motion-fast) var(--ease-abrupt) 3;
+}
+
+@keyframes enter-scale {
+  from {
+    opacity: 0;
+    scale: 0.92;
+  }
+}
+
+@keyframes enter-slide {
+  from {
+    opacity: 0;
+    translate: 0 var(--space-24);
+  }
+}
+
+@keyframes close-collapse {
+  to {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+@keyframes shake {
+  25% {
+    translate: -4px 0;
+  }
+
+  75% {
+    translate: 4px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot[data-motion] {
+    animation: none;
+  }
+}

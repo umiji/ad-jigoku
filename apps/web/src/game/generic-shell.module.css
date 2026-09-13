@@ -1,0 +1,81 @@
+/* フォールバック用の汎用シェル。DESIGN §8 の anatomy を最小限で。本実装は packages/ui/shells */
+.box {
+  position: relative;
+  padding: var(--space-16);
+  padding-right: calc(var(--target-tap-min) + var(--space-8));
+  background: var(--color-surface-popup);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-border-popup);
+  border-radius: var(--radius-popup);
+  box-shadow: var(--shadow-popup);
+  font-family: var(--font-sans);
+}
+
+.meta {
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.headline {
+  margin-top: var(--space-4);
+  font-size: var(--text-ad-headline-size);
+  font-weight: var(--text-ad-headline-weight);
+  line-height: var(--text-ad-headline-line-height);
+}
+
+.body {
+  margin: var(--space-8) 0;
+  font-size: var(--text-ad-legal-size);
+  line-height: var(--text-ad-legal-line-height);
+  opacity: 0.8;
+}
+
+.countdown {
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  color: var(--color-accent-danger);
+}
+
+.badge {
+  margin-top: var(--space-4);
+  font-size: var(--text-ad-meta-size);
+}
+
+.cta {
+  margin-top: var(--space-8);
+  min-height: var(--target-tap-min);
+  padding: var(--space-8) var(--space-16);
+  background: var(--color-accent-danger);
+  color: var(--color-text-inverse);
+  border: 0;
+  border-radius: var(--radius-button);
+  font-weight: var(--text-ad-meta-weight);
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: var(--target-tap-min);
+  height: var(--target-tap-min);
+  background: transparent;
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-border-popup);
+  border-radius: var(--radius-button);
+  font-size: var(--text-body-size);
+  cursor: pointer;
+}
+
+.close[aria-disabled='true'] {
+  opacity: 0.35;
+}
+
+.close:focus-visible,
+.cta:focus-visible {
+  outline: 2px solid var(--color-accent-danger);
+  outline-offset: 2px;
+}

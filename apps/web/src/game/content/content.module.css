@@ -1,0 +1,148 @@
+/*
+ * 偽記事コンテンツ面（TASK-015）。本文の品質は高く保つ（広告が邪魔でも本文自体は読みやすい。そのコントラストが体験の核）。
+ * タイポグラフィは DESIGN.md §5 の body / h2 トークン。
+ */
+.article {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: var(--space-96) var(--container-padding-mobile) var(--space-192);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+@media (width >= 768px) {
+  .article {
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+}
+
+.kicker {
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  line-height: var(--text-ad-meta-line-height);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.outlet {
+  color: var(--color-accent-electric);
+}
+
+.title {
+  margin: var(--space-12) 0 var(--space-16);
+  font-size: var(--text-h2-size);
+  font-weight: var(--text-h2-weight);
+  line-height: var(--text-h2-line-height);
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  margin: 0 0 var(--space-8);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line-height);
+  color: var(--color-text-secondary);
+}
+
+.author {
+  margin: 0 0 var(--space-48);
+  font-size: var(--text-ad-meta-size);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+.paragraph {
+  margin: 0 0 var(--space-24);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-line-height);
+  text-wrap: pretty;
+}
+
+.paragraph[data-read='true'] {
+  color: var(--color-text-secondary);
+}
+
+.question {
+  margin: var(--space-32) 0 var(--space-48);
+  padding: var(--space-16);
+  border: 1px solid var(--color-border-subtle);
+  border-left: 3px solid var(--color-accent-electric);
+  border-radius: var(--radius-base);
+  background: var(--color-bg-secondary);
+}
+
+.questionLabel {
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.questionPrompt {
+  margin: var(--space-8) 0 var(--space-16);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-h2-weight);
+  line-height: 1.4;
+}
+
+.choices {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.choice {
+  min-height: var(--target-tap-min);
+  padding: var(--space-8) var(--space-12);
+  text-align: left;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-button);
+  font: inherit;
+  font-size: var(--text-body-size);
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+
+.choice:hover {
+  border-color: var(--color-accent-electric);
+}
+
+.choice:focus-visible {
+  outline: 2px solid var(--color-accent-electric);
+  outline-offset: 2px;
+}
+
+.choice[data-state='correct'] {
+  border-color: var(--color-accent-success);
+  color: var(--color-accent-success);
+}
+
+.choice[data-state='wrong'] {
+  border-color: var(--color-accent-danger);
+  color: var(--color-accent-danger);
+}
+
+.choice:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.questionDone {
+  margin-top: var(--space-8);
+  font-size: var(--text-ad-meta-size);
+  color: var(--color-accent-success);
+}
+
+.end {
+  margin-top: var(--space-64);
+  padding-top: var(--space-24);
+  border-top: 1px solid var(--color-border-subtle);
+  font-size: var(--text-ad-meta-size);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
