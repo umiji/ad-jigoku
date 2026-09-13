@@ -81,3 +81,43 @@ apps/web/                               (Next.js 初期化)
 
 - 上記 acceptance criteria が全て満たされている
 - README に「開発の始め方」が3行以内で書かれている
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）
+- ブランチ: `feat/phase1-m0-m2`
+
+### 決定ログ
+
+#### 2026-09-13 pattern-catalog の外部依存は zod のみ許可
+- 決定: `check-deps` の許可リストで `pattern-catalog` の外部依存を `zod` のみ許可する
+- 却下案: 「依存ゼロ」（本タスク要件 5）→ TASK-003 の受け入れ基準「dependencies が zod のみ」と矛盾するため、後続タスクの要件を正とした
+- 出典: TASK-003 acceptance criteria / session decision
+
+#### 2026-09-13 ESLint はリポジトリルートから実行する
+- 決定: 各パッケージの `lint` は `pnpm -w exec eslint packages/<name>` でルートから実行する
+- 却下案: `eslint . --config ../../eslint.config.js` → ESLint 9 では `--config` 指定時に `files` パターンの基点が cwd になり、`packages/game-engine/**` の純粋層ルールが一致しなかった（違反ファイルが exit 0 で通過）
+- 出典: session decision（実測で確認）
+
+#### 2026-09-13 Next.js は 15.5 系を採用
+- 決定: `next@^15.5`（タスク文書指定の 15 系最新）
+- 却下案: Next 16 → 文書が 15 App Router を指定しており、静的書き出し要件に 16 の利点がない
+- 出典: TASK-001 要件 4
+
+### 作業ログ
+
+- 2026-09-13: pnpm workspaces + Turborepo + TS strict + ESLint flat config + check-deps + Next 15 static export + CI を作成。lint の基点問題を修正。
+
+### 証拠
+
+```text
+$ pnpm turbo run typecheck lint test   → Tasks: 18 successful, 18 total
+$ pnpm check-deps                      → check-deps: OK
+$ pnpm test:scripts                    → Tests 8 passed (8)
+$ (game-engine に React import + Math.random + Date を書く) → 3 errors（no-restricted-imports / properties / globals）
+$ (ui に GlassCard.tsx を作る)          → 1 error（no-restricted-syntax）
+$ next build                           → ✓ Exporting (2/2)、out/index.html 生成
+$ next dev -p 3123 → curl / → 200、「ようこそ、広告地獄へ。」を含む
+```

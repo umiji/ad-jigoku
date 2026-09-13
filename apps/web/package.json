@@ -1,0 +1,32 @@
+{
+  "name": "@ad-jigoku/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Next.js: LP / Game / Audit / Ranking。Phase 1 は静的書き出し（output: 'export' / D8）",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx serve out",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "pnpm -w exec eslint apps/web",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ad-jigoku/game-engine": "workspace:*",
+    "@ad-jigoku/pattern-catalog": "workspace:*",
+    "@ad-jigoku/ui": "workspace:*",
+    "next": "^15.5.25",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "jsdom": "^30.0.1",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "ad-jigoku",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.19.0",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter @ad-jigoku/web dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "check-deps": "tsx scripts/check-deps.ts",
+    "lint:root": "eslint scripts eslint.config.js",
+    "test:scripts": "cd scripts && vitest run",
+    "ci": "turbo run typecheck lint test && pnpm lint:root && pnpm test:scripts && pnpm check-deps"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.20.2",
+    "eslint": "^9.39.5",
+    "globals": "^16.0.0",
+    "tsx": "^4.23.13",
+    "turbo": "^2.10.12",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^3.2.7"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@ad-jigoku/safety",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Safety Invariants（SAFE-01..13）の共通テストキット。LP / Game 共用（ADR-007）",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "pnpm -w exec eslint packages/safety",
+    "test": "vitest run"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "eslint": "^9.39.5",
+    "jsdom": "^30.0.1",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@ad-jigoku/pattern-catalog",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared Kernel: パターンカタログのスキーマ・データ・クエリ API（他の何にも依存しない / ADR-001）",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "pnpm -w exec eslint packages/pattern-catalog",
+    "test": "vitest run"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "eslint": "^9.39.5",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

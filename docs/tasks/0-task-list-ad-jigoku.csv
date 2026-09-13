@@ -1,5 +1,5 @@
 ID,作成日,更新日,タスク名,状態,依存タスク,ドキュメント
-TASK-001,2026-09-12,2026-09-13,monorepo基盤とツールチェーン,未着手,無し,docs/tasks/TASK-001-monorepo-foundation.md
+TASK-001,2026-09-12,2026-09-13,monorepo基盤とツールチェーン,完了,無し,docs/tasks/TASK-001-monorepo-foundation.md
 TASK-002,2026-09-12,2026-09-12,デザイントークンとDESIGN.md強制lint,未着手,TASK-001,docs/tasks/TASK-002-design-tokens.md
 TASK-003,2026-09-12,2026-09-12,パターンスキーマとバリデータ,未着手,TASK-001,docs/tasks/TASK-003-pattern-schema.md
 TASK-004,2026-09-12,2026-09-12,カタログMarkdown→JSON変換（全パターン）,未着手,TASK-003,docs/tasks/TASK-004-catalog-data.md
