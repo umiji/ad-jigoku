@@ -1,0 +1,354 @@
+[
+  {
+    "id": "cr-game-0001",
+    "kind": "game",
+    "tags": [
+      "freebie",
+      "prize"
+    ],
+    "brand": "ムゲンガチャ",
+    "headline": "今なら10連が無料",
+    "body": "無料なのは1回目の10連だけです",
+    "cta": "引いてみる",
+    "legal": "※排出率は別途表示しています",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0002",
+    "kind": "game",
+    "tags": [
+      "prize"
+    ],
+    "brand": "ムゲンガチャ",
+    "headline": "星5の確率0.3%",
+    "body": "0.3%は0%ではありません",
+    "cta": "確率を見る",
+    "legal": "※確率は変更される場合があります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0003",
+    "kind": "game",
+    "tags": [
+      "freebie",
+      "mobile"
+    ],
+    "brand": "ポチポチゲームズ",
+    "headline": "押すだけのゲーム",
+    "body": "押し続けると数字が増えます",
+    "cta": "遊んでみる",
+    "legal": "※本広告は架空のものです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0004",
+    "kind": "game",
+    "tags": [
+      "video",
+      "freebie"
+    ],
+    "brand": "ポチポチゲームズ",
+    "headline": "広告を見て回復",
+    "body": "回復量は1です",
+    "cta": "広告を見る",
+    "legal": "※動画広告が再生されます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0005",
+    "kind": "game",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "放置系スライム",
+    "headline": "放置するほど強い",
+    "body": "起動していないと放置になりません",
+    "cta": "はじめる",
+    "legal": "※通信環境が必要です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0006",
+    "kind": "game",
+    "tags": [
+      "prize",
+      "video"
+    ],
+    "brand": "放置系スライム",
+    "headline": "12時間分の報酬",
+    "body": "受け取りには広告が2本必要です",
+    "cta": "受け取る",
+    "legal": "※広告の視聴が条件です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0007",
+    "kind": "game",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "パカパカ大戦",
+    "headline": "初心者に優しい",
+    "body": "優しいのは最初の3分だけです",
+    "cta": "出撃する",
+    "legal": "※難易度は段階的に上がります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0008",
+    "kind": "game",
+    "tags": [
+      "native"
+    ],
+    "brand": "パカパカ大戦",
+    "headline": "あなたも司令官に",
+    "body": "司令官の仕事はガチャを引くことです",
+    "cta": "就任する",
+    "legal": "※ゲーム内容は架空です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0009",
+    "kind": "game",
+    "tags": [
+      "freebie",
+      "video"
+    ],
+    "brand": "ヒマ潰し帝国",
+    "headline": "1日3分で覇者に",
+    "body": "3分の内訳は広告が2分です",
+    "cta": "建国する",
+    "legal": "※広告が表示されます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0010",
+    "kind": "game",
+    "tags": [
+      "warning",
+      "loud"
+    ],
+    "brand": "ヒマ潰し帝国",
+    "headline": "城が攻められてる",
+    "body": "その城はまだ建っていません",
+    "cta": "防衛する",
+    "legal": "※画面上の演出です",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-game-0011",
+    "kind": "game",
+    "tags": [
+      "native",
+      "mobile"
+    ],
+    "brand": "ネコ島開拓記",
+    "headline": "猫が待っています",
+    "body": "待っているのは餌のほうです",
+    "cta": "島へ行く",
+    "legal": "※画像はイメージです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0012",
+    "kind": "game",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ネコ島開拓記",
+    "headline": "無料で全部遊べる",
+    "body": "「全部」の定義は運営が決めます",
+    "cta": "無料で遊ぶ",
+    "legal": "※アイテム課金があります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0013",
+    "kind": "game",
+    "tags": [
+      "prize"
+    ],
+    "brand": "ダミークエスト",
+    "headline": "伝説の剣を進呈",
+    "body": "伝説なので実在しません",
+    "cta": "受け取る",
+    "legal": "※ゲーム内アイテムです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0014",
+    "kind": "game",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ダミークエスト",
+    "headline": "レベル99から開始",
+    "body": "2レベル目で成長が止まります",
+    "cta": "開始する",
+    "legal": "※ゲームバランスは調整されます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0015",
+    "kind": "game",
+    "tags": [
+      "prize"
+    ],
+    "brand": "ムゲンガチャ",
+    "headline": "天井は300連です",
+    "body": "300連の先にもう一つ天井があります",
+    "cta": "天井を見る",
+    "legal": "※上限は変更される場合があります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0016",
+    "kind": "game",
+    "tags": [
+      "ranking"
+    ],
+    "brand": "ポチポチゲームズ",
+    "headline": "ランキング1位に",
+    "body": "対象はこの広告を見た人だけです",
+    "cta": "挑戦する",
+    "legal": "※ランキングは自社調べです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0017",
+    "kind": "game",
+    "tags": [
+      "system",
+      "mobile"
+    ],
+    "brand": "放置系スライム",
+    "headline": "スタミナが回復した",
+    "body": "回復したのは1です",
+    "cta": "遊びに戻る",
+    "legal": "※通知は設定で切れます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0018",
+    "kind": "game",
+    "tags": [
+      "countdown",
+      "urgent",
+      "loud"
+    ],
+    "brand": "パカパカ大戦",
+    "headline": "あと3秒で参加締切",
+    "body": "締切のあと、次の締切が始まります",
+    "cta": "今すぐ参加",
+    "legal": "※開催時間は変更されます",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-game-0019",
+    "kind": "game",
+    "tags": [
+      "native"
+    ],
+    "brand": "ヒマ潰し帝国",
+    "headline": "課金なしでも強い",
+    "body": "強い人はだいたい課金しています",
+    "cta": "詳しく見る",
+    "legal": "※アイテム課金があります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0020",
+    "kind": "game",
+    "tags": [
+      "prize",
+      "urgent"
+    ],
+    "brand": "ネコ島開拓記",
+    "headline": "限定の猫が登場",
+    "body": "限定の猫は毎週登場します",
+    "cta": "会いに行く",
+    "legal": "※期間限定の内容です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0021",
+    "kind": "game",
+    "tags": [
+      "testimonial",
+      "ranking"
+    ],
+    "brand": "ダミークエスト",
+    "headline": "神ゲーだと話題",
+    "body": "話題にしているのは公式です",
+    "cta": "評判を見る",
+    "legal": "※感想は個人のものです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0022",
+    "kind": "game",
+    "tags": [
+      "prize"
+    ],
+    "brand": "ムゲンガチャ",
+    "headline": "引き直しできます",
+    "body": "引き直し券はガチャから出ます",
+    "cta": "引き直す",
+    "legal": "※本広告は架空のものです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0023",
+    "kind": "game",
+    "tags": [
+      "prize"
+    ],
+    "brand": "ポチポチゲームズ",
+    "headline": "友達を招待しよう",
+    "body": "招待された友達も招待されます",
+    "cta": "招待する",
+    "legal": "※特典には条件があります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0024",
+    "kind": "game",
+    "tags": [
+      "mobile"
+    ],
+    "brand": "放置系スライム",
+    "headline": "電池にやさしい",
+    "body": "やさしいのは画面が暗いときだけです",
+    "cta": "詳しくはこちら",
+    "legal": "※消費電力は環境によります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0025",
+    "kind": "game",
+    "tags": [
+      "ranking",
+      "prize"
+    ],
+    "brand": "パカパカ大戦",
+    "headline": "事前登録40万人",
+    "body": "うち39万は通知だけの登録です",
+    "cta": "登録する",
+    "legal": "※登録者数は自社発表です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-game-0026",
+    "kind": "game",
+    "tags": [
+      "recurring",
+      "loud"
+    ],
+    "brand": "ネコ島開拓記",
+    "headline": "広告を消せます",
+    "body": "消せる広告はこの広告ではありません",
+    "cta": "消してみる",
+    "legal": "※広告非表示は課金が必要です",
+    "theme": "danger"
+  }
+]

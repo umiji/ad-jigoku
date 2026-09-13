@@ -1,0 +1,212 @@
+[
+  {
+    "id": "OBS-01",
+    "category": "OBS",
+    "name": { "ja": "全画面オーバーレイ", "en": "Fullscreen Overlay" },
+    "definition": { "ja": "viewportの大部分/全体を広告が覆う" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "interruption": 2, "obstruction": 3, "interactionFriction": 1, "timeCost": 1, "mobileImpact": 3 },
+    "game": {
+      "shell": "interstitial",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "surface": { "id": "surface:fullscreen" }
+      },
+      "creative": { "kinds": ["sale", "notice"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 1,
+      "uncertainty": 1,
+      "timePressure": 3,
+      "comboTags": ["fullscreen", "interstitial"],
+      "incompatibleWith": ["OBS-09"],
+      "patienceEffect": { "onSpawn": 8, "onMistake": 6, "perSecondAlive": 1.5 },
+      "education": { "ja": "画面全体を覆うタイプ。読む作業そのものが止まるので、放置コストが高い。偽×付きの罠より先に片付けるのが正解。" }
+    },
+    "detect": {
+      "layer": 2,
+      "signals": ["dom.boundingBoxes", "viewport.size", "viewport.occlusion", "dom.zIndex"],
+      "detectorId": "fullscreen-overlay-area",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "minViewportAreaRatio": 0.75 }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "本文が完全に見えなくなるため、ユーザーはコンテンツの価値を判断できないまま「閉じる」作業を強制される。モバイルでは占有率がそのまま離脱率に効く。" },
+      "recommendations": [
+        { "ja": "オーバーレイの占有面積を viewport の 30% 以下に抑える。", "effort": "medium", "expectedSeverityReduction": 6 },
+        { "ja": "ページ遷移の境界（記事から記事へ移る瞬間）にのみ表示する。", "effort": "medium", "expectedSeverityReduction": 3 }
+      ],
+      "adFriendlyAlternative": { "ja": "全画面をやめ、本文と競合しないアンカー枠やインライン枠に同じクリエイティブを出す。占有率を下げても視認は成立する。" }
+    }
+  },
+  {
+    "id": "OBS-02",
+    "category": "OBS",
+    "name": { "ja": "スクロール追従の覆いかぶさり", "en": "Scrollover" },
+    "definition": { "ja": "スクロール中に広告が本文上を覆う" },
+    "severity": 13,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interruption": 2, "obstruction": 3, "interactionFriction": 2, "mobileImpact": 3, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "OBS-03",
+    "category": "OBS",
+    "name": { "ja": "画面下部の大型固定広告", "en": "Large Sticky Bottom" },
+    "definition": { "ja": "画面下部を固定広告が大きく占有" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "obstruction": 3, "interactionFriction": 2, "persistence": 2, "mobileImpact": 3, "cumulativeEffect": 2 },
+    "game": {
+      "shell": "stickyBanner",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "persist": { "id": "persist:sticky" }
+      },
+      "creative": { "kinds": ["sale", "app"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 1,
+      "uncertainty": 1,
+      "timePressure": 2,
+      "comboTags": ["sticky"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 3, "onMistake": 4, "perSecondAlive": 0.5 },
+      "education": { "ja": "下に居座り続けるバナー。1つなら我慢できるが、放置したまま他が増えると画面が消える。余裕のあるうちに片付けておく種類。" }
+    },
+    "detect": {
+      "layer": 2,
+      "signals": ["dom.boundingBoxes", "dom.computedStyles", "viewport.size"],
+      "detectorId": "sticky-bottom-geometry",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "minViewportHeightRatio": 0.15 }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "モバイルでは画面高の2割前後が常時消える。さらに親指の操作領域と重なるため、本文のリンクを押したつもりが広告になる事故が積み上がる。" },
+      "recommendations": [
+        { "ja": "固定バナーの高さを画面高の 15% 以下に抑える。", "effort": "low", "expectedSeverityReduction": 3 },
+        { "ja": "本文末尾までスクロールしたら自動的に解除する。", "effort": "medium", "expectedSeverityReduction": 2 }
+      ],
+      "adFriendlyAlternative": { "ja": "アンカー広告は残してよい。高さを標準サイズに戻し、閉じるボタンを付けるだけで、視認率をほぼ保ったまま体感の圧迫が消える。" }
+    }
+  },
+  {
+    "id": "OBS-04",
+    "category": "OBS",
+    "name": { "ja": "画面上部の大型固定広告", "en": "Large Sticky Top" },
+    "definition": { "ja": "画面上部を固定広告が大きく占有" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "obstruction": 3, "interactionFriction": 1, "persistence": 2, "mobileImpact": 3 },
+    "detect": {
+      "layer": 2,
+      "signals": ["dom.boundingBoxes", "dom.computedStyles", "viewport.size"],
+      "detectorId": "sticky-top-geometry",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "minViewportHeightRatio": 0.15 }
+    }
+  },
+  {
+    "id": "OBS-05",
+    "category": "OBS",
+    "name": { "ja": "左右の固定サイドレール", "en": "Sticky Side Rail" },
+    "definition": { "ja": "デスクトップ左右を広告が占有" },
+    "severity": 6,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 1,
+    "dimensions": { "obstruction": 2, "persistence": 1, "attentionHijacking": 1 }
+  },
+  {
+    "id": "OBS-06",
+    "category": "OBS",
+    "name": { "ja": "浮遊する動画広告", "en": "Floating Video" },
+    "definition": { "ja": "動画広告が画面上に浮遊し続ける" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "obstruction": 2, "attentionHijacking": 3, "persistence": 2, "mobileImpact": 2, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "OBS-07",
+    "category": "OBS",
+    "name": { "ja": "追従して切り離される動画", "en": "Pop-out Video" },
+    "definition": { "ja": "本文中の動画がスクロール後も追従する" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "obstruction": 2, "attentionHijacking": 3, "persistence": 2, "mobileImpact": 2 }
+  },
+  {
+    "id": "OBS-08",
+    "category": "OBS",
+    "name": { "ja": "本文を直接覆う広告", "en": "Content-Covering Ad" },
+    "definition": { "ja": "本文の重要部分を直接覆う" },
+    "severity": 14,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "obstruction": 3, "interruption": 2, "interactionFriction": 2, "mobileImpact": 2, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "OBS-09",
+    "category": "OBS",
+    "name": { "ja": "過剰な広告密度", "en": "Excessive Ad Density" },
+    "definition": { "ja": "コンテンツに対して広告量が過剰" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "obstruction": 3, "interruption": 2, "interactionFriction": 2, "mobileImpact": 3, "cumulativeEffect": 3 },
+    "game": {
+      "shell": "densityStack",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "persist": { "id": "persist:multi-layer", "params": { "layers": { "min": 3, "max": 4 }, "respawnDelayMs": { "min": 0, "max": 200 } } }
+      },
+      "creative": { "kinds": ["sale", "app", "notice"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 3,
+      "uncertainty": 1,
+      "timePressure": 2,
+      "comboTags": ["density", "multi-layer"],
+      "incompatibleWith": ["OBS-01", "PER-02"],
+      "patienceEffect": { "onSpawn": 6, "onMistake": 5, "perSecondAlive": 1.2 },
+      "education": { "ja": "1つ1つは普通の広告なのに、量で本文が消えるパターン。個々のフォーマットを責めても解決しない種類の地獄。" }
+    },
+    "detect": {
+      "layer": 2,
+      "signals": ["dom.boundingBoxes", "dom.snapshot", "viewport.size", "screenshot.fullPage"],
+      "detectorId": "ad-density-ratio",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "maxAdAreaRatio": 0.3 }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "広告1つ1つは基準内でも、合計面積が本文を上回ると読む行為が成立しない。密度は個別フォーマットの問題ではなくページ設計の問題。" },
+      "recommendations": [
+        { "ja": "ファーストビューの広告面積比を 30% 以下に制限する。", "effort": "medium", "expectedSeverityReduction": 5 },
+        { "ja": "本文の一定文字数ごとに広告は1枠まで、という上限を実装する。", "effort": "medium", "expectedSeverityReduction": 4 }
+      ],
+      "adFriendlyAlternative": { "ja": "枠数を減らした分だけ1枠あたりの視認率と単価は上がる。総面積を保つのではなく、良い位置の枠に集約する。" }
+    }
+  },
+  {
+    "id": "OBS-10",
+    "category": "OBS",
+    "name": { "ja": "広告の壁", "en": "Ad Wall" },
+    "definition": { "ja": "広告が連続し、本文が断片化する" },
+    "severity": 14,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "obstruction": 3, "interruption": 3, "timeCost": 2, "mobileImpact": 3, "cumulativeEffect": 3 }
+  }
+]

@@ -1,0 +1,348 @@
+[
+  {
+    "id": "cr-health-0001",
+    "kind": "health",
+    "tags": [
+      "testimonial"
+    ],
+    "brand": "ふしぎ健康茶",
+    "headline": "飲むだけの生活",
+    "body": "飲むだけでは何も起きませんでした",
+    "cta": "詳しくはこちら",
+    "legal": "※効果には個人差があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0002",
+    "kind": "health",
+    "tags": [
+      "ranking"
+    ],
+    "brand": "ふしぎ健康茶",
+    "headline": "5000万杯を突破",
+    "body": "1人が5000万杯飲んだ可能性もあります",
+    "cta": "実績を見る",
+    "legal": "※累計の出荷数です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0003",
+    "kind": "health",
+    "tags": [
+      "native"
+    ],
+    "brand": "株式会社ダミー製薬",
+    "headline": "話題の新成分",
+    "body": "話題にしているのは当社だけです",
+    "cta": "成分を見る",
+    "legal": "※本広告は架空のものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0004",
+    "kind": "health",
+    "tags": [
+      "native"
+    ],
+    "brand": "株式会社ダミー製薬",
+    "headline": "医師も知らない話",
+    "body": "当社しか知りません",
+    "cta": "詳細を読む",
+    "legal": "※医療行為ではありません",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-health-0005",
+    "kind": "health",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "明日から本気ジム",
+    "headline": "入会は明日から",
+    "body": "明日は毎日やってきます",
+    "cta": "見学する",
+    "legal": "※入会金が別途かかります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0006",
+    "kind": "health",
+    "tags": [
+      "freebie",
+      "recurring"
+    ],
+    "brand": "明日から本気ジム",
+    "headline": "3か月で変わる",
+    "body": "変わるのは会費の引き落とし日です",
+    "cta": "無料体験",
+    "legal": "※体験後は自動更新されます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-health-0007",
+    "kind": "health",
+    "tags": [
+      "testimonial"
+    ],
+    "brand": "ぷにぷに整体",
+    "headline": "1回でスッキリ",
+    "body": "スッキリするのは財布のほうです",
+    "cta": "予約する",
+    "legal": "※効果には個人差があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0008",
+    "kind": "health",
+    "tags": [
+      "ranking",
+      "testimonial"
+    ],
+    "brand": "ぷにぷに整体",
+    "headline": "口コミ評価4.9",
+    "body": "口コミは全部で3件です",
+    "cta": "口コミを見る",
+    "legal": "※口コミは個人の感想です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0009",
+    "kind": "health",
+    "tags": [
+      "testimonial"
+    ],
+    "brand": "アヤシイ美容液",
+    "headline": "1週間で実感",
+    "body": "実感の中身は人それぞれです",
+    "cta": "試してみる",
+    "legal": "※個人の感想です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0010",
+    "kind": "health",
+    "tags": [
+      "recurring",
+      "freebie"
+    ],
+    "brand": "アヤシイ美容液",
+    "headline": "初回は500円",
+    "body": "2回目からは5000円です",
+    "cta": "注文する",
+    "legal": "※定期購入が条件です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-health-0011",
+    "kind": "health",
+    "tags": [
+      "native"
+    ],
+    "brand": "永久脱兎サロン",
+    "headline": "うさぎは脱ぎません",
+    "body": "商品名の由来は不明です",
+    "cta": "詳しく見る",
+    "legal": "※本広告は架空のものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0012",
+    "kind": "health",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "永久脱兎サロン",
+    "headline": "通い放題プラン",
+    "body": "放題の範囲は月1回です",
+    "cta": "プランを見る",
+    "legal": "※プラン内容は変更されます",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0013",
+    "kind": "health",
+    "tags": [
+      "testimonial"
+    ],
+    "brand": "サボテン青汁",
+    "headline": "まずい、もう一杯",
+    "body": "2杯目もやはりまずいです",
+    "cta": "注文する",
+    "legal": "※味の感じ方には個人差があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0014",
+    "kind": "health",
+    "tags": [
+      "native"
+    ],
+    "brand": "サボテン青汁",
+    "headline": "野菜1日分の何か",
+    "body": "その何かは特定できていません",
+    "cta": "成分表を見る",
+    "legal": "※栄養成分は目安です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0015",
+    "kind": "health",
+    "tags": [
+      "native"
+    ],
+    "brand": "ゲンキ製菓",
+    "headline": "食べても太らない",
+    "body": "食べる量によります",
+    "cta": "詳しくはこちら",
+    "legal": "※摂取量にご注意ください",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0016",
+    "kind": "health",
+    "tags": [
+      "native"
+    ],
+    "brand": "ゲンキ製菓",
+    "headline": "1袋にレタス3個分",
+    "body": "食物繊維の話で、味とは別です",
+    "cta": "買ってみる",
+    "legal": "※換算は当社基準です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0017",
+    "kind": "health",
+    "tags": [
+      "countdown",
+      "urgent"
+    ],
+    "brand": "ふしぎ健康茶",
+    "headline": "あと3個で完売",
+    "body": "3個は毎朝補充されます",
+    "cta": "急いで買う",
+    "legal": "※在庫がなくなり次第終了です",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-health-0018",
+    "kind": "health",
+    "tags": [
+      "freebie",
+      "prize"
+    ],
+    "brand": "株式会社ダミー製薬",
+    "headline": "無料サンプル進呈",
+    "body": "送料は1980円かかります",
+    "cta": "申し込む",
+    "legal": "※送料はお客様のご負担です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-health-0019",
+    "kind": "health",
+    "tags": [
+      "testimonial",
+      "ranking"
+    ],
+    "brand": "明日から本気ジム",
+    "headline": "体験者の90%が満足",
+    "body": "満足しなかった人は答えていません",
+    "cta": "声を見る",
+    "legal": "※アンケートは自社調べです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0020",
+    "kind": "health",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "ぷにぷに整体",
+    "headline": "初回限定の枠です",
+    "body": "枠は毎日1つ空きます",
+    "cta": "枠を取る",
+    "legal": "※初回限定価格です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0021",
+    "kind": "health",
+    "tags": [
+      "testimonial"
+    ],
+    "brand": "アヤシイ美容液",
+    "headline": "使う前と使った後",
+    "body": "写真の明るさが違います",
+    "cta": "写真を見る",
+    "legal": "※画像はイメージです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0022",
+    "kind": "health",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "永久脱兎サロン",
+    "headline": "痛くありません",
+    "body": "痛みの感じ方には個人差があります",
+    "cta": "相談する",
+    "legal": "※効果には個人差があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0023",
+    "kind": "health",
+    "tags": [
+      "warning"
+    ],
+    "brand": "サボテン青汁",
+    "headline": "健康診断の前に",
+    "body": "診断の結果は変わりません",
+    "cta": "詳しく見る",
+    "legal": "※医療行為ではありません",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-health-0024",
+    "kind": "health",
+    "tags": [
+      "mobile"
+    ],
+    "brand": "ゲンキ製菓",
+    "headline": "歩数計と連動します",
+    "body": "歩かなくても連動します",
+    "cta": "連動する",
+    "legal": "※アプリの利用が必要です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0025",
+    "kind": "health",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "株式会社ダミー製薬",
+    "headline": "睡眠の質を高める",
+    "body": "高まるのは期待値だけです",
+    "cta": "試してみる",
+    "legal": "※効果を保証するものではありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-health-0026",
+    "kind": "health",
+    "tags": [
+      "urgent",
+      "countdown",
+      "loud"
+    ],
+    "brand": "ふしぎ健康茶",
+    "headline": "今だけ半額です",
+    "body": "この「今だけ」が1年続いています",
+    "cta": "今すぐ確認",
+    "legal": "※本広告は架空のものです",
+    "theme": "danger"
+  }
+]

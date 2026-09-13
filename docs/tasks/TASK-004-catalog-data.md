@@ -69,3 +69,45 @@ scripts/catalog-parity.ts                          Markdown ↔ JSON 整合検�
 
 - acceptance criteria を全て満たす
 - `dimensions` の付与方針が `packages/pattern-catalog/README.md` に記録されている
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）。実装はサブエージェント（opus）、検証・コミットはコントローラ
+
+### 決定ログ
+
+#### 2026-09-13 パターン数は 92（Markdown が正）
+- 決定: `AD_UX_PATTERN_CATALOG.md` の表は 92 行（14+10+10+8+8+7+6+5+6+6+12）。タスク文書・設計文書の「90」は概数として扱い、JSON は 92 件、`version.json.patternCount = 92`
+- 却下案: 90 に合わせて 2 件を落とす → Markdown が source of truth（ADR-001）に反する
+- 出典: catalog-parity の実測
+
+#### 2026-09-13 MVP の shell / behavior 契約
+- 決定: MVP 15 + CLS-01 の game facet は `packages/pattern-catalog/README.md §4` の表（shell id / behavior id / params 名）に固定。TASK-013A/B/C・017〜022 はこの表を契約として実装する
+- 却下案: なし
+- 出典: TASK-004 brief（GAME_ENGINE_DESIGN §7.1 の展開）
+
+#### 2026-09-13 COM-* は game facet に shell / behaviors を持たない
+- 決定: COM-03 等は `composedOf` の構成要素を生成器が同時起動する（TASK-003 の schema 改訂に追従）
+- 出典: GAME_ENGINE_DESIGN §7.1
+
+### 作業ログ
+
+- 2026-09-13: data/patterns/*.json（92 件、MVP 16 件に game + improve、12 件に detect）、scripts/catalog-parity.ts（+10 tests）、bin/catalog-coverage.ts、src/data.ts（loadCatalog）、README（dimensions 方針・V-10 判断）。CI に catalog:parity を追加。
+
+### 証拠
+
+```text
+$ pnpm catalog:validate → 92 patterns, 0 errors, 0 warnings
+$ pnpm catalog:parity   → OK (92 patterns, Markdown ↔ JSON 一致)
+$ (Markdown の CLS-05 severity を書き換え) → exit 1「Markdown が正: JSON の CLS-05.severity を 16 に直す」→ revert
+$ pnpm catalog:coverage → game 16/92, detect 12/92, improve 16/92, escape 0/92, fixture 0/92
+$ pnpm turbo run typecheck lint test --filter=@ad-jigoku/pattern-catalog → 103 tests passed
+$ pnpm test:scripts → 18 passed / $ pnpm check-deps → OK
+```
+
+### 未解決の懸念
+
+- parity は severity / gameDifficulty のみ比較（definition.ja の drift は検出しない）
+- dimensions は定義文からの単独判断。レビュー未実施

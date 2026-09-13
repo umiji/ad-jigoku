@@ -69,3 +69,40 @@ packages/game-engine/src/score/breakdown.ts    結果画面用の内訳
 
 - acceptance criteria を全て満たす
 - `docs/design/GAME_ENGINE_DESIGN.md §9.1` の禁止事項がコードコメントとして該当箇所に書かれている
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）
+
+### 決定ログ
+
+#### 2026-09-13 処理ごとの加点は即時、完走系はクリア/失敗確定時に確定
+- 決定: onClear / triage / chain は広告を処理した瞬間に加算。completion / speed / survival / accuracy / damage / time は `finalizeScore` で phase 確定時に計算する
+- 却下案: 毎 tick 全項目を再計算 → 60 回/秒の再計算で無駄が大きく、内訳の説明も揺れる
+- 出典: session decision
+
+#### 2026-09-13 triage bonus は「他にアクティブ広告があるとき」のみ
+- 決定: アクティブが 1 件だけなら判断が要らないので bonus なし。同点は正解扱い
+- 却下案: 常に付与 → 1 件ずつ出るステージで無条件に加点され、Prioritization の意味が消える
+- 出典: GAME_ENGINE_DESIGN §9.4.1
+
+#### 2026-09-13 Clean Play は「ミス 0」で半額、「ミス 0 + patience 満タン」で満額
+- 決定: `SCORE_CLEAN_PLAY_BONUS` を 2 段階で付与
+- 却下案: 満タンのみ → onSpawn で必ず減るため事実上到達不能
+- 出典: GAME §9.2
+
+### 作業ログ
+
+- 2026-09-13: score/{on-clear,triage,score,breakdown}.ts、engine/outcome.ts で処理時加点、run.ts で確定時 finalize。テスト 7 件（severity 非依存 / triage 有無 / 内訳合計 / Clean Play / 決定性 / optimal > naive > spam）。
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/game-engine test → 128 tests passed
+  - severity +5 / 0 に書き換えても score が同一（toEqual）
+  - 自動音声を先に閉じる: triageBonus 50 / 偽×を先: 0
+  - sumBreakdown === total、全 9 項目
+  - optimal > naive > spam
+```

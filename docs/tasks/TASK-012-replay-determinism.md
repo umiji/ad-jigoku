@@ -58,3 +58,44 @@ packages/game-engine/test/fixtures/replays/*.json
 - acceptance criteria を全て満たす
 - **M1 完了**: ブラウザなしでゲームが1本通り、seed で再現できる
 - `pnpm game:simulate --seed=X --strategy=optimal` でヘッドレス実行して結果を出せる CLI がある
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）— **M1 完了**: ブラウザなしでゲームが 1 本通り、seed で再現できる
+
+### 決定ログ
+
+#### 2026-09-13 ReplayRecord は catalog 本体を持たず version.catalog で照合する
+- 決定: `config` から `catalog` を除いて記録し、再生側が同バージョンのカタログを渡す。`schedule` を明示注入した run（フィクスチャ）だけ config ごと記録する
+- 却下案: カタログ全体を記録 → 1 本数百 KB になり、URL 共有・ファイル保存に向かない
+- 出典: GAME_ENGINE_DESIGN §11
+
+#### 2026-09-13 createRun は schedule 未指定なら生成器で作る
+- 決定: `RunConfig.schedule` が無ければ `generateStage(getStage(stageId), …)` で埋める。seed URL（s/st/m/cv）だけで同じ地獄が再現される
+- 出典: TASK-012 要件 5 / GAME §8.5
+
+#### 2026-09-13 フィクスチャはミニカタログで記録
+- 決定: `test/fixtures/replays/*.json` は `src/testing/mini-catalog.ts`（実装スタブ付き）で記録。実カタログの値変更で回帰テストが揺れない。更新は `pnpm --filter @ad-jigoku/game-engine replay:fixtures`（挙動を意図的に変えたときだけ）
+- 却下案: 実カタログで記録 → severity 等の調整のたびに全フィクスチャが失効
+- 出典: session decision
+
+### 作業ログ
+
+- 2026-09-13: replay/{record,play,encode,strategies,simulate,fixture-cases}.ts、bin/{simulate,make-replay-fixtures}.ts、フィクスチャ 4 本、テスト 14 件。ENGINE_VERSION=0.1.0。
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/game-engine test → 11 files, 143 tests passed
+  - 記録 → 再生 → finalStateHash 一致 / encode・decode ラウンドトリップ
+  - フィクスチャ 4 本（clear-optimal / fail-patience-zero / fail-fake-close / high-combo）が記録 hash と一致
+  - tuning を 1 箇所変えると hash 不一致（回帰検出）
+  - engine / catalog バージョン不一致は reason 付きで拒否
+  - seed URL → 同一 schedule・同一 hash / 60fps・30fps の宿主ループで同一 hash
+$ pnpm game:simulate --seed=demo --strategy=optimal
+  result: CLEARED score=2664 patience=89.1 time=24.0s ads=4 mistakes=0 bestChain=4  hash: 55b74d328f229042
+$ pnpm game:simulate --seed=demo --strategy=spam
+  result: FAILED score=0 patience=0 time=8.8s ads=2 mistakes=29  culprit: INT-01
+```

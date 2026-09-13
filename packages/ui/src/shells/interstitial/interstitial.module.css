@@ -1,0 +1,130 @@
+/*
+ * interstitial — 全画面の割り込み（DESIGN.md §8 position: center / §9 Fullscreen / §19）。
+ *
+ * スロット側が全画面の暗幕（surface-overlay）を敷いているので、ここは中央のカードだけを描く。
+ * popup と違って「浮いた紙」ではなく「画面を奪った面」なので、影を弱くして端まで詰める。
+ */
+
+.interstitial {
+  display: grid;
+  inline-size: 100%;
+  block-size: 100%;
+  place-items: center;
+  padding: var(--space-16);
+  font-family: var(--font-sans);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+
+  /* DESIGN.md §19: モバイルの広告幅は calc(100vw - 32px) を超えない */
+  inline-size: min(100%, calc(100vw - var(--space-32)));
+  max-inline-size: calc(var(--space-192) * 2);
+  max-block-size: 100%;
+  padding: var(--space-24);
+  overflow: auto;
+  color: var(--ad-ink);
+  background-color: var(--ad-surface);
+  border: 1px solid var(--ad-border);
+  border-radius: var(--radius-popup);
+}
+
+.card::before {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: var(--space-4);
+  content: "";
+  background-color: var(--ad-accent);
+}
+
+.head {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: var(--target-tap-min);
+
+  /* 右上は × の席（DESIGN.md §8 anatomy / §19） */
+  padding-inline-end: var(--target-tap-min);
+}
+
+.brand {
+  overflow: hidden;
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  line-height: var(--text-ad-meta-line-height);
+  color: var(--ad-ink-muted);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*
+ * 抽象ビジュアル（DESIGN.md §17: 写真も人物画像も使わない）。
+ * 斜めの帯を 1 本通すだけ。全画面なので図像を足すより余白で見せる。
+ */
+.media {
+  position: relative;
+
+  /* flex の縮みで潰れると「帯 1 本」になってしまう。比率を守らせる */
+  flex: none;
+  overflow: hidden;
+  aspect-ratio: 16 / 6;
+  color: var(--ad-accent);
+  background-color: var(--ad-media-bg);
+  border: 1px solid var(--ad-border);
+}
+
+.beam {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline: calc(var(--space-32) * -1);
+  block-size: var(--space-32);
+  background-color: currentcolor;
+  opacity: 0.85;
+  transform: translateY(-50%) rotate(-6deg);
+}
+
+.tag {
+  position: absolute;
+  inset-block-end: var(--space-8);
+  inset-inline-start: var(--space-8);
+  padding-block: var(--space-4);
+  padding-inline: var(--space-8);
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  line-height: var(--text-ad-meta-line-height);
+  color: var(--ad-accent-ink);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  background-color: var(--ad-accent);
+}
+
+/* 全画面なので見出しは一段上げる（DESIGN.md §5 の h2 スケール。新しいサイズは作らない） */
+.card .headline {
+  font-size: var(--text-h2-size);
+  line-height: var(--text-h2-line-height);
+}
+
+/* CTA は画面幅いっぱいの帯。全画面広告の「進むしかない」感じ */
+.card .cta {
+  inline-size: 100%;
+}
+
+.badge {
+  align-self: flex-start;
+  max-inline-size: 100%;
+  padding-block: var(--space-4);
+  padding-inline: var(--space-8);
+  overflow: hidden;
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  line-height: var(--text-ad-meta-line-height);
+  color: var(--ad-accent-ink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: var(--ad-accent);
+}

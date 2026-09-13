@@ -1,0 +1,138 @@
+[
+  {
+    "id": "ATT-01",
+    "category": "ATT",
+    "name": { "ja": "動画の自動再生", "en": "Auto-play Video" },
+    "definition": { "ja": "ユーザー操作なしに動画再生" },
+    "severity": 8,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "attentionHijacking": 3, "obstruction": 1, "timeCost": 1, "mobileImpact": 2 },
+    "game": {
+      "shell": "videoPlayer",
+      "behaviors": {
+        "spawn": { "id": "spawn:delayed", "params": { "afterMs": { "min": 1500, "max": 4000 } } },
+        "attention": { "id": "attention:autoplay-video" }
+      },
+      "creative": { "kinds": ["video"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 1,
+      "uncertainty": 2,
+      "timePressure": 3,
+      "comboTags": ["autoplay-video"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 4, "onMistake": 5, "perSecondAlive": 1.2 },
+      "education": { "ja": "勝手に再生が始まる動画広告。視線は動くものに引っ張られるので、放置している間ずっと読む速度が落ちている。" }
+    },
+    "detect": {
+      "layer": 1,
+      "signals": ["media.autoplay", "dom.boundingBoxes", "network.requests"],
+      "detectorId": "autoplay-video-media-state",
+      "confidence": "deterministic",
+      "scoreContributing": true
+    },
+    "improve": {
+      "whyItHurts": { "ja": "人間の視線は動く領域に強制的に引かれる。本文を読んでいる最中に動画が始まると、読解が中断され、再開のたびに読み直しが発生する。" },
+      "recommendations": [
+        { "ja": "自動再生をやめ、クリックで再生する形式にする。", "effort": "low", "expectedSeverityReduction": 5 },
+        { "ja": "自動再生する場合も、viewport に 50% 以上入ったときだけに限定する。", "effort": "medium", "expectedSeverityReduction": 3 }
+      ],
+      "adFriendlyAlternative": { "ja": "動画在庫は維持したまま、最初のフレームを静止画で見せてクリック再生にする。視聴完了率は下がっても、離脱は目に見えて減る。" }
+    }
+  },
+  {
+    "id": "ATT-02",
+    "category": "ATT",
+    "name": { "ja": "音声の自動再生", "en": "Auto-play Sound" },
+    "definition": { "ja": "ユーザー操作なしに音声再生" },
+    "severity": 13,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "attentionHijacking": 3, "interruption": 2, "mobileImpact": 3, "cumulativeEffect": 2 },
+    "game": {
+      "shell": "videoPlayer",
+      "behaviors": {
+        "spawn": { "id": "spawn:delayed", "params": { "afterMs": { "min": 1500, "max": 4000 } } },
+        "attention": { "id": "attention:auto-sound" }
+      },
+      "creative": { "kinds": ["video"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 2,
+      "uncertainty": 2,
+      "timePressure": 4,
+      "comboTags": ["autoplay-video", "auto-sound"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 6, "onMistake": 6, "perSecondAlive": 3 },
+      "education": { "ja": "音が出る広告は放置コストが最大。ゲーム内では実際には鳴らさない（それをやったら同類になる）が、最優先で止めるのが正解なのは現実と同じ。" }
+    },
+    "detect": {
+      "layer": 1,
+      "signals": ["media.audio", "media.autoplay", "dom.boundingBoxes"],
+      "detectorId": "autoplay-audio-media-state",
+      "confidence": "deterministic",
+      "scoreContributing": true
+    },
+    "improve": {
+      "whyItHurts": { "ja": "音は無視できない。公共の場では即座に離脱され、音量を探す数秒はすべてサイトへの敵意に変換される。" },
+      "recommendations": [
+        { "ja": "既定でミュートし、音声はユーザー操作の後にのみ有効にする。", "effort": "low", "expectedSeverityReduction": 9 },
+        { "ja": "音量コントロールを広告枠内の固定位置に常時表示する。", "effort": "low", "expectedSeverityReduction": 3 }
+      ],
+      "adFriendlyAlternative": { "ja": "音声付き在庫は残してよい。既定ミュート＋字幕にすれば、音を出さないまま内容は伝わり、離脱要因だけが消える。" }
+    }
+  },
+  {
+    "id": "ATT-03",
+    "category": "ATT",
+    "name": { "ja": "点滅するクリエイティブ", "en": "Flashing Creative" },
+    "definition": { "ja": "点滅/強い反復アニメーション" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "attentionHijacking": 3, "obstruction": 1, "mobileImpact": 2 }
+  },
+  {
+    "id": "ATT-04",
+    "category": "ATT",
+    "name": { "ja": "動き続けるクリエイティブ", "en": "High-Motion Creative" },
+    "definition": { "ja": "常時動き続け注意を強制的に奪う" },
+    "severity": 8,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "attentionHijacking": 3, "mobileImpact": 1 }
+  },
+  {
+    "id": "ATT-05",
+    "category": "ATT",
+    "name": { "ja": "閉じても残る音声", "en": "Persistent Audio" },
+    "definition": { "ja": "広告を閉じても音声が残る" },
+    "severity": 16,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "attentionHijacking": 3, "persistence": 3, "interactionFriction": 2, "mobileImpact": 3, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "ATT-06",
+    "category": "ATT",
+    "name": { "ja": "突然の動画拡大", "en": "Unexpected Video Expansion" },
+    "definition": { "ja": "小さい広告が突然大型化" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "attentionHijacking": 3, "obstruction": 2, "interruption": 2, "mobileImpact": 2 }
+  },
+  {
+    "id": "ATT-07",
+    "category": "ATT",
+    "name": { "ja": "過剰な視線誘導", "en": "Attention-Grabbing Cursor/Pointer" },
+    "definition": { "ja": "ポインタ/視覚誘導を過剰利用" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "attentionHijacking": 3, "deception": 2 }
+  }
+]

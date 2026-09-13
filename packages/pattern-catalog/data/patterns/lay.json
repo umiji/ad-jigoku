@@ -1,0 +1,96 @@
+[
+  {
+    "id": "LAY-01",
+    "category": "LAY",
+    "name": { "ja": "レイアウトシフト", "en": "Layout Shift" },
+    "definition": { "ja": "広告ロード等でページレイアウトが移動" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interruption": 2, "interactionFriction": 3, "timeCost": 1, "mobileImpact": 3, "cumulativeEffect": 2 },
+    "game": {
+      "shell": "inlineRect",
+      "behaviors": {
+        "spawn": { "id": "spawn:delayed", "params": { "afterMs": { "min": 1000, "max": 3000 } } },
+        "instability": { "id": "instability:shift", "params": { "shiftPx": { "min": 80, "max": 240 } } }
+      },
+      "creative": { "kinds": ["sale", "notice"] },
+      "playerActions": ["DODGE", "CLOSE"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 3,
+      "uncertainty": 3,
+      "timePressure": 3,
+      "comboTags": ["layout-shift"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 4, "onMistake": 12, "perSecondAlive": 0.4 },
+      "education": { "ja": "押そうとした瞬間に本文が下へずれるやつ。押し間違いの原因はユーザーの不注意ではなく、高さを確保していない実装にある。" }
+    },
+    "detect": {
+      "layer": 2,
+      "signals": ["perf.cls", "dom.boundingBoxes", "viewport.size"],
+      "detectorId": "layout-shift-cls",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "maxCls": 0.1 }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "読んでいた行やタップ先が物理的に移動するため、誤タップと読み直しが同時に起きる。しかもその誤タップ先はたいてい広告になる。" },
+      "recommendations": [
+        { "ja": "広告枠に固定の width / height を先に確保し、ロード前後で高さを変えない。", "effort": "low", "expectedSeverityReduction": 7 },
+        { "ja": "遅延ロードする枠にはプレースホルダを置き、CLS を 0.1 未満に保つ。", "effort": "low", "expectedSeverityReduction": 3 }
+      ],
+      "adFriendlyAlternative": { "ja": "枠数も枠サイズも変えなくてよい。事前に高さを予約するだけでシフトは消え、広告の視認率はむしろ上がる。" }
+    }
+  },
+  {
+    "id": "LAY-02",
+    "category": "LAY",
+    "name": { "ja": "スクロール位置の飛び", "en": "Scroll Jump" },
+    "definition": { "ja": "閲覧中にスクロール位置が意図せず変化" },
+    "severity": 13,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 3, "interactionFriction": 3, "timeCost": 2, "mobileImpact": 2 }
+  },
+  {
+    "id": "LAY-03",
+    "category": "LAY",
+    "name": { "ja": "本文の押し下げ", "en": "Content Pushdown" },
+    "definition": { "ja": "広告挿入で本文が大きく押し下げられる" },
+    "severity": 8,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "obstruction": 2, "interactionFriction": 2, "timeCost": 1, "mobileImpact": 2 }
+  },
+  {
+    "id": "LAY-04",
+    "category": "LAY",
+    "name": { "ja": "表示中のサイズ変更", "en": "Ad Resize" },
+    "definition": { "ja": "広告が表示中にサイズ変更" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interactionFriction": 3, "obstruction": 2, "attentionHijacking": 1, "mobileImpact": 2 }
+  },
+  {
+    "id": "LAY-05",
+    "category": "LAY",
+    "name": { "ja": "浮遊広告の突然移動", "en": "Floating Reposition" },
+    "definition": { "ja": "広告位置が突然変化" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interactionFriction": 3, "obstruction": 2, "attentionHijacking": 2, "mobileImpact": 2 }
+  },
+  {
+    "id": "LAY-06",
+    "category": "LAY",
+    "name": { "ja": "オーバーレイ解除後のずれ", "en": "Overlay Reflow" },
+    "definition": { "ja": "オーバーレイ解除後にページ位置が変わる" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interactionFriction": 2, "timeCost": 2, "interruption": 1 }
+  }
+]

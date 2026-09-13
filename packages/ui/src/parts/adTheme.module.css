@@ -1,0 +1,68 @@
+/*
+ * 広告面のローカル変数（DESIGN.md §4 の semantic role の別名。新しい色ではない）。
+ *
+ * 部位（parts）は「どのテーマに置かれても正しい色になる」必要がある。
+ * 紙色の広告（surface.popup）の上では文字は text.inverse、暗い広告の上では text.primary。
+ * これを部位ごとに分岐させると破綻するので、面の側が変数を宣言し、部位はそれを読むだけにする。
+ *
+ *   --ad-surface        パネルの地色
+ *   --ad-ink            主文字色
+ *   --ad-ink-muted      控えめな文字色
+ *   --ad-muted-opacity  控えめな文字の不透明度（紙面では色ではなく透過で落とす）
+ *   --ad-border         枠線
+ *   --ad-accent         CTA / 強調の地色
+ *   --ad-accent-ink     accent の上に乗る文字色
+ *   --ad-media-bg       ビジュアル面の地色
+ *
+ * 値は必ず tokens.css の変数。生の色を書かない（stylelint が落とす）。
+ * パネルの地色に accent（赤・黄）を使わないのは、その上の文字がコントラスト基準を
+ * 満たせなくなるため（DESIGN.md §20 / DESIGN_REQ §19）。accent は枠・ラベル・CTA に使う。
+ */
+
+/* 紙色の広告。暗いサイトの中に割り込む「明るい紙」（packages/ui/README.md: ライトテーマではない） */
+.popup {
+  --ad-surface: var(--color-surface-popup);
+  --ad-ink: var(--color-text-inverse);
+  --ad-ink-muted: var(--color-text-inverse);
+  --ad-muted-opacity: 0.62;
+  --ad-border: var(--color-border-popup);
+  --ad-accent: var(--color-accent-danger);
+  --ad-accent-ink: var(--color-text-inverse);
+  --ad-media-bg: var(--color-bg-primary);
+}
+
+/* 暗い広告。サイトに溶け込む「ネイティブ広告」側 */
+.popup-dark {
+  --ad-surface: var(--color-surface-popup-dark);
+  --ad-ink: var(--color-text-primary);
+  --ad-ink-muted: var(--color-text-secondary);
+  --ad-muted-opacity: 1;
+  --ad-border: var(--color-border-subtle);
+  --ad-accent: var(--color-accent-electric);
+  --ad-accent-ink: var(--color-text-inverse);
+  --ad-media-bg: var(--color-bg-primary);
+}
+
+/* 割り込み・危険（DESIGN.md §4「Red should mean intrusion / danger」） */
+.danger {
+  --ad-surface: var(--color-surface-popup-dark);
+  --ad-ink: var(--color-text-primary);
+  --ad-ink-muted: var(--color-text-secondary);
+  --ad-muted-opacity: 1;
+  --ad-border: var(--color-accent-danger);
+  --ad-accent: var(--color-accent-danger);
+  --ad-accent-ink: var(--color-text-inverse);
+  --ad-media-bg: var(--color-bg-primary);
+}
+
+/* 偽の緊急性（カウントダウン系） */
+.warning {
+  --ad-surface: var(--color-surface-popup);
+  --ad-ink: var(--color-text-inverse);
+  --ad-ink-muted: var(--color-text-inverse);
+  --ad-muted-opacity: 0.62;
+  --ad-border: var(--color-accent-warning);
+  --ad-accent: var(--color-accent-warning);
+  --ad-accent-ink: var(--color-text-inverse);
+  --ad-media-bg: var(--color-bg-primary);
+}

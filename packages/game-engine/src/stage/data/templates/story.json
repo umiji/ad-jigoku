@@ -1,0 +1,33 @@
+[
+  {
+    "id": "opener",
+    "roles": [{ "role": "interrupt", "categories": ["INT", "OBS"], "difficulty": { "min": 1, "max": 2 } }],
+    "spacingMs": { "min": 2500, "max": 4000 }
+  },
+  {
+    "id": "pressure-pair",
+    "roles": [
+      { "role": "interrupt", "categories": ["INT", "OBS"], "difficulty": { "min": 1, "max": 2 } },
+      { "role": "pressure", "categories": ["OBS", "ATT", "LAY", "PER"], "difficulty": { "min": 1, "max": 3 } }
+    ],
+    "spacingMs": { "min": 2000, "max": 3500 }
+  },
+  {
+    "id": "trap-set",
+    "roles": [
+      { "role": "interrupt", "categories": ["INT", "OBS"], "difficulty": { "min": 1, "max": 3 } },
+      { "role": "trap", "categories": ["DEC", "CLS"], "difficulty": { "min": 3, "max": 5 } },
+      { "role": "wildcard" }
+    ],
+    "spacingMs": { "min": 1500, "max": 3000 }
+  },
+  {
+    "id": "finale",
+    "roles": [
+      { "role": "pressure", "categories": ["OBS", "ATT", "PER"], "difficulty": { "min": 2, "max": 4 } },
+      { "role": "trap", "categories": ["DEC", "CLS"], "difficulty": { "min": 3, "max": 5 } },
+      { "role": "finale", "categories": ["PER", "COM", "OBS"], "difficulty": { "min": 3, "max": 5 } }
+    ],
+    "spacingMs": { "min": 1000, "max": 2000 }
+  }
+]

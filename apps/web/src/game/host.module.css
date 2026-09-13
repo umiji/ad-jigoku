@@ -1,0 +1,185 @@
+/* GameHost の演出レイヤー（shake / stamp / toast / rage）と結果オーバーレイ。トークンのみ */
+.host {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+}
+
+.host[data-shake='true'] {
+  animation: host-shake var(--motion-fast) var(--ease-abrupt) 3;
+}
+
+@keyframes host-shake {
+  25% {
+    translate: -3px 0;
+  }
+
+  75% {
+    translate: 3px 0;
+  }
+}
+
+.host[data-rage='1'] {
+  filter: contrast(1.05);
+}
+
+.host[data-rage='2'] {
+  filter: contrast(1.1) saturate(1.1);
+}
+
+.host[data-rage='3'] {
+  filter: contrast(1.15) saturate(1.2);
+}
+
+.stamp {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  translate: -50% -50%;
+  rotate: -12deg;
+  z-index: var(--z-critical);
+  padding: var(--space-8) var(--space-16);
+  border: 4px solid var(--color-accent-danger);
+  color: var(--color-accent-danger);
+  font-size: var(--text-h2-size);
+  font-weight: var(--text-h1-weight);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  animation: stamp-in var(--motion-fast) var(--ease-abrupt) both;
+}
+
+@keyframes stamp-in {
+  from {
+    opacity: 0;
+    scale: 1.4;
+  }
+}
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--space-96) + env(safe-area-inset-bottom, 0px));
+  translate: -50% 0;
+  z-index: var(--z-critical);
+  padding: var(--space-8) var(--space-16);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-base);
+  font-size: var(--text-ad-meta-size);
+  pointer-events: none;
+}
+
+.result {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-system);
+  display: grid;
+  place-items: center;
+  padding: var(--space-16);
+  background: var(--color-surface-overlay);
+}
+
+.resultBox {
+  width: min(100%, 28rem);
+  padding: var(--space-24);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-top: 3px solid var(--color-accent-danger);
+  border-radius: var(--radius-card);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+.result[data-phase='cleared'] .resultBox {
+  border-top-color: var(--color-accent-success);
+}
+
+.resultMeta {
+  margin: 0;
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.resultTitle {
+  margin: var(--space-8) 0 var(--space-16);
+  font-size: var(--text-h2-size);
+  font-weight: var(--text-h2-weight);
+  line-height: var(--text-h2-line-height);
+}
+
+.resultScore {
+  margin: 0 0 var(--space-16);
+  font-size: var(--text-h1-size);
+  font-weight: var(--text-h1-weight);
+  line-height: var(--text-h1-line-height);
+  font-variant-numeric: tabular-nums;
+}
+
+.resultRows {
+  margin: 0 0 var(--space-16);
+  display: grid;
+  gap: var(--space-4);
+  font-size: var(--text-ad-meta-size);
+  color: var(--color-text-secondary);
+}
+
+.resultRow {
+  display: flex;
+  justify-content: space-between;
+  font-variant-numeric: tabular-nums;
+}
+
+.resultRow dd {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.culprit {
+  margin: var(--space-16) 0;
+  padding: var(--space-12);
+  border-left: 3px solid var(--color-accent-danger);
+  background: var(--color-bg-elevated);
+}
+
+.culpritName {
+  margin: var(--space-4) 0;
+  font-size: var(--text-body-size);
+  font-weight: var(--text-ad-headline-weight);
+}
+
+.culpritBody {
+  margin: 0;
+  font-size: var(--text-ad-meta-size);
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.restart {
+  margin-top: var(--space-16);
+  width: 100%;
+  min-height: var(--target-tap-min);
+  background: var(--color-accent-danger);
+  color: var(--color-text-inverse);
+  border: 0;
+  border-radius: var(--radius-button);
+  font: inherit;
+  font-weight: var(--text-ad-headline-weight);
+  cursor: pointer;
+}
+
+.restart:focus-visible {
+  outline: 2px solid var(--color-accent-electric);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .host[data-shake='true'],
+  .stamp {
+    animation: none;
+  }
+}

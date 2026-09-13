@@ -1,0 +1,364 @@
+[
+  {
+    "id": "cr-download-0001",
+    "kind": "download",
+    "tags": [
+      "download",
+      "loud"
+    ],
+    "brand": "ムゲンDL便",
+    "headline": "ダウンロード準備完了",
+    "body": "どのボタンが本物かはお楽しみです",
+    "cta": "ダウンロード",
+    "legal": "※本広告は架空のものです",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-download-0002",
+    "kind": "download",
+    "tags": [
+      "countdown",
+      "download"
+    ],
+    "brand": "ムゲンDL便",
+    "headline": "あと3秒で開始",
+    "body": "開始するのはダウンロードではありません",
+    "cta": "今すぐ開始",
+    "legal": "※実際には何も保存されません",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-download-0003",
+    "kind": "download",
+    "tags": [
+      "download"
+    ],
+    "brand": "ムゲンDL便",
+    "headline": "速度が10倍に",
+    "body": "当社比。分母は公開していません",
+    "cta": "高速化する",
+    "legal": "※効果には個人差があります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-download-0004",
+    "kind": "download",
+    "tags": [
+      "download",
+      "freebie"
+    ],
+    "brand": "謎の圧縮ソフト",
+    "headline": "ファイルが軽くなる",
+    "body": "圧縮後にソフト本体が容量を使います",
+    "cta": "無料で試す",
+    "legal": "※無料期間終了後は有料になります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-download-0005",
+    "kind": "download",
+    "tags": [
+      "download"
+    ],
+    "brand": "謎の圧縮ソフト",
+    "headline": "対応形式は3000種",
+    "body": "実際に使う形式は3種類くらいです",
+    "cta": "対応表を見る",
+    "legal": "※一部形式は非対応です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0006",
+    "kind": "download",
+    "tags": [
+      "download",
+      "system",
+      "warning"
+    ],
+    "brand": "ホゲドライバ",
+    "headline": "更新が見つかりました",
+    "body": "必要かどうかは誰にも分かりません",
+    "cta": "更新する",
+    "legal": "※実際のドライバではありません",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-download-0007",
+    "kind": "download",
+    "tags": [
+      "warning",
+      "system",
+      "loud"
+    ],
+    "brand": "ホゲドライバ",
+    "headline": "30個の問題を検出",
+    "body": "検出数は開くたびに増えます",
+    "cta": "修復する",
+    "legal": "※検出結果は演出です",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-download-0008",
+    "kind": "download",
+    "tags": [
+      "download"
+    ],
+    "brand": "ダミー変換器",
+    "headline": "どんな形式も変換",
+    "body": "変換先は選べません",
+    "cta": "変換を始める",
+    "legal": "※変換結果の品質は保証しません",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-download-0009",
+    "kind": "download",
+    "tags": [
+      "freebie",
+      "download"
+    ],
+    "brand": "ダミー変換器",
+    "headline": "会員登録は不要",
+    "body": "ダウンロードしたあとに必要になります",
+    "cta": "そのまま進む",
+    "legal": "※後から登録が必要です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0010",
+    "kind": "download",
+    "tags": [
+      "download",
+      "video"
+    ],
+    "brand": "ピヨピヨ動画保存",
+    "headline": "動画を保存できます",
+    "body": "保存できるのはこの広告だけです",
+    "cta": "保存する",
+    "legal": "※対応する配信元はありません",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-download-0011",
+    "kind": "download",
+    "tags": [
+      "download",
+      "video"
+    ],
+    "brand": "ピヨピヨ動画保存",
+    "headline": "高画質のまま保存",
+    "body": "画質は保存したあとに決まります",
+    "cta": "試してみる",
+    "legal": "※画質は環境によります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0012",
+    "kind": "download",
+    "tags": [
+      "download",
+      "warning"
+    ],
+    "brand": "無限インストーラ",
+    "headline": "一括で全部入る",
+    "body": "入れたくない物も一括で入ります",
+    "cta": "一括で入れる",
+    "legal": "※同梱ソフトが追加されます",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-download-0013",
+    "kind": "download",
+    "tags": [
+      "download",
+      "warning",
+      "loud"
+    ],
+    "brand": "無限インストーラ",
+    "headline": "×を押しても進む",
+    "body": "×はキャンセルではなく次へです",
+    "cta": "次へ進む",
+    "legal": "※本広告は架空のものです",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-download-0014",
+    "kind": "download",
+    "tags": [
+      "download",
+      "video"
+    ],
+    "brand": "ヨクミル再生器",
+    "headline": "再生には専用ソフト",
+    "body": "なぜか再生より先に更新が始まります",
+    "cta": "ソフトを入れる",
+    "legal": "※再生できない場合があります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-download-0015",
+    "kind": "download",
+    "tags": [
+      "download",
+      "system"
+    ],
+    "brand": "ヨクミル再生器",
+    "headline": "コーデックが不足",
+    "body": "不足しているのは説明のほうです",
+    "cta": "追加する",
+    "legal": "※実際のコーデックではありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0016",
+    "kind": "download",
+    "tags": [
+      "download",
+      "quiz"
+    ],
+    "brand": "カイゼン最適化",
+    "headline": "端末が遅い原因は",
+    "body": "原因はこの最適化ソフトかもしれません",
+    "cta": "診断する",
+    "legal": "※診断結果は一律で表示されます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-download-0017",
+    "kind": "download",
+    "tags": [
+      "download",
+      "system"
+    ],
+    "brand": "カイゼン最適化",
+    "headline": "空き容量を増やす",
+    "body": "増やした分は次の更新で消えます",
+    "cta": "空きを作る",
+    "legal": "※効果には個人差があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0018",
+    "kind": "download",
+    "tags": [
+      "freebie",
+      "download"
+    ],
+    "brand": "ムゲンDL便",
+    "headline": "無料版と有料版",
+    "body": "無料版のボタンは小さく置いてあります",
+    "cta": "無料版を選ぶ",
+    "legal": "※無料版には制限があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0019",
+    "kind": "download",
+    "tags": [
+      "system",
+      "download"
+    ],
+    "brand": "ホゲドライバ",
+    "headline": "再起動が必要です",
+    "body": "再起動しても同じ画面に戻ります",
+    "cta": "再起動する",
+    "legal": "※実際には再起動しません",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-download-0020",
+    "kind": "download",
+    "tags": [
+      "ranking",
+      "download"
+    ],
+    "brand": "謎の圧縮ソフト",
+    "headline": "今週の人気1位",
+    "body": "集計対象はこの広告を見た人だけです",
+    "cta": "入手する",
+    "legal": "※ランキングは自社調べです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0021",
+    "kind": "download",
+    "tags": [
+      "native"
+    ],
+    "brand": "ダミー変換器",
+    "headline": "広告なしで使える",
+    "body": "いま広告なし版の広告を見ています",
+    "cta": "詳しくはこちら",
+    "legal": "※広告は表示されます",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0022",
+    "kind": "download",
+    "tags": [
+      "download"
+    ],
+    "brand": "ピヨピヨ動画保存",
+    "headline": "3ステップで完了",
+    "body": "ステップ1がなかなか終わりません",
+    "cta": "手順を見る",
+    "legal": "※所要時間は目安です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0023",
+    "kind": "download",
+    "tags": [
+      "warning",
+      "download"
+    ],
+    "brand": "無限インストーラ",
+    "headline": "安全性を確認済み",
+    "body": "確認したのは当社です",
+    "cta": "確認結果",
+    "legal": "※第三者の検証は受けていません",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-download-0024",
+    "kind": "download",
+    "tags": [
+      "download"
+    ],
+    "brand": "ヨクミル再生器",
+    "headline": "旧バージョンに戻す",
+    "body": "戻すには新バージョンが必要です",
+    "cta": "戻し方を見る",
+    "legal": "※動作は保証されません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-download-0025",
+    "kind": "download",
+    "tags": [
+      "countdown",
+      "download",
+      "loud"
+    ],
+    "brand": "カイゼン最適化",
+    "headline": "あと1件で完了",
+    "body": "1件目がまだ終わっていません",
+    "cta": "続きを進める",
+    "legal": "※進捗表示は演出です",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-download-0026",
+    "kind": "download",
+    "tags": [
+      "countdown",
+      "download"
+    ],
+    "brand": "ムゲンDL便",
+    "headline": "ファイルは3秒後",
+    "body": "3秒は環境により変動します",
+    "cta": "待機する",
+    "legal": "※本広告は架空のものです",
+    "theme": "danger"
+  }
+]

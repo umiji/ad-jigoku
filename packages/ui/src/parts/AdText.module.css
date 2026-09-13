@@ -1,0 +1,32 @@
+/*
+ * 広告の文字要素（DESIGN.md §5 Typography / §8 anatomy）。
+ *
+ * 見出し・本文・極小注意書きは同じ「文字の面」の仲間なので 1 ファイルにまとめる。
+ * サイズ差は意図的に大きく取る（DESIGN_REQUIREMENTS §3.3）。
+ */
+
+.headline {
+  font-size: var(--text-ad-headline-size);
+  font-weight: var(--text-ad-headline-weight);
+  line-height: var(--text-ad-headline-line-height);
+  color: var(--ad-ink, var(--color-text-primary));
+  text-wrap: balance;
+}
+
+.body {
+  max-inline-size: 48ch;
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-line-height);
+  color: var(--ad-ink-muted, var(--color-text-secondary));
+  opacity: var(--ad-muted-opacity, 1);
+}
+
+.legal {
+  max-inline-size: 60ch;
+  font-size: var(--text-ad-legal-size);
+  font-weight: var(--text-ad-legal-weight);
+  line-height: var(--text-ad-legal-line-height);
+  color: var(--ad-ink-muted, var(--color-text-secondary));
+  opacity: var(--ad-muted-opacity, 1);
+}

@@ -1,0 +1,102 @@
+/*
+ * ダーク基盤（DESIGN.md §2 / §3 MUST 2, DESIGN_REQUIREMENTS.md §3.1）。
+ *
+ * このプロダクトは「常にダーク」。ライト / ダークの切り替えは存在しない。
+ * テーマトグルを作らないこと（packages/ui/README.md 参照）。
+ *
+ * 背景は完全な単色にせず、グレイン / 微かな発光 / ヴィネットで質感を作る。
+ * ただし背景演出が広告 UI より目立ってはいけない（DESIGN_REQUIREMENTS §3.1）ので、
+ * どのレイヤーも極端に低いコントラストに抑えてある。
+ *
+ * 前提: tokens.css が先に読み込まれていること。
+ */
+
+/*
+ * 背景の質感レイヤーはトークンの合成であって新しい色ではない。
+ *   1. grain    : feTurbulence のモノクロノイズ（最前面・ごく薄い）
+ *   2. vignette : 周辺を bg.primary で締める
+ *   3. glow     : 上部だけ bg.elevated でわずかに持ち上げる
+ */
+:root {
+  /* ライト/ダークの切り替えは持たない。常にダーク */
+  color-scheme: dark;
+
+  --surface-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)' opacity='0.06'/%3E%3C/svg%3E");
+  --surface-vignette: radial-gradient(ellipse 130% 95% at 50% 45%, transparent 30%, var(--color-bg-primary) 100%);
+  --surface-glow: radial-gradient(ellipse 120% 70% at 50% 0%, var(--color-bg-elevated) 0%, transparent 62%);
+
+  /* DESIGN.md §6 Container。mobile 20px → desktop 32px */
+  --container-gutter: var(--container-padding-mobile);
+}
+
+/* ブレークポイントは Tailwind の md に合わせる（DESIGN.md は値を定義していない） */
+@media (width >= 48rem) {
+  :root {
+    --container-gutter: var(--container-padding-desktop);
+  }
+}
+
+html {
+  background-color: var(--color-bg-primary);
+}
+
+body {
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-line-height);
+  background-color: var(--color-bg-primary);
+  background-image: var(--surface-grain), var(--surface-vignette), var(--surface-glow);
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-attachment: scroll, fixed, fixed;
+  background-size: 160px 160px, cover, cover;
+}
+
+/* 見出しは DESIGN.md §5 のヒエラルキーに従う。装飾フォントは使わない */
+h1 {
+  font-size: var(--text-h1-size);
+  font-weight: var(--text-h1-weight);
+  line-height: var(--text-h1-line-height);
+}
+
+h2 {
+  font-size: var(--text-h2-size);
+  font-weight: var(--text-h2-weight);
+  line-height: var(--text-h2-line-height);
+}
+
+/*
+ * フォーカスは必ず見えること（DESIGN.md §20 MUST「visible focus state」）。
+ * 幅 2px は DESIGN.md が値を定義していないため、ここだけ素の値を使っている。
+ * 値を増やしたくなったら DESIGN.md を先に改訂する。
+ */
+:focus-visible {
+  outline: 2px solid var(--color-accent-electric);
+  outline-offset: 2px;
+}
+
+::selection {
+  color: var(--color-text-inverse);
+  background-color: var(--color-accent-warning);
+}
+
+/*
+ * reduced-motion（DESIGN.md §20 / DESIGN_REQUIREMENTS §19）。
+ * 動きは消すが、状態変化とインタラクションのロジックは残す。
+ * 背景も動かさない。
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    background-attachment: scroll;
+  }
+}

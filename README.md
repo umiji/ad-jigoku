@@ -10,13 +10,13 @@ Experience → Awareness → Evaluation → Improvement → Better UX
 
 ## 現在の状態
 
-**設計フェーズ。実装コードはまだ存在しない。**
+**実装フェーズ（Phase 1 / M0〜）。** 進捗は `docs/tasks/0-task-list-ad-jigoku.csv` を参照。
 
 - 要件: 確定（`docs/requirements/`）
 - アーキテクチャ: **v0.2 反映済み**（`docs/design/DECISIONS_v0.2.md`。Shell×Behaviors の2軸モデル、
   BrowserFrame、エンカウンターテンプレート、Prioritization、escape facet、Cloudflare Pages/Actions 移行）
 - タスク分解: 完了（`docs/tasks/` に 59 タスク。v0.2 で 013A/013B/013C/013D/014A/024A/024B/046A を追加）
-- 実装: 未着手（TASK-001 から）
+- 実装: 進行中（`docs/tasks/0-task-list-ad-jigoku.csv` が単一の進捗台帳）
 
 ## ドキュメント
 
@@ -66,4 +66,10 @@ Experience → Awareness → Evaluation → Improvement → Better UX
 
 ## 開発
 
-（TASK-001 完了後に記載）
+```bash
+pnpm install                 # Node 22 / pnpm 10（packageManager で固定）
+pnpm dev                     # apps/web を http://localhost:3000 で起動
+pnpm verify                  # typecheck → lint → test → check-deps → parity → creatives（CI と同じ。`pnpm ci` は pnpm 予約語）
+```
+
+依存方向（`ARCHITECTURE.md §5.1`）は `pnpm check-deps` と ESLint で機械的に強制される。

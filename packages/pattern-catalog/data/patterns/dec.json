@@ -1,0 +1,136 @@
+[
+  {
+    "id": "DEC-01",
+    "category": "DEC",
+    "name": { "ja": "ネイティブ偽装", "en": "Native Camouflage" },
+    "definition": { "ja": "記事/コンテンツと広告の見た目が酷似" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "deception": 3, "interactionFriction": 2, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "DEC-02",
+    "category": "DEC",
+    "name": { "ja": "偽ダウンロードボタン", "en": "Fake Download" },
+    "definition": { "ja": "ダウンロードUIに見える広告" },
+    "severity": 16,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "deception": 3, "interactionFriction": 2, "mobileImpact": 2, "cumulativeEffect": 2 },
+    "game": {
+      "shell": "fakeDownload",
+      "behaviors": {
+        "spawn": { "id": "spawn:delayed", "params": { "afterMs": { "min": 800, "max": 2500 } } },
+        "deception": { "id": "deception:fake-download" }
+      },
+      "creative": { "kinds": ["download"] },
+      "playerActions": ["REPORT", "IGNORE"],
+      "correctInaction": true,
+      "failureCondition": { "kind": "wrong-target" },
+      "warning": "subtle",
+      "interactionComplexity": 3,
+      "uncertainty": 4,
+      "timePressure": 2,
+      "comboTags": ["fake-download"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 3, "onMistake": 30, "perSecondAlive": 0 },
+      "education": { "ja": "巨大な「ダウンロード」ボタンは本物ではない。放置しても何も起きないので、触らないことが正解。本物のリンクはたいてい地味で小さい。" }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "ユーザーが今まさにやろうとしている操作（ダウンロード）に偽装するため、注意深い人でも踏む。踏んだ先が別サイトである以上、被害はサイトの信用に返ってくる。" },
+      "recommendations": [
+        { "ja": "ダウンロード導線の周囲には広告枠を置かない（上下 150px を禁止帯にする）。", "effort": "low", "expectedSeverityReduction": 8 },
+        { "ja": "本物のダウンロードボタンを、広告より大きく・色でも区別できる形にする。", "effort": "low", "expectedSeverityReduction": 4 }
+      ],
+      "adFriendlyAlternative": { "ja": "広告は残し、枠に明確な「広告」ラベルと境界線を付けて、本文のボタンと視覚的に絶対に混ざらないようにする。" }
+    }
+  },
+  {
+    "id": "DEC-03",
+    "category": "DEC",
+    "name": { "ja": "偽の再生ボタン", "en": "Fake Play" },
+    "definition": { "ja": "再生ボタンに見える広告" },
+    "severity": 15,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "deception": 3, "interactionFriction": 2, "mobileImpact": 2, "cumulativeEffect": 2 },
+    "game": {
+      "shell": "fakePlay",
+      "behaviors": {
+        "spawn": { "id": "spawn:delayed", "params": { "afterMs": { "min": 800, "max": 2500 } } },
+        "deception": { "id": "deception:fake-play" }
+      },
+      "creative": { "kinds": ["video"] },
+      "playerActions": ["REPORT", "IGNORE"],
+      "correctInaction": true,
+      "failureCondition": { "kind": "wrong-target" },
+      "warning": "subtle",
+      "interactionComplexity": 3,
+      "uncertainty": 4,
+      "timePressure": 2,
+      "comboTags": ["fake-play"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 3, "onMistake": 30, "perSecondAlive": 0 },
+      "education": { "ja": "▶に見えるが再生しない。押した先にあるのは動画ではなく別サイト。押さずに放置するのが最善手。" }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "再生ボタンは「押していい」ことを意味する記号として学習されている。その記号を広告に使うのは、記号そのものを壊す行為にあたる。" },
+      "recommendations": [
+        { "ja": "再生アイコンを模した広告クリエイティブを配信対象から除外する。", "effort": "medium", "expectedSeverityReduction": 8 },
+        { "ja": "動画プレイヤーの直上・直下に広告枠を置かない。", "effort": "low", "expectedSeverityReduction": 4 }
+      ],
+      "adFriendlyAlternative": { "ja": "動画の前後に、プレイヤーとは明確に別枠と分かるバナーを置く。再生導線と紛れさせなくても在庫は消化できる。" }
+    }
+  },
+  {
+    "id": "DEC-04",
+    "category": "DEC",
+    "name": { "ja": "偽の「次へ」", "en": "Fake Next" },
+    "definition": { "ja": "次へ/次の記事に見える広告" },
+    "severity": 15,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "deception": 3, "interactionFriction": 2, "mobileImpact": 2, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "DEC-05",
+    "category": "DEC",
+    "name": { "ja": "偽ナビゲーション", "en": "Fake Navigation" },
+    "definition": { "ja": "メニュー/ナビゲーションに見える広告" },
+    "severity": 16,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "deception": 3, "interactionFriction": 3, "mobileImpact": 2, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "DEC-06",
+    "category": "DEC",
+    "name": { "ja": "見出しに偽装した広告", "en": "Misleading Heading" },
+    "definition": { "ja": "広告をコンテンツ見出し等に見せる" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "deception": 3, "interactionFriction": 1, "cumulativeEffect": 1 }
+  },
+  {
+    "id": "DEC-07",
+    "category": "DEC",
+    "name": { "ja": "広告表記が分かりにくい", "en": "Ad Label Obscured" },
+    "definition": { "ja": "広告表示であることが分かりにくい" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "deception": 3, "interactionFriction": 1 }
+  },
+  {
+    "id": "DEC-08",
+    "category": "DEC",
+    "name": { "ja": "本文と広告の境界消失", "en": "Content-Ad Blend" },
+    "definition": { "ja": "広告と本文の境界が極めて分かりにくい" },
+    "severity": 13,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "deception": 3, "interactionFriction": 2, "cumulativeEffect": 2 }
+  }
+]

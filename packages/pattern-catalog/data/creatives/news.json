@@ -1,0 +1,351 @@
+[
+  {
+    "id": "cr-news-0001",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "ナゾ速報",
+    "headline": "【速報】速報です",
+    "body": "速報の内容は追ってお伝えします",
+    "cta": "続きを読む",
+    "legal": "※記事は架空です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0002",
+    "kind": "news",
+    "tags": [
+      "native",
+      "loud"
+    ],
+    "brand": "ナゾ速報",
+    "headline": "衝撃の事実が判明",
+    "body": "判明したのは、何も判明していないこと",
+    "cta": "記事を読む",
+    "legal": "※本広告は架空のものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0003",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "テキトー出版",
+    "headline": "あなたも知らない話",
+    "body": "書いた本人も知りません",
+    "cta": "詳しくはこちら",
+    "legal": "※内容はフィクションです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0004",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "テキトー出版",
+    "headline": "続きは次のページ",
+    "body": "次のページも1行で終わります",
+    "cta": "次のページ",
+    "legal": "※ページ送りが発生します",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0005",
+    "kind": "news",
+    "tags": [
+      "warning",
+      "native"
+    ],
+    "brand": "ヨクワカラン新聞",
+    "headline": "専門家が警鐘",
+    "body": "警鐘の音は誰にも聞こえませんでした",
+    "cta": "記事を読む",
+    "legal": "※専門家は架空の人物です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-news-0006",
+    "kind": "news",
+    "tags": [
+      "ranking",
+      "native"
+    ],
+    "brand": "ヨクワカラン新聞",
+    "headline": "ランキング発表",
+    "body": "1位から3位まで同じ内容です",
+    "cta": "順位を見る",
+    "legal": "※ランキングは自社調べです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0007",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "ダミー通信社",
+    "headline": "関係者によると",
+    "body": "関係者とは記者本人のことです",
+    "cta": "全文を読む",
+    "legal": "※記事は架空です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0008",
+    "kind": "news",
+    "tags": [
+      "urgent",
+      "native"
+    ],
+    "brand": "ダミー通信社",
+    "headline": "号外が出ました",
+    "body": "出たのは号外を出すという告知です",
+    "cta": "号外を見る",
+    "legal": "※実在の報道ではありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0009",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "深夜のまとめ",
+    "headline": "眠れない人のために",
+    "body": "この記事を読むとさらに眠れません",
+    "cta": "読んでみる",
+    "legal": "※内容はフィクションです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-news-0010",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "深夜のまとめ",
+    "headline": "厳選30記事",
+    "body": "30記事のうち28本が広告です",
+    "cta": "一覧を見る",
+    "legal": "※広告を含みます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-news-0011",
+    "kind": "news",
+    "tags": [
+      "recurring",
+      "native"
+    ],
+    "brand": "ホゲ経済新聞",
+    "headline": "市場が動きました",
+    "body": "どちらに動いたかは有料会員のみ",
+    "cta": "続きを読む",
+    "legal": "※投資判断はご自身の責任で",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0012",
+    "kind": "news",
+    "tags": [
+      "freebie",
+      "recurring"
+    ],
+    "brand": "ホゲ経済新聞",
+    "headline": "無料登録で3本",
+    "body": "4本目から月額が始まります",
+    "cta": "登録する",
+    "legal": "※無料期間終了後は自動的に有料になります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-news-0013",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "ナゾ速報",
+    "headline": "関連記事はこちら",
+    "body": "関連しているのは広告枠だけです",
+    "cta": "関連を見る",
+    "legal": "※広告が含まれます",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0014",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "テキトー出版",
+    "headline": "写真11枚で見る",
+    "body": "11枚目だけが本題です",
+    "cta": "写真を見る",
+    "legal": "※画像はイメージです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0015",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "ヨクワカラン新聞",
+    "headline": "独占インタビュー",
+    "body": "独占しているのは沈黙です",
+    "cta": "全文を読む",
+    "legal": "※登場人物は架空です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0016",
+    "kind": "news",
+    "tags": [
+      "system",
+      "mobile"
+    ],
+    "brand": "ダミー通信社",
+    "headline": "速報通知をオンに",
+    "body": "1日40件の速報が届きます",
+    "cta": "オンにする",
+    "legal": "※通知は設定で変更できます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-news-0017",
+    "kind": "news",
+    "tags": [
+      "ranking",
+      "native"
+    ],
+    "brand": "深夜のまとめ",
+    "headline": "衝撃の第3位",
+    "body": "1位と2位は掲載していません",
+    "cta": "3位を見る",
+    "legal": "※ランキングは自社調べです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-news-0018",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "ホゲ経済新聞",
+    "headline": "今朝の相場観",
+    "body": "相場観は毎朝変わります",
+    "cta": "解説を読む",
+    "legal": "※将来の成果を保証しません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0019",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "ナゾ速報",
+    "headline": "これは広告です",
+    "body": "正直に書いたら誰も押しませんでした",
+    "cta": "押してみる",
+    "legal": "※本広告は架空のものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0020",
+    "kind": "news",
+    "tags": [
+      "testimonial"
+    ],
+    "brand": "テキトー出版",
+    "headline": "読者の反響が凄い",
+    "body": "反響は3件ありました",
+    "cta": "反響を見る",
+    "legal": "※感想は個人のものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0021",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "ヨクワカラン新聞",
+    "headline": "図解でわかる",
+    "body": "図はありません",
+    "cta": "解説を読む",
+    "legal": "※図版は準備中です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0022",
+    "kind": "news",
+    "tags": [
+      "countdown",
+      "urgent"
+    ],
+    "brand": "ダミー通信社",
+    "headline": "あと3秒で公開",
+    "body": "公開されるのは続きの案内です",
+    "cta": "待つ",
+    "legal": "※公開時刻は目安です",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-news-0023",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "深夜のまとめ",
+    "headline": "元記事はこちら",
+    "body": "元記事もまとめ記事です",
+    "cta": "元記事へ",
+    "legal": "※出典は架空です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-news-0024",
+    "kind": "news",
+    "tags": [
+      "native",
+      "desktop"
+    ],
+    "brand": "ホゲ経済新聞",
+    "headline": "紙面をそのまま",
+    "body": "そのまますぎて読めません",
+    "cta": "見本を見る",
+    "legal": "※画像はイメージです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0025",
+    "kind": "news",
+    "tags": [
+      "urgent",
+      "native"
+    ],
+    "brand": "ナゾ速報",
+    "headline": "続報が入りました",
+    "body": "続報の続報をお待ちください",
+    "cta": "続報を見る",
+    "legal": "※記事は架空です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-news-0026",
+    "kind": "news",
+    "tags": [
+      "native"
+    ],
+    "brand": "テキトー出版",
+    "headline": "あなたにおすすめ",
+    "body": "おすすめの基準は掲載枠の空きです",
+    "cta": "おすすめを見る",
+    "legal": "※広告が含まれます",
+    "theme": "popup"
+  }
+]

@@ -1,0 +1,112 @@
+/*
+ * inlineRect — 本文中のレクタングル広告（DESIGN.md §9 / §16 / §17）。
+ *
+ * 300×250 の「レクタングル」の記号。ビジュアルが面積の大半を取り、下に PR ラベルと小さな CTA。
+ * 図像は写真ではなく図形だけで作る（DESIGN.md §17 Imagery）。色は面のテーマ変数から取る。
+ */
+
+.rect {
+  --ad-offset-y: 0%;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  inline-size: 100%;
+  max-inline-size: calc(var(--space-96) * 3 + var(--space-12));
+  padding: var(--space-8);
+  font-family: var(--font-sans);
+  color: var(--ad-ink);
+  background-color: var(--ad-surface);
+  border: 1px solid var(--ad-border);
+  border-radius: var(--radius-popup);
+
+  /* LAY-01: 見た目だけずらす。position / margin は触らない（ADR-006） */
+  transform: translateY(var(--ad-offset-y));
+}
+
+.media {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+
+  /* 300 × 250 のレクタングル */
+  aspect-ratio: 300 / 250;
+  padding: var(--space-12);
+  overflow: hidden;
+  color: var(--ad-accent);
+  background-color: var(--ad-media-bg);
+}
+
+/* 網点のかわりの細い格子。図像 1（DESIGN.md §17 abstract ad graphics） */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, currentcolor 0 1px, transparent 1px var(--space-12)),
+    repeating-linear-gradient(0deg, currentcolor 0 1px, transparent 1px var(--space-12));
+  opacity: 0.18;
+}
+
+/* 斜めに走る太い帯。図像 2 */
+.burst {
+  position: absolute;
+  inset-block-start: 20%;
+  inset-inline: calc(var(--space-48) * -1);
+  block-size: var(--space-48);
+  background-color: currentcolor;
+  opacity: 0.9;
+  transform: rotate(-12deg);
+}
+
+/* バナーに焼き込まれた文字。media 面の一部なので data-target は media 側が持つ */
+.headline {
+  position: relative;
+  font-size: var(--text-ad-headline-size);
+  font-weight: var(--text-ad-headline-weight);
+  line-height: var(--text-ad-headline-line-height);
+  color: var(--ad-accent-ink);
+  text-wrap: balance;
+  background-color: var(--ad-accent);
+  box-shadow: 0 0 0 var(--space-4) var(--ad-accent);
+}
+
+.tag {
+  position: absolute;
+  inset-block-start: var(--space-8);
+  inset-inline-end: var(--space-8);
+  padding-block: var(--space-4);
+  padding-inline: var(--space-8);
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  line-height: var(--text-ad-meta-line-height);
+  color: var(--ad-accent-ink);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  background-color: var(--ad-accent);
+}
+
+.foot {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rect .cta {
+  padding-block: var(--space-8);
+  padding-inline: var(--space-16);
+  font-size: var(--text-ad-meta-size);
+}
+
+.badge {
+  align-self: flex-start;
+  max-inline-size: 100%;
+  padding-block: var(--space-4);
+  padding-inline: var(--space-8);
+  overflow: hidden;
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  line-height: var(--text-ad-meta-line-height);
+  color: var(--ad-ink-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

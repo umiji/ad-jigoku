@@ -1,0 +1,196 @@
+/*
+ * BrowserFrame — ゲーム領域を包む偽ブラウザ UI（TASK-014A / ADR-010）。
+ * SAFE-12: Safari / Chrome の外観を模倣しない。DESIGN.md のダーク様式で「ゲーム内 UI」と分かる見た目。
+ * 色・z-index・角丸・余白はすべてトークン（tokens.css）。
+ */
+.frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  isolation: isolate;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-12);
+  padding-top: calc(var(--space-8) + env(safe-area-inset-top, 0px));
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border-subtle);
+  z-index: var(--z-system);
+}
+
+.brand {
+  font-size: var(--text-ad-meta-size);
+  font-weight: var(--text-ad-meta-weight);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  line-height: var(--text-ad-meta-line-height);
+  text-transform: uppercase;
+  color: var(--color-accent-warning);
+  border: 1px solid var(--color-accent-warning);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-button);
+  white-space: nowrap;
+}
+
+.navButton {
+  min-width: var(--target-tap-min);
+  min-height: var(--target-tap-min);
+  display: inline-grid;
+  place-items: center;
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-button);
+  font-size: var(--text-body-size);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard);
+}
+
+.navButton:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-elevated);
+}
+
+.navButton:focus-visible {
+  outline: 2px solid var(--color-accent-electric);
+  outline-offset: 2px;
+}
+
+.navButton[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.urlBar {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: var(--target-tap-min);
+  padding: 0 var(--space-12);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-button);
+  font-size: var(--text-ad-meta-size);
+  letter-spacing: 0.02em;
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.urlScheme {
+  color: var(--color-accent-danger);
+  font-weight: var(--text-ad-meta-weight);
+}
+
+.urlHost {
+  color: var(--color-text-primary);
+}
+
+.tabs {
+  display: none;
+  gap: var(--space-4);
+}
+
+@media (width >= 768px) {
+  .tabs {
+    display: flex;
+  }
+}
+
+.tab {
+  padding: var(--space-4) var(--space-12);
+  font-size: var(--text-ad-meta-size);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-bottom: none;
+  border-radius: var(--radius-button) var(--radius-button) 0 0;
+  white-space: nowrap;
+}
+
+.tabActive {
+  color: var(--color-text-primary);
+  background: var(--color-bg-primary);
+}
+
+.notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding: var(--space-8) var(--space-12);
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-size: var(--text-ad-meta-size);
+  line-height: var(--text-ad-meta-line-height);
+  color: var(--color-text-secondary);
+  z-index: var(--z-system);
+}
+
+.noticeStrong {
+  color: var(--color-accent-warning);
+  font-weight: var(--text-ad-meta-weight);
+}
+
+.noticeDismiss {
+  min-height: var(--target-tap-min);
+  min-width: var(--target-tap-min);
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-button);
+  cursor: pointer;
+}
+
+.noticeDismiss:focus-visible {
+  outline: 2px solid var(--color-accent-electric);
+  outline-offset: 2px;
+}
+
+/* 偽ブラウザの viewport。スクロール内容と、それに固定されるレイヤー（広告 / HUD）の基準 */
+.viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 偽スクロールコンテナ: 実ページの window.scroll には一切触れない */
+.scroll {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  background: var(--color-bg-primary);
+}
+
+.scrollInner {
+  position: relative;
+  min-height: 100%;
+}
+
+.badge {
+  position: absolute;
+  right: var(--space-8);
+  bottom: calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-ambient);
+  font-size: var(--text-ad-legal-size);
+  letter-spacing: var(--text-ad-meta-letter-spacing);
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+  pointer-events: none;
+}

@@ -1,0 +1,144 @@
+[
+  {
+    "id": "INT-01",
+    "category": "INT",
+    "name": { "ja": "即時ポップアップ", "en": "Immediate Popup" },
+    "definition": { "ja": "ページ表示直後にポップアップ" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "interruption": 3, "obstruction": 2, "interactionFriction": 1, "mobileImpact": 2, "cumulativeEffect": 2 },
+    "game": {
+      "shell": "popup",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "close": { "id": "close:instant" }
+      },
+      "creative": { "kinds": ["sale", "notice"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 1,
+      "uncertainty": 1,
+      "timePressure": 2,
+      "comboTags": ["popup"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 5, "onMistake": 5, "perSecondAlive": 0.5 },
+      "education": { "ja": "ページを開いた瞬間に出るポップアップ。まだ何も読んでいないユーザーに「重要なお知らせ」を出しても、重要なのはサイト側の都合だけ。" }
+    },
+    "detect": {
+      "layer": 2,
+      "signals": ["timeline.popupEvents", "dom.zIndex", "dom.boundingBoxes"],
+      "detectorId": "immediate-popup-timing",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "minDelayAfterLoadMs": 3000 }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "到着直後はまだページの価値を判断していない。そこを覆われると、内容ではなく「邪魔された」だけが記憶に残り、直帰の最大要因になる。" },
+      "recommendations": [
+        { "ja": "ポップアップの表示をスクロール 50% 到達後、または滞在 15 秒後に遅らせる。", "effort": "low", "expectedSeverityReduction": 5 },
+        { "ja": "同一セッションでの表示回数を1回に制限する。", "effort": "low", "expectedSeverityReduction": 3 }
+      ],
+      "adFriendlyAlternative": { "ja": "同じ在庫を、記事を読み終えた位置のインライン枠に移す。読了後のほうが可処分注意が残っており、実測のCTRが落ちないことも多い。" }
+    }
+  },
+  {
+    "id": "INT-02",
+    "category": "INT",
+    "name": { "ja": "遅延ポップアップ", "en": "Delayed Popup" },
+    "definition": { "ja": "閲覧開始後、予期せずポップアップ" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "interruption": 3, "obstruction": 2, "cumulativeEffect": 1 }
+  },
+  {
+    "id": "INT-03",
+    "category": "INT",
+    "name": { "ja": "スクロール連動ポップアップ", "en": "Scroll-Triggered Popup" },
+    "definition": { "ja": "スクロール中に突然広告表示" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interruption": 3, "obstruction": 2, "interactionFriction": 2, "mobileImpact": 2 }
+  },
+  {
+    "id": "INT-04",
+    "category": "INT",
+    "name": { "ja": "クリック起点の全画面広告", "en": "Click-Triggered Interstitial" },
+    "definition": { "ja": "リンククリック等で全画面広告" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interruption": 3, "obstruction": 3, "timeCost": 2, "mobileImpact": 2 }
+  },
+  {
+    "id": "INT-05",
+    "category": "INT",
+    "name": { "ja": "離脱検知広告", "en": "Exit-Intent Ad" },
+    "definition": { "ja": "離脱/戻る操作に反応して広告表示" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interruption": 3, "obstruction": 2, "interactionFriction": 2 }
+  },
+  {
+    "id": "INT-06",
+    "category": "INT",
+    "name": { "ja": "戻る操作の乗っ取り", "en": "Back-Intercept Ad" },
+    "definition": { "ja": "ブラウザBackに干渉する広告/オーバーレイ" },
+    "severity": 14,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 3, "deception": 2, "interactionFriction": 3, "persistence": 2, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "INT-07",
+    "category": "INT",
+    "name": { "ja": "コンテンツ前の全画面広告", "en": "Prestitial" },
+    "definition": { "ja": "コンテンツ到達前に広告で遮る" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "interruption": 3, "obstruction": 3, "timeCost": 2, "mobileImpact": 2 },
+    "detect": {
+      "layer": 2,
+      "signals": ["timeline.navigation", "dom.snapshot", "viewport.occlusion"],
+      "detectorId": "prestitial-navigation",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "minContentDelayMs": 1000 }
+    }
+  },
+  {
+    "id": "INT-08",
+    "category": "INT",
+    "name": { "ja": "コンテンツ後の全画面広告", "en": "Postitial" },
+    "definition": { "ja": "コンテンツ/操作後に広告で遮る" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interruption": 3, "obstruction": 2, "timeCost": 2 }
+  },
+  {
+    "id": "INT-09",
+    "category": "INT",
+    "name": { "ja": "全画面広告の連発", "en": "Repeated Interstitial" },
+    "definition": { "ja": "複数ページ/複数操作で頻繁に全画面広告" },
+    "severity": 14,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 3, "obstruction": 3, "persistence": 3, "timeCost": 2, "cumulativeEffect": 3 }
+  },
+  {
+    "id": "INT-10",
+    "category": "INT",
+    "name": { "ja": "頻度制御の失敗", "en": "Frequency-Cap Failure" },
+    "definition": { "ja": "同一セッションで過剰頻度に広告が出る" },
+    "severity": 13,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 3, "persistence": 3, "timeCost": 2, "cumulativeEffect": 3 }
+  }
+]

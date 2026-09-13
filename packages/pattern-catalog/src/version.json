@@ -1,0 +1,6 @@
+{
+  "catalogVersion": "0.1.0",
+  "patternCount": 92,
+  "calibratedCount": 0,
+  "changelog": "docs/requirements/AD_UX_PATTERN_CATALOG.md の v0.1 に対応。TASK-004 で全 92 パターンを data/patterns/*.json に投入"
+}

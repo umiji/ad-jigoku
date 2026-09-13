@@ -1,0 +1,100 @@
+/*
+ * 閉じるボタンの外形（DESIGN.md §19 / DESIGN_REQUIREMENTS §5.3 Pattern C）。
+ * 本物の × （CloseButton）と偽の × （FakeCloseButton）が共有する。
+ * 見た目が同じでよいのがこのパロディの肝であり、違いは aria-label と data-target だけ。
+ *
+ * **当たり判定と見た目の大きさを分ける**のがこのファイルの存在理由:
+ *   - ボタン自体 … 最低 44×44（--target-tap-min / DESIGN.md §19）。ここは絶対に縮まない
+ *   - 中の箱     … --close-visual-scale で縮む。「Tiny Close」は見た目だけ小さい
+ * ゲームとして不公平にしないため、hitboxScale が 1 未満でも max() で 44px を下回らせない。
+ */
+
+.button {
+  --close-visual-scale: 1;
+  --close-hitbox-scale: 1;
+
+  display: grid;
+  place-items: center;
+  min-inline-size: max(var(--target-tap-min), calc(var(--target-tap-min) * var(--close-hitbox-scale)));
+  min-block-size: max(var(--target-tap-min), calc(var(--target-tap-min) * var(--close-hitbox-scale)));
+  padding: 0;
+  color: var(--ad-ink, var(--color-text-primary));
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+/* 既定位置: 右上（DESIGN.md §8 anatomy の図）。親が position を持つ前提 */
+.corner {
+  position: absolute;
+  inset-block-start: var(--space-4);
+  inset-inline-end: var(--space-4);
+}
+
+/* moving close 用。親に対する % で置く。中心合わせ */
+.anchored {
+  position: absolute;
+  inset-block-start: var(--close-y);
+  inset-inline-start: var(--close-x);
+  transform: translate(-50%, -50%);
+}
+
+/* 通常フローに置く（dev ページや、自前で配置するシェル用） */
+.flow {
+  position: relative;
+}
+
+.box {
+  display: grid;
+  place-items: center;
+  inline-size: calc(var(--space-32) * var(--close-visual-scale));
+  block-size: calc(var(--space-32) * var(--close-visual-scale));
+  font-size: calc(var(--space-16) * var(--close-visual-scale));
+  font-weight: var(--text-ad-meta-weight);
+  line-height: 1;
+  background-color: var(--ad-surface, var(--color-bg-elevated));
+  border: 1px solid var(--ad-border, var(--color-border-subtle));
+  border-radius: var(--radius-button);
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+/* emphasis 2: 押させたい × （fake 側でよく使う） */
+.loud .box {
+  color: var(--ad-accent-ink, var(--color-text-inverse));
+  background-color: var(--ad-accent, var(--color-accent-danger));
+  border-color: transparent;
+}
+
+/* emphasis 0: 気配だけ */
+.quiet .box {
+  background: none;
+  border-color: transparent;
+}
+
+/* enabled=false: 見た目は死んでいるが、フォーカスも押下もできる（カウントダウンに気づけるように） */
+.inert {
+  cursor: default;
+}
+
+.inert .box {
+  border-style: dashed;
+
+  /* 0.6 より下げない。下げるとグリフのコントラストが AA を割る（DESIGN.md §20） */
+  opacity: 0.6;
+}
+
+.button:hover .box {
+  color: var(--ad-accent-ink, var(--color-text-inverse));
+  background-color: var(--ad-accent, var(--color-accent-danger));
+}
+
+.button:active .box {
+  transform: scale(0.92);
+}
+
+.inert:hover .box {
+  color: inherit;
+  background-color: var(--ad-surface, var(--color-bg-elevated));
+}

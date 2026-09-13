@@ -67,3 +67,26 @@ apps/web/src/game/frame/frameCapabilities.ts    端末プロファイル別の c
 
 - acceptance criteria を全て満たす
 - TASK-029 の SAFE-12 テストがこの実装に対して実際に通る
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-14）
+
+### 決定ログ
+
+#### 2026-09-13 偽 URL は `hell://yomimono.jigoku/...`（架空スキーム + 架空ホスト）
+- 決定: スキームごと架空にして「本物の URL ではない」ことを構造的に示す（SAFE-12）。`looksLikeRealDomain` で実在 TLD / 実在ホストを静的検査
+- 却下案: `https://example.jigoku` → https 表記が実ブラウザの URL バーに似すぎる
+- 出典: DECISIONS_v0.2 §2.4
+
+#### 2026-09-13 初回案内は localStorage で 1 回だけ強調（per-viewer の利便のみ）
+- 出典: DECISIONS_v0.2 §2.4「初回のみ強調」
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/web test → frame.test.tsx 4 tests（history.pushState/replaceState/back 不呼出、実在ドメインなし、mobile はタブなし、偽スクロールで window.scrollY = 0）
+$ e2e game.spec「偽ブラウザ枠は実 history / window.scroll に触れない」→ mobile / desktop pass
+```

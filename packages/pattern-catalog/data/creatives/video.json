@@ -1,0 +1,364 @@
+[
+  {
+    "id": "cr-video-0001",
+    "kind": "video",
+    "tags": [
+      "video",
+      "countdown"
+    ],
+    "brand": "ナントカ動画",
+    "headline": "広告のあとに続きます",
+    "body": "続きの前にもう1本だけ広告があります",
+    "cta": "スキップ",
+    "legal": "※スキップは5秒後に押せます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0002",
+    "kind": "video",
+    "tags": [
+      "video",
+      "loud"
+    ],
+    "brand": "ナントカ動画",
+    "headline": "音が出ます",
+    "body": "音量は端末側で下げてください",
+    "cta": "再生する",
+    "legal": "※音声は自動で再生されます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0003",
+    "kind": "video",
+    "tags": [
+      "video",
+      "countdown"
+    ],
+    "brand": "ムゲン再生",
+    "headline": "次の動画まで3秒",
+    "body": "止める方法は用意されていません",
+    "cta": "今すぐ再生",
+    "legal": "※自動再生は設定で変更できます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0004",
+    "kind": "video",
+    "tags": [
+      "video",
+      "native"
+    ],
+    "brand": "ムゲン再生",
+    "headline": "あなたへのおすすめ",
+    "body": "さっき閉じた動画をもう一度おすすめします",
+    "cta": "おすすめを見る",
+    "legal": "※おすすめは自動生成です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0005",
+    "kind": "video",
+    "tags": [
+      "video"
+    ],
+    "brand": "ヨルヨル劇場",
+    "headline": "深夜の一本勝負",
+    "body": "眠れない夜のための90分をご用意しました",
+    "cta": "予告を見る",
+    "legal": "※画像はイメージです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0006",
+    "kind": "video",
+    "tags": [
+      "video",
+      "freebie"
+    ],
+    "brand": "ヨルヨル劇場",
+    "headline": "全12話を一気に",
+    "body": "1話目の冒頭3分だけ無料です",
+    "cta": "無料で見る",
+    "legal": "※無料の範囲には制限があります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0007",
+    "kind": "video",
+    "tags": [
+      "video",
+      "loud"
+    ],
+    "brand": "ピヨピヨTV",
+    "headline": "生配信中です",
+    "body": "配信しているのは録画です",
+    "cta": "視聴する",
+    "legal": "※配信内容は架空です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0008",
+    "kind": "video",
+    "tags": [
+      "video",
+      "loud"
+    ],
+    "brand": "ピヨピヨTV",
+    "headline": "いま1200人が視聴",
+    "body": "この数字は3桁目から演出です",
+    "cta": "参加する",
+    "legal": "※視聴者数は目安です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0009",
+    "kind": "video",
+    "tags": [
+      "video",
+      "warning"
+    ],
+    "brand": "ダミー放送局",
+    "headline": "緊急特番のお知らせ",
+    "body": "緊急性はありませんが特番です",
+    "cta": "番組表を見る",
+    "legal": "※実在の放送局ではありません",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0010",
+    "kind": "video",
+    "tags": [
+      "video",
+      "native"
+    ],
+    "brand": "ダミー放送局",
+    "headline": "見逃し配信中",
+    "body": "見逃していない方もどうぞ",
+    "cta": "見逃しを見る",
+    "legal": "※配信期間には限りがあります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-video-0011",
+    "kind": "video",
+    "tags": [
+      "video",
+      "freebie",
+      "recurring"
+    ],
+    "brand": "謎の映画配信",
+    "headline": "初月は実質無料",
+    "body": "実質の定義は掲載していません",
+    "cta": "無料で始める",
+    "legal": "※無料期間終了後は自動的に有料になります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0012",
+    "kind": "video",
+    "tags": [
+      "recurring",
+      "video"
+    ],
+    "brand": "謎の映画配信",
+    "headline": "解約はいつでも",
+    "body": "解約ボタンは3階層目にあります",
+    "cta": "はじめる",
+    "legal": "※解約手続きは所定の画面からのみ",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0013",
+    "kind": "video",
+    "tags": [
+      "video",
+      "loud"
+    ],
+    "brand": "エンドレス動画",
+    "headline": "再生が止まりません",
+    "body": "止め方は動画の中で説明しています",
+    "cta": "対処法を見る",
+    "legal": "※本広告は架空のものです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0014",
+    "kind": "video",
+    "tags": [
+      "video",
+      "mobile"
+    ],
+    "brand": "エンドレス動画",
+    "headline": "縦でも横でも再生",
+    "body": "どちらでも広告は全画面です",
+    "cta": "再生する",
+    "legal": "※表示は端末により異なります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0015",
+    "kind": "video",
+    "tags": [
+      "video",
+      "recurring"
+    ],
+    "brand": "ナントカ動画",
+    "headline": "高画質は会員だけ",
+    "body": "会員になると別の画質が出てきます",
+    "cta": "会員になる",
+    "legal": "※画質は回線状況によります",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0016",
+    "kind": "video",
+    "tags": [
+      "video",
+      "warning"
+    ],
+    "brand": "ムゲン再生",
+    "headline": "早送りできません",
+    "body": "広告の早送りだけができません",
+    "cta": "了解",
+    "legal": "※広告はスキップできません",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-video-0017",
+    "kind": "video",
+    "tags": [
+      "video"
+    ],
+    "brand": "ヨルヨル劇場",
+    "headline": "出演者は全員架空",
+    "body": "実在の人物とは一切関係ありません",
+    "cta": "紹介を見る",
+    "legal": "※登場人物は架空です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0018",
+    "kind": "video",
+    "tags": [
+      "video"
+    ],
+    "brand": "ピヨピヨTV",
+    "headline": "字幕をご利用ください",
+    "body": "字幕は音声と一致しないことがあります",
+    "cta": "字幕設定",
+    "legal": "※字幕は自動生成です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0019",
+    "kind": "video",
+    "tags": [
+      "video",
+      "urgent"
+    ],
+    "brand": "ダミー放送局",
+    "headline": "この後すぐ",
+    "body": "この後がいつなのかは未定です",
+    "cta": "続きを見る",
+    "legal": "※放送予定は変更されます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0020",
+    "kind": "video",
+    "tags": [
+      "ranking",
+      "video"
+    ],
+    "brand": "謎の映画配信",
+    "headline": "ランキング1位",
+    "body": "対象は当社の3作品です",
+    "cta": "1位を見る",
+    "legal": "※ランキングは自社調べです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0021",
+    "kind": "video",
+    "tags": [
+      "video"
+    ],
+    "brand": "エンドレス動画",
+    "headline": "途中から再生します",
+    "body": "途中とは広告のあとのことです",
+    "cta": "途中から見る",
+    "legal": "※再生位置は保存されません",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0022",
+    "kind": "video",
+    "tags": [
+      "video",
+      "loud"
+    ],
+    "brand": "ナントカ動画",
+    "headline": "ミュートを解除",
+    "body": "解除すると音量は最大になります",
+    "cta": "音を出す",
+    "legal": "※音量にご注意ください",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-video-0023",
+    "kind": "video",
+    "tags": [
+      "countdown",
+      "video"
+    ],
+    "brand": "ムゲン再生",
+    "headline": "あと3秒でスキップ",
+    "body": "3秒は5秒に延びることがあります",
+    "cta": "スキップ",
+    "legal": "※スキップ可能時間は変動します",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0024",
+    "kind": "video",
+    "tags": [
+      "freebie",
+      "video"
+    ],
+    "brand": "ヨルヨル劇場",
+    "headline": "予告編だけ無料",
+    "body": "本編の予告編も予告編です",
+    "cta": "予告を見る",
+    "legal": "※本編は有料です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0025",
+    "kind": "video",
+    "tags": [
+      "video",
+      "recurring"
+    ],
+    "brand": "ピヨピヨTV",
+    "headline": "チャンネル登録を",
+    "body": "登録すると通知が毎日届きます",
+    "cta": "登録する",
+    "legal": "※通知設定は変更できます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-video-0026",
+    "kind": "video",
+    "tags": [
+      "video",
+      "mobile",
+      "warning"
+    ],
+    "brand": "ダミー放送局",
+    "headline": "データ通信量に注意",
+    "body": "注意した頃にはもう終わっています",
+    "cta": "設定を見る",
+    "legal": "※通信料はお客様のご負担となります",
+    "theme": "warning"
+  }
+]

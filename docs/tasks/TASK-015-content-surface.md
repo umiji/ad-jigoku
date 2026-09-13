@@ -64,3 +64,28 @@ apps/web/src/game/content/articles/*.ts          架空の記事データ
 
 - acceptance criteria を全て満たす
 - 記事が最低3本ある
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-14）
+
+### 決定ログ
+
+#### 2026-09-13 行数換算は 16 文字 / 行（読了 ≈ 20 秒）
+- 決定: `CHARS_PER_LINE = 16`。3 本の記事が 30〜120 行に収まり、READ_LINES_PER_SECOND=2 で 20 秒前後
+- 却下案: 40 文字 / 行 → 10 秒で読み終わり、広告に邪魔される前に終わる
+- 出典: session decision
+
+#### 2026-09-13 記事選択のハッシュは engine の xmur3 と同式をローカルに持つ
+- 決定: e2e からも import するため、articles/index.ts は game-engine に依存しない
+- 出典: Playwright の ESM ローダーが engine の JSON import を扱えなかった実測
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/web test → articles.test.ts 4 tests（3 本、設問は途中と末尾、実在メディア名なし、seed で決定論）
+$ e2e「記事を読み切り設問に答えるとクリアし、もう一回できる」→ mobile / desktop pass（設問未回答ではクリアしない = tasksTotal）
+$ e2e「CTA を押しても外部遷移しない」→ pass
+```

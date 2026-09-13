@@ -1,0 +1,357 @@
+[
+  {
+    "id": "cr-subscription-0001",
+    "kind": "subscription",
+    "tags": [
+      "freebie",
+      "recurring"
+    ],
+    "brand": "ムゲン定額",
+    "headline": "初月は無料です",
+    "body": "2か月目から自動で課金されます",
+    "cta": "無料で始める",
+    "legal": "※無料期間終了後は自動的に有料になります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-subscription-0002",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ムゲン定額",
+    "headline": "いつでも解約可能",
+    "body": "可能とは書きましたが、簡単とは",
+    "cta": "はじめる",
+    "legal": "※解約手続きは所定の画面からのみ",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-subscription-0003",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ホゲプラス",
+    "headline": "広告が消えます",
+    "body": "消えるのは一部の広告だけです",
+    "cta": "広告を消す",
+    "legal": "※一部の広告は表示されます",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0004",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ホゲプラス",
+    "headline": "月額480円から",
+    "body": "この「から」の先は980円です",
+    "cta": "プランを見る",
+    "legal": "※価格は税込表示です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0005",
+    "kind": "subscription",
+    "tags": [
+      "freebie",
+      "recurring",
+      "countdown"
+    ],
+    "brand": "ダミープレミアム",
+    "headline": "7日間だけお試し",
+    "body": "8日目に自動で切り替わります",
+    "cta": "7日間試す",
+    "legal": "※自動更新されます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-subscription-0006",
+    "kind": "subscription",
+    "tags": [
+      "prize",
+      "recurring"
+    ],
+    "brand": "ダミープレミアム",
+    "headline": "会員特典が満載",
+    "body": "特典の中身は会員だけが知っています",
+    "cta": "特典を見る",
+    "legal": "※特典は変更になる場合があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0007",
+    "kind": "subscription",
+    "tags": [
+      "warning",
+      "recurring"
+    ],
+    "brand": "カイヤク迷路",
+    "headline": "解約はこちらから",
+    "body": "こちらの先に、またこちらがあります",
+    "cta": "解約に進む",
+    "legal": "※解約には数分かかります",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-subscription-0008",
+    "kind": "subscription",
+    "tags": [
+      "warning",
+      "recurring",
+      "loud"
+    ],
+    "brand": "カイヤク迷路",
+    "headline": "本当に解約しますか",
+    "body": "このあと4回お聞きします",
+    "cta": "やめておく",
+    "legal": "※確認画面が複数あります",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-subscription-0009",
+    "kind": "subscription",
+    "tags": [
+      "system",
+      "recurring"
+    ],
+    "brand": "ずっと自動更新社",
+    "headline": "更新のお知らせ",
+    "body": "更新は済んでいます。事後報告です",
+    "cta": "明細を見る",
+    "legal": "※自動更新されます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-subscription-0010",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ずっと自動更新社",
+    "headline": "価格改定のご案内",
+    "body": "改定の方向は上です",
+    "cta": "詳しくはこちら",
+    "legal": "※価格は変更される場合があります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-subscription-0011",
+    "kind": "subscription",
+    "tags": [
+      "recurring",
+      "warning"
+    ],
+    "brand": "ゾンビ定期便",
+    "headline": "解約後も届きます",
+    "body": "届くのは案内のほうです",
+    "cta": "停止する",
+    "legal": "※配送停止は別の手続きが必要です",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-subscription-0012",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ゾンビ定期便",
+    "headline": "4回の受け取り必須",
+    "body": "5回目からは自由です",
+    "cta": "条件を見る",
+    "legal": "※定期購入が条件です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-subscription-0013",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ムゲン定額",
+    "headline": "家族でシェアできる",
+    "body": "家族の定義は同居中の方のみです",
+    "cta": "詳しく見る",
+    "legal": "※利用規約をご確認ください",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0014",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ホゲプラス",
+    "headline": "2つ目のプラン",
+    "body": "1つ目より高くて機能は同じです",
+    "cta": "比較する",
+    "legal": "※プラン内容は変更されます",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0015",
+    "kind": "subscription",
+    "tags": [
+      "urgent",
+      "recurring"
+    ],
+    "brand": "ダミープレミアム",
+    "headline": "今だけ半額です",
+    "body": "この「今だけ」が3年続いています",
+    "cta": "半額で始める",
+    "legal": "※期間は予告なく終了します",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0016",
+    "kind": "subscription",
+    "tags": [
+      "warning",
+      "recurring"
+    ],
+    "brand": "カイヤク迷路",
+    "headline": "電話でのみ受付",
+    "body": "受付時間は平日の3分間です",
+    "cta": "番号を見る",
+    "legal": "※受付時間には限りがあります",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-subscription-0017",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ずっと自動更新社",
+    "headline": "ご利用ありがとう",
+    "body": "使っていない月もありがとうございます",
+    "cta": "利用状況",
+    "legal": "※料金は毎月発生します",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0018",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ゾンビ定期便",
+    "headline": "おまとめでお得",
+    "body": "まとめる先は当社の全定期便です",
+    "cta": "まとめる",
+    "legal": "※各定期便の条件が適用されます",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0019",
+    "kind": "subscription",
+    "tags": [
+      "countdown",
+      "urgent"
+    ],
+    "brand": "ムゲン定額",
+    "headline": "あと3時間で終了",
+    "body": "終了後、同じ内容で再開します",
+    "cta": "今すぐ確認",
+    "legal": "※予告なく終了する場合があります",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-subscription-0020",
+    "kind": "subscription",
+    "tags": [
+      "native"
+    ],
+    "brand": "ホゲプラス",
+    "headline": "解約率が低い理由",
+    "body": "解約画面が見つからないからです",
+    "cta": "理由を読む",
+    "legal": "※本広告は架空のものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0021",
+    "kind": "subscription",
+    "tags": [
+      "recurring",
+      "system"
+    ],
+    "brand": "ダミープレミアム",
+    "headline": "決済方法は1つ",
+    "body": "その1つは自動更新のみです",
+    "cta": "設定する",
+    "legal": "※自動更新されます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-subscription-0022",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "カイヤク迷路",
+    "headline": "休会という選択肢",
+    "body": "休会している間も会費はかかります",
+    "cta": "休会する",
+    "legal": "※休会中も料金が発生します",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-subscription-0023",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ずっと自動更新社",
+    "headline": "領収書を発行",
+    "body": "発行は有料オプションです",
+    "cta": "発行する",
+    "legal": "※オプション料金がかかります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0024",
+    "kind": "subscription",
+    "tags": [
+      "countdown",
+      "warning",
+      "recurring"
+    ],
+    "brand": "ゾンビ定期便",
+    "headline": "次回の発送は明日",
+    "body": "止めるなら今日の23時59分までです",
+    "cta": "停止する",
+    "legal": "※締切のあとは変更できません",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-subscription-0025",
+    "kind": "subscription",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ムゲン定額",
+    "headline": "1日あたり16円",
+    "body": "1年で5840円になります",
+    "cta": "詳しくはこちら",
+    "legal": "※価格は税込表示です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-subscription-0026",
+    "kind": "subscription",
+    "tags": [
+      "countdown",
+      "recurring",
+      "loud"
+    ],
+    "brand": "ホゲプラス",
+    "headline": "あと3秒で自動継続",
+    "body": "継続後の解約は来月からです",
+    "cta": "継続を止める",
+    "legal": "※自動更新されます",
+    "theme": "danger"
+  }
+]

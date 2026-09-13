@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        # version は package.json の packageManager から解決される
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm turbo run typecheck
+
+      - name: Lint
+        run: pnpm turbo run lint
+
+      - name: Test
+        run: pnpm turbo run test
+
+      - name: Lint / test root scripts
+        run: pnpm lint:root && pnpm test:scripts
+
+      - name: Lint CSS (DESIGN.md §4 / §15 を stylelint で強制)
+        run: pnpm lint:css
+
+      - name: Check design tokens are in sync (DESIGN.md §4,5,6,14,15,16)
+        run: pnpm --filter @ad-jigoku/ui tokens:check
+
+      - name: Check dependency direction (ARCHITECTURE §5.1)
+        run: pnpm check-deps
+
+      - name: Catalog parity (Markdown ↔ JSON / ADR-001)
+        run: pnpm catalog:parity
+
+      - name: Creative に実在ブランドが混入していないか (DESIGN.md §3 / TASK-013D)
+        run: pnpm check-creatives
+
+      - name: Build (static export)
+        run: pnpm turbo run build --filter=@ad-jigoku/web
+
+  # 部位（parts）のブラウザ実測（TASK-013）。
+  # 当たり判定 44×44 / axe / キーボード操作を実ブラウザで検査する。
+  # 視覚回帰スナップショットは Linux 用のベースラインが無いのでこのジョブでは skip される
+  # （apps/web/e2e/parts.spec.ts の test.skip(!!process.env.CI, ...)）。
+  e2e:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browser (chromium only)
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E (parts: 44px hit area / axe / keyboard)
+        run: pnpm --filter @ad-jigoku/web e2e
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report/
+          retention-days: 7
+          if-no-files-found: ignore

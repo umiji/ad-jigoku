@@ -1,0 +1,83 @@
+/*
+ * このファイルは自動生成されています。手で編集しないでください。
+ *
+ * Tailwind v4 の @theme バインディング（OD-1）。
+ * source : packages/ui/tokens/*.ts (DESIGN.md §4,5,6,14,15,16)
+ * build  : pnpm --filter @ad-jigoku/ui tokens:build
+ * verify : pnpm --filter @ad-jigoku/ui tokens:check
+ */
+
+@theme {
+  /* Tailwind 既定値を捨てる。DESIGN.md に無い値を書けないようにするため */
+  --color-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --spacing-*: initial;
+  --container-*: initial;
+  --radius-*: initial;
+
+  /* Color — DESIGN.md §4 */
+  --color-accent-danger: #FF3B30;
+  --color-accent-electric: #E8E8E8;
+  --color-accent-success: #7CFF6B;
+  --color-accent-warning: #FFD23F;
+  --color-bg-elevated: #181818;
+  --color-bg-primary: #080808;
+  --color-bg-secondary: #111111;
+  --color-border-popup: rgba(0,0,0,0.18);
+  --color-border-subtle: rgba(255,255,255,0.12);
+  --color-surface-overlay: rgba(0,0,0,0.72);
+  --color-surface-popup: #F4F1EA;
+  --color-surface-popup-dark: #1C1C1C;
+  --color-text-inverse: #0A0A0A;
+  --color-text-primary: #F5F3EE;
+  --color-text-secondary: #A8A5A0;
+
+  /* Typography — DESIGN.md §5 */
+  --font-sans: 'M PLUS 2 Variable', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', Meiryo, system-ui, sans-serif;
+  --text-ad-headline: clamp(1.2rem, 3vw, 2.4rem);
+  --text-ad-headline--font-weight: 800;
+  --text-ad-headline--line-height: 1.05;
+  --text-ad-legal: 0.55rem;
+  --text-ad-legal--font-weight: 400;
+  --text-ad-legal--line-height: 1.35;
+  --text-ad-meta: 0.65rem;
+  --text-ad-meta--font-weight: 600;
+  --text-ad-meta--letter-spacing: 0.08em;
+  --text-ad-meta--line-height: 1.2;
+  --text-body: 1rem;
+  --text-body--font-weight: 400;
+  --text-body--line-height: 1.7;
+  --text-display: clamp(3rem, 10vw, 8rem);
+  --text-display--font-weight: 800;
+  --text-display--letter-spacing: -0.04em;
+  --text-display--line-height: 0.95;
+  --text-h1: clamp(2.5rem, 7vw, 5rem);
+  --text-h1--font-weight: 800;
+  --text-h1--line-height: 1;
+  --text-h2: clamp(1.8rem, 4vw, 3.5rem);
+  --text-h2--font-weight: 700;
+  --text-h2--line-height: 1.05;
+
+  /* Spacing — DESIGN.md §6 */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-96: 96px;
+  --spacing-128: 128px;
+  --spacing-192: 192px;
+
+  /* Container — DESIGN.md §6 */
+  --container-content: 1280px;
+
+  /* Border / Radius — DESIGN.md §16 */
+  --radius-base: 4px;
+  --radius-button: 2px;
+  --radius-card: 6px;
+  --radius-popup: 2px;
+}

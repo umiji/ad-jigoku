@@ -1,0 +1,348 @@
+[
+  {
+    "id": "cr-dating-0001",
+    "kind": "dating",
+    "tags": [
+      "loud"
+    ],
+    "brand": "ご近所マッチ",
+    "headline": "近くに3人います",
+    "body": "3人とも運営スタッフです",
+    "cta": "見てみる",
+    "legal": "※登録者は架空です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0002",
+    "kind": "dating",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ご近所マッチ",
+    "headline": "メッセージが届いた",
+    "body": "届いたのは自動送信の定型文です",
+    "cta": "確認する",
+    "legal": "※自動送信メッセージです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0003",
+    "kind": "dating",
+    "tags": [
+      "native"
+    ],
+    "brand": "ヒマツブシ恋活",
+    "headline": "趣味が同じ人がいる",
+    "body": "その趣味は「アプリを開くこと」です",
+    "cta": "探してみる",
+    "legal": "※プロフィールは架空です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0004",
+    "kind": "dating",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ヒマツブシ恋活",
+    "headline": "女性は無料です",
+    "body": "男性は無料ではありません",
+    "cta": "料金を見る",
+    "legal": "※料金体系は変更される場合があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-dating-0005",
+    "kind": "dating",
+    "tags": [
+      "quiz",
+      "ranking"
+    ],
+    "brand": "ダミー縁結び",
+    "headline": "相性98%の相手",
+    "body": "分母を書いていないので98%です",
+    "cta": "相手を見る",
+    "legal": "※相性判定は娯楽です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0006",
+    "kind": "dating",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ダミー縁結び",
+    "headline": "本人確認は済み",
+    "body": "確認したのは本人がいることだけです",
+    "cta": "はじめる",
+    "legal": "※本人確認は簡易的なものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-dating-0007",
+    "kind": "dating",
+    "tags": [
+      "ranking"
+    ],
+    "brand": "ホゲ婚活",
+    "headline": "成婚率No.1",
+    "body": "当社には3組しか登録がありません",
+    "cta": "実績を見る",
+    "legal": "※No.1は自社比です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-dating-0008",
+    "kind": "dating",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ホゲ婚活",
+    "headline": "無料カウンセリング",
+    "body": "カウンセリング後に有料プランが始まります",
+    "cta": "予約する",
+    "legal": "※カウンセリングは無料です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-dating-0009",
+    "kind": "dating",
+    "tags": [
+      "loud"
+    ],
+    "brand": "ピヨピヨ出会い",
+    "headline": "いいねが12件",
+    "body": "12件とも同じ人からです",
+    "cta": "いいねを見る",
+    "legal": "※通知は演出を含みます",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0010",
+    "kind": "dating",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ピヨピヨ出会い",
+    "headline": "今すぐ話せます",
+    "body": "話せる相手は自動応答です",
+    "cta": "話してみる",
+    "legal": "※自動応答が返信します",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-dating-0011",
+    "kind": "dating",
+    "tags": [
+      "native"
+    ],
+    "brand": "架空のあの人",
+    "headline": "あなたを待っています",
+    "body": "待っているのは登録画面です",
+    "cta": "会いに行く",
+    "legal": "※登場人物は架空です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0012",
+    "kind": "dating",
+    "tags": [
+      "warning"
+    ],
+    "brand": "架空のあの人",
+    "headline": "プロフィールを見た",
+    "body": "見たのはあなた自身です",
+    "cta": "履歴を見る",
+    "legal": "※閲覧履歴は架空です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0013",
+    "kind": "dating",
+    "tags": [
+      "warning",
+      "recurring"
+    ],
+    "brand": "ご近所マッチ",
+    "headline": "年齢確認が必要です",
+    "body": "確認するのは年齢ではなく課金です",
+    "cta": "確認する",
+    "legal": "※実際の年齢確認ではありません",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-dating-0014",
+    "kind": "dating",
+    "tags": [
+      "native"
+    ],
+    "brand": "ヒマツブシ恋活",
+    "headline": "今週のおすすめ",
+    "body": "先週と同じ人がおすすめされます",
+    "cta": "おすすめを見る",
+    "legal": "※おすすめは自動生成です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0015",
+    "kind": "dating",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ダミー縁結び",
+    "headline": "退会は簡単です",
+    "body": "簡単ですが、場所は秘密です",
+    "cta": "手順を見る",
+    "legal": "※退会手続きは所定の画面からのみ",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-dating-0016",
+    "kind": "dating",
+    "tags": [
+      "countdown",
+      "urgent"
+    ],
+    "brand": "ホゲ婚活",
+    "headline": "あと3席の説明会",
+    "body": "3席は毎日補充されます",
+    "cta": "申し込む",
+    "legal": "※定員は目安です",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-dating-0017",
+    "kind": "dating",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ピヨピヨ出会い",
+    "headline": "足あとが残ります",
+    "body": "残るのは広告を見た記録だけです",
+    "cta": "足あとを見る",
+    "legal": "※閲覧履歴は保存されません",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0018",
+    "kind": "dating",
+    "tags": [
+      "native"
+    ],
+    "brand": "架空のあの人",
+    "headline": "写真は加工済み",
+    "body": "加工前の写真は存在しません",
+    "cta": "写真を見る",
+    "legal": "※画像はイメージです",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0019",
+    "kind": "dating",
+    "tags": [
+      "prize",
+      "loud"
+    ],
+    "brand": "ご近所マッチ",
+    "headline": "マッチしました",
+    "body": "マッチした相手は明日には消えます",
+    "cta": "会話を始める",
+    "legal": "※アカウントは架空です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0020",
+    "kind": "dating",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ヒマツブシ恋活",
+    "headline": "ポイント制です",
+    "body": "1通送るのに、なぜか3ポイント",
+    "cta": "料金を見る",
+    "legal": "※ポイントは有償です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-dating-0021",
+    "kind": "dating",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "ダミー縁結び",
+    "headline": "診断は3問だけ",
+    "body": "3問目で登録画面になります",
+    "cta": "診断する",
+    "legal": "※診断結果は登録後に表示されます",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-dating-0022",
+    "kind": "dating",
+    "tags": [
+      "native"
+    ],
+    "brand": "ホゲ婚活",
+    "headline": "会員数は非公開",
+    "body": "非公開にしている理由も非公開です",
+    "cta": "詳しくはこちら",
+    "legal": "※会員数は開示していません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-dating-0023",
+    "kind": "dating",
+    "tags": [
+      "freebie",
+      "recurring"
+    ],
+    "brand": "ピヨピヨ出会い",
+    "headline": "初回は無料です",
+    "body": "2回目からは1回ずつ有料です",
+    "cta": "無料で試す",
+    "legal": "※無料は初回のみです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-dating-0024",
+    "kind": "dating",
+    "tags": [
+      "warning"
+    ],
+    "brand": "架空のあの人",
+    "headline": "返信率が高い相手",
+    "body": "返信しているのは運営です",
+    "cta": "相手を探す",
+    "legal": "※やり取りは自動応答です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-dating-0025",
+    "kind": "dating",
+    "tags": [
+      "mobile",
+      "warning"
+    ],
+    "brand": "ご近所マッチ",
+    "headline": "通知をオンに",
+    "body": "オンにすると1日20回届きます",
+    "cta": "オンにする",
+    "legal": "※通知頻度は変更できます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-dating-0026",
+    "kind": "dating",
+    "tags": [
+      "urgent",
+      "countdown",
+      "loud"
+    ],
+    "brand": "ダミー縁結び",
+    "headline": "キャンペーンは今日",
+    "body": "今日は毎日やってきます",
+    "cta": "今すぐ確認",
+    "legal": "※本広告は架空のものです",
+    "theme": "danger"
+  }
+]

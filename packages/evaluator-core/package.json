@@ -1,0 +1,26 @@
+{
+  "name": "@ad-jigoku/evaluator-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "純粋関数: Evidence → Finding → Score（Playwright import 禁止 / ADR-004）",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "pnpm -w exec eslint packages/evaluator-core",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ad-jigoku/pattern-catalog": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "eslint": "^9.39.5",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

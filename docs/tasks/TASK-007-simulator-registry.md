@@ -77,3 +77,46 @@ packages/game-engine/src/sim/noop.ts          テスト用のダミー shell + b
 - acceptance criteria を全て満たす
 - `ViewState` の各フィールドについて「UI 側が何を描くか」が README に1行ずつ書かれている
   （TASK-014 の実装者がこれだけ読めば描画できる状態）
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）
+
+### 決定ログ
+
+#### 2026-09-13 Behavior.init は BehaviorResult を返し、closeDelayMs を任意メソッドで宣言する
+- 決定: `init(params, ctx): BehaviorResult<S>`（sim + 初期 view の上書きを同時に返せる）。閉じられるまでの遅延は `closeDelayMs?(params, ctx)` で宣言し、エンジンが SAFE-01 の上限で clamp して `closableAtStep` を決める
+- 却下案: 設計文書の `init(): S`（sim のみ）→ 初期 ViewState を返す手段がなく、最初の tick まで見た目が決まらない
+- 出典: GAME_ENGINE_DESIGN §7 を拡張（互換: sim のみ返す実装も `{ sim }` で書ける）
+
+#### 2026-09-13 × / CTA / SMASH / REPORT の既定ルールはエンジン側に置く
+- 決定: behavior が `handled` / `outcome` を返さない intent には `engine/intent.ts` の既定処理（closable なら閉じる、早押しは too-early、偽× は fake-close、CTA は clicked-ad、REPORT は correctInaction のパターンのみ正解）を適用する
+- 却下案: 全 behavior に閉じる処理を実装させる → 20 個の behavior で同じコードが重複し、noop behavior でゲームが成立しない
+- 出典: session decision（TASK-007 acceptance「noop でゲームに出せる」）
+
+#### 2026-09-13 Shell 宣言に surface / sizeHint の既定値を持たせる
+- 決定: エンジン側 `Shell` は id / parts / supports / frame に加えて既定の `surface` / `sizeHint` を持つ（behavior が上書き可）
+- 却下案: shell 毎の既定レイアウトを UI 側だけに持つ → ViewState.surface が決まらず、blocksProgress（fullscreen）の判定がエンジンでできない
+- 出典: session decision
+
+#### 2026-09-13 レジストリは Run に注入する（既定はモジュール単一）
+- 決定: `createRun(config, registries = defaultRegistries)`。`Run.registries` はシリアライズ対象外（リプレイは config + intents で再現）
+- 却下案: RunConfig に含める → ReplayRecord に関数が混入する
+- 出典: session decision
+
+### 作業ログ
+
+- 2026-09-13: sim/{types,shell-registry,behavior-registry,registries,noop,spawn}.ts、engine/{context,tick,intent,outcome}.ts、run.ts への組み込み、テスト 11 件、README（ViewState の各フィールドを UI が何を描くか）。
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/game-engine typecheck lint test → 7 files, 46 tests passed
+  - 重複登録拒否 / スロット不一致拒否 / 接頭辞不一致拒否
+  - noop: schedule → spawn(entering) → visible → closable → point(close) → closing → 除去
+  - 未登録 shell で例外（"未登録の ShellId"）/ supports 外スロットで例外
+  - MAX_CONCURRENT_ADS(mobile=2) で 3 件目を持ち越し
+  - 同一 seed で hashState 一致（rng state 含む）
+```

@@ -1,26 +1,26 @@
 ID,作成日,更新日,タスク名,状態,依存タスク,ドキュメント
-TASK-001,2026-09-12,2026-09-13,monorepo基盤とツールチェーン,未着手,無し,docs/tasks/TASK-001-monorepo-foundation.md
-TASK-002,2026-09-12,2026-09-12,デザイントークンとDESIGN.md強制lint,未着手,TASK-001,docs/tasks/TASK-002-design-tokens.md
-TASK-003,2026-09-12,2026-09-12,パターンスキーマとバリデータ,未着手,TASK-001,docs/tasks/TASK-003-pattern-schema.md
-TASK-004,2026-09-12,2026-09-12,カタログMarkdown→JSON変換（全パターン）,未着手,TASK-003,docs/tasks/TASK-004-catalog-data.md
-TASK-005,2026-09-12,2026-09-12,決定論プリミティブ（RNG/固定ステップ/state hash）,未着手,TASK-001,docs/tasks/TASK-005-deterministic-primitives.md
-TASK-006,2026-09-12,2026-09-12,GameStateとstep() reducer骨格,未着手,"TASK-004, TASK-005",docs/tasks/TASK-006-game-state-reducer.md
-TASK-007,2026-09-12,2026-09-13,BehaviorRegistry + ShellRegistryとViewState契約,未着手,TASK-006,docs/tasks/TASK-007-simulator-registry.md
-TASK-008,2026-09-12,2026-09-13,ステージ生成器（エンカウンターテンプレート+R1-R8）,未着手,TASK-007,docs/tasks/TASK-008-stage-generator.md
-TASK-009,2026-09-12,2026-09-13,Progress/Patience/勝敗判定/threat計算,未着手,TASK-006,docs/tasks/TASK-009-progress-patience.md
-TASK-010,2026-09-12,2026-09-13,スコアシステム（onClear導出+triage bonus）,未着手,TASK-009,docs/tasks/TASK-010-score-system.md
-TASK-011,2026-09-12,2026-09-12,コンボとRAGE,未着手,TASK-010,docs/tasks/TASK-011-combo-rage.md
-TASK-012,2026-09-12,2026-09-12,リプレイ記録・再生と決定論回帰テスト,未着手,"TASK-008, TASK-011",docs/tasks/TASK-012-replay-determinism.md
-TASK-013,2026-09-12,2026-09-13,canonical広告コンポーネント基盤（parts）,未着手,TASK-002,docs/tasks/TASK-013-ad-components.md
-TASK-013A,2026-09-13,2026-09-13,Shell: popup/interstitial/stickyBanner/inlineRect,未着手,TASK-013,docs/tasks/TASK-013A-shell-generic.md
-TASK-013B,2026-09-13,2026-09-13,Shell: videoPlayer/densityStack,未着手,TASK-013,docs/tasks/TASK-013B-shell-media.md
+TASK-001,2026-09-12,2026-09-13,monorepo基盤とツールチェーン,完了,無し,docs/tasks/TASK-001-monorepo-foundation.md
+TASK-002,2026-09-12,2026-09-13,デザイントークンとDESIGN.md強制lint,完了,TASK-001,docs/tasks/TASK-002-design-tokens.md
+TASK-003,2026-09-12,2026-09-13,パターンスキーマとバリデータ,完了,TASK-001,docs/tasks/TASK-003-pattern-schema.md
+TASK-004,2026-09-12,2026-09-13,カタログMarkdown→JSON変換（全パターン）,完了,TASK-003,docs/tasks/TASK-004-catalog-data.md
+TASK-005,2026-09-12,2026-09-13,決定論プリミティブ（RNG/固定ステップ/state hash）,完了,TASK-001,docs/tasks/TASK-005-deterministic-primitives.md
+TASK-006,2026-09-12,2026-09-13,GameStateとstep() reducer骨格,完了,"TASK-004, TASK-005",docs/tasks/TASK-006-game-state-reducer.md
+TASK-007,2026-09-12,2026-09-13,BehaviorRegistry + ShellRegistryとViewState契約,完了,TASK-006,docs/tasks/TASK-007-simulator-registry.md
+TASK-008,2026-09-12,2026-09-13,ステージ生成器（エンカウンターテンプレート+R1-R8）,完了,TASK-007,docs/tasks/TASK-008-stage-generator.md
+TASK-009,2026-09-12,2026-09-13,Progress/Patience/勝敗判定/threat計算,完了,TASK-006,docs/tasks/TASK-009-progress-patience.md
+TASK-010,2026-09-12,2026-09-13,スコアシステム（onClear導出+triage bonus）,完了,TASK-009,docs/tasks/TASK-010-score-system.md
+TASK-011,2026-09-12,2026-09-13,コンボとRAGE,完了,TASK-010,docs/tasks/TASK-011-combo-rage.md
+TASK-012,2026-09-12,2026-09-13,リプレイ記録・再生と決定論回帰テスト,完了,"TASK-008, TASK-011",docs/tasks/TASK-012-replay-determinism.md
+TASK-013,2026-09-12,2026-09-14,canonical広告コンポーネント基盤（parts）,完了,TASK-002,docs/tasks/TASK-013-ad-components.md
+TASK-013A,2026-09-13,2026-09-14,Shell: popup/interstitial/stickyBanner/inlineRect,完了,TASK-013,docs/tasks/TASK-013A-shell-generic.md
+TASK-013B,2026-09-13,2026-09-14,Shell: videoPlayer/densityStack,完了,TASK-013,docs/tasks/TASK-013B-shell-media.md
 TASK-013C,2026-09-13,2026-09-13,Shell: fakeDownload/fakePlay（専用デザイン）,未着手,TASK-013,docs/tasks/TASK-013C-shell-deceptive.md
-TASK-013D,2026-09-13,2026-09-13,Creativeデータ基盤（数百件+実在ブランドNG検査）,未着手,TASK-004,docs/tasks/TASK-013D-creative-data.md
-TASK-014,2026-09-12,2026-09-12,ゲームホスト（rAF/ViewState→DOM/入力→Intent）,未着手,"TASK-007, TASK-013",docs/tasks/TASK-014-game-host.md
-TASK-014A,2026-09-13,2026-09-13,BrowserFrame（偽ブラウザ枠）,未着手,TASK-014,docs/tasks/TASK-014A-browser-frame.md
-TASK-015,2026-09-12,2026-09-12,偽記事コンテンツ面と読了・設問メカニクス,未着手,TASK-014,docs/tasks/TASK-015-content-surface.md
-TASK-016,2026-09-12,2026-09-12,HUD（patience/progress/time/combo）,未着手,TASK-014,docs/tasks/TASK-016-hud.md
-TASK-017,2026-09-12,2026-09-13,spawn/surface behavior（INT-01, OBS-01）,未着手,"TASK-014, TASK-013A",docs/tasks/TASK-017-sim-overlay.md
+TASK-013D,2026-09-13,2026-09-13,Creativeデータ基盤（数百件+実在ブランドNG検査）,完了,TASK-004,docs/tasks/TASK-013D-creative-data.md
+TASK-014,2026-09-12,2026-09-14,ゲームホスト（rAF/ViewState→DOM/入力→Intent）,完了,"TASK-007, TASK-013",docs/tasks/TASK-014-game-host.md
+TASK-014A,2026-09-13,2026-09-14,BrowserFrame（偽ブラウザ枠）,完了,TASK-014,docs/tasks/TASK-014A-browser-frame.md
+TASK-015,2026-09-12,2026-09-14,偽記事コンテンツ面と読了・設問メカニクス,完了,TASK-014,docs/tasks/TASK-015-content-surface.md
+TASK-016,2026-09-12,2026-09-14,HUD（patience/progress/time/combo）,完了,TASK-014,docs/tasks/TASK-016-hud.md
+TASK-017,2026-09-12,2026-09-14,spawn/surface behavior（INT-01,完了,未着手,"TASK-014, TASK-013A",docs/tasks/TASK-017-sim-overlay.md
 TASK-018,2026-09-12,2026-09-13,close slot behavior（CLS-01/03/05）,未着手,"TASK-017, TASK-013A",docs/tasks/TASK-018-sim-close-friction.md
 TASK-019,2026-09-12,2026-09-13,deception/hitbox slot behavior（CLS-11, DEC-02, DEC-03）,未着手,"TASK-017, TASK-013A, TASK-013C",docs/tasks/TASK-019-sim-deception.md
 TASK-020,2026-09-12,2026-09-13,persist/attention slot behavior（OBS-03, OBS-06, ATT-01, ATT-02）,未着手,"TASK-017, TASK-013B",docs/tasks/TASK-020-sim-sticky-attention.md

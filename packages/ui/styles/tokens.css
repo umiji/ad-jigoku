@@ -1,0 +1,98 @@
+/*
+ * このファイルは自動生成されています。手で編集しないでください。
+ *
+ * デザイントークンの CSS カスタムプロパティ。
+ * source : packages/ui/tokens/*.ts (DESIGN.md §4,5,6,14,15,16)
+ * build  : pnpm --filter @ad-jigoku/ui tokens:build
+ * verify : pnpm --filter @ad-jigoku/ui tokens:check
+ */
+
+:root {
+  /* Color — DESIGN.md §4 */
+  --color-accent-danger: #FF3B30;
+  --color-accent-electric: #E8E8E8;
+  --color-accent-success: #7CFF6B;
+  --color-accent-warning: #FFD23F;
+  --color-bg-elevated: #181818;
+  --color-bg-primary: #080808;
+  --color-bg-secondary: #111111;
+  --color-border-popup: rgba(0,0,0,0.18);
+  --color-border-subtle: rgba(255,255,255,0.12);
+  --color-surface-overlay: rgba(0,0,0,0.72);
+  --color-surface-popup: #F4F1EA;
+  --color-surface-popup-dark: #1C1C1C;
+  --color-text-inverse: #0A0A0A;
+  --color-text-primary: #F5F3EE;
+  --color-text-secondary: #A8A5A0;
+
+  /* Typography — DESIGN.md §5 */
+  --font-sans: 'M PLUS 2 Variable', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', Meiryo, system-ui, sans-serif;
+  --text-ad-headline-line-height: 1.05;
+  --text-ad-headline-size: clamp(1.2rem, 3vw, 2.4rem);
+  --text-ad-headline-weight: 800;
+  --text-ad-legal-line-height: 1.35;
+  --text-ad-legal-size: 0.55rem;
+  --text-ad-legal-weight: 400;
+  --text-ad-meta-letter-spacing: 0.08em;
+  --text-ad-meta-line-height: 1.2;
+  --text-ad-meta-size: 0.65rem;
+  --text-ad-meta-weight: 600;
+  --text-body-line-height: 1.7;
+  --text-body-size: 1rem;
+  --text-body-weight: 400;
+  --text-display-letter-spacing: -0.04em;
+  --text-display-line-height: 0.95;
+  --text-display-size: clamp(3rem, 10vw, 8rem);
+  --text-display-weight: 800;
+  --text-h1-line-height: 1;
+  --text-h1-size: clamp(2.5rem, 7vw, 5rem);
+  --text-h1-weight: 800;
+  --text-h2-line-height: 1.05;
+  --text-h2-size: clamp(1.8rem, 4vw, 3.5rem);
+  --text-h2-weight: 700;
+
+  /* Spacing / Layout — DESIGN.md §6 */
+  --container-max-width: 1280px;
+  --container-padding-desktop: 32px;
+  --container-padding-mobile: 20px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-96: 96px;
+  --space-128: 128px;
+  --space-192: 192px;
+
+  /* Motion — DESIGN.md §14 / §14.1 */
+  --ease-abrupt: cubic-bezier(0.4, 0, 1, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-dramatic: 420ms;
+  --motion-escalation: 700ms;
+  --motion-fast: 120ms;
+  --motion-normal: 240ms;
+
+  /* Depth / Layering — DESIGN.md §15 */
+  --z-ambient: 10;
+  --z-critical: 800;
+  --z-page: 0;
+  --z-popup: 500;
+  --z-popup-stack: 600;
+  --z-sticky: 100;
+  --z-system: 1000;
+
+  /* Border / Radius / Shadow — DESIGN.md §16 / §16.1 */
+  --radius-base: 4px;
+  --radius-button: 2px;
+  --radius-card: 6px;
+  --radius-popup: 2px;
+  --shadow-popup: 0 2px 0 rgba(0,0,0,0.6), 0 12px 32px rgba(0,0,0,0.45);
+  --shadow-sticky: 0 -1px 0 rgba(255,255,255,0.08), 0 -8px 24px rgba(0,0,0,0.4);
+
+  /* Target size — DESIGN.md §19 */
+  --target-tap-min: 44px;
+}

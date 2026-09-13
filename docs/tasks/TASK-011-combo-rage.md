@@ -60,3 +60,33 @@ packages/game-engine/src/rage/rage.ts
 
 - acceptance criteria を全て満たす
 - コンボ名の日本語が `GAME_REQUIREMENTS.md §10` と一致している
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）
+
+### 決定ログ
+
+#### 2026-09-13 敵側コンボはアクティブ広告の comboTags の和集合で判定
+- 決定: 毎 tick `activeComboTags` を集め、`definitions.json` の requires ⊆ tags で成立。複数成立時は要求タグ数が最大のものを代表名にする
+- 却下案: 出現履歴（閉じた広告も含む）で判定 → 「同時に成立している」（GAME §10）に反する
+- 出典: GAME_ENGINE_DESIGN §9.3
+
+#### 2026-09-13 RAGE の演出強度は reducedMotion で半減、スコアは不変
+- 決定: `state.rage.level` は a11y に依存せず、Effect の level のみ `presentationLevel` で減衰
+- 出典: TASK-011 要件 4 / GAME §9.3
+
+### 作業ログ
+
+- 2026-09-13: combo/{definitions.json,tags,detect}.ts、rage/rage.ts、run.ts への組み込み。テスト 5 件。
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/game-engine test → combo.test.ts 5 tests passed
+  - 4 コンボ検出 / 新パターン CLS-99（同タグ）で定義を触らず成立 / 閉じると解除
+  - chain 3 → comboBonus 25×(1+2) / CTA ミスで chain 0
+  - RAGE level 上限 3 / 閾値未満で非発動 / reducedMotion で effect level 減、score・level 同一
+```

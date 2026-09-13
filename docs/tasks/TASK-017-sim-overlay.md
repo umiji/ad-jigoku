@@ -67,3 +67,28 @@ packages/pattern-catalog/data/patterns/ ... INT-01, OBS-01 の game facet 完成
 
 - acceptance criteria を全て満たす
 - **以降の behavior タスクが、このファイルをテンプレートにして書ける状態**
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-14）
+
+### 決定ログ
+
+#### 2026-09-13 閉じる操作の既定ルールはエンジン側、behavior は差分だけ書く
+- 決定: `spawn:immediate` / `spawn:delayed` / `surface:fullscreen` / `close:instant` に加え、`close:delayed`（TASK-018 の一部）と `persist:sticky`（TASK-020 の一部）を baseline として先行実装。stage-1 のトライアルに必要だったため
+- 却下案: 017 の 2 behavior だけ → stage-1 に OBS-03 / CLS-03 が出せず、トライアルが popup だけになる
+- 出典: docs/design/BEHAVIOR_GUIDE.md
+
+#### 2026-09-13 spawn:delayed の afterMs は生成器が出現時刻に加算する
+- 決定: behavior は出現後にしか動けないので、`ScheduledSpawn.atStep` に焼き込む
+- 出典: stage/generate.ts
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/game-engine test → behaviors.test.ts 7 tests（INT-01 / OBS-01 / OBS-03 / CLS-03 が実カタログで遊べる、未実装パターンは選ばれない、stage-1 300 seed で SAFE-01 成立・optimal で 95% 以上クリア）
+$ e2e game.spec → INT-01（popup）と OBS-03（stickyBanner）が本実装シェルで出現・閉じられる
+$ docs/design/BEHAVIOR_GUIDE.md 作成
+```

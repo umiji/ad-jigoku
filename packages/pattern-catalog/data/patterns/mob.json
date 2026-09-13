@@ -1,0 +1,62 @@
+[
+  {
+    "id": "MOB-01",
+    "category": "MOB",
+    "name": { "ja": "ビューポート占有", "en": "Viewport Dominance" },
+    "definition": { "ja": "広告がモバイルviewportの大部分を占有" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "obstruction": 3, "interruption": 1, "mobileImpact": 3, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "MOB-02",
+    "category": "MOB",
+    "name": { "ja": "親指操作領域の罠", "en": "Thumb-zone Trap" },
+    "definition": { "ja": "親指操作領域に広告/誤操作領域が集中" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interactionFriction": 3, "deception": 2, "mobileImpact": 3, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "MOB-03",
+    "category": "MOB",
+    "name": { "ja": "画面端の閉じる罠", "en": "Edge Close Trap" },
+    "definition": { "ja": "画面端の×が操作しにくい" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interactionFriction": 3, "timeCost": 1, "mobileImpact": 3 }
+  },
+  {
+    "id": "MOB-04",
+    "category": "MOB",
+    "name": { "ja": "下部固定広告の干渉", "en": "Fixed Bottom Collision" },
+    "definition": { "ja": "固定広告がブラウザ/UI/操作と干渉" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "obstruction": 2, "interactionFriction": 3, "persistence": 2, "mobileImpact": 3 }
+  },
+  {
+    "id": "MOB-05",
+    "category": "MOB",
+    "name": { "ja": "キーボードとの競合", "en": "Keyboard/Viewport Conflict" },
+    "definition": { "ja": "入力時に広告がviewportを圧迫" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "obstruction": 3, "interactionFriction": 2, "mobileImpact": 3 }
+  },
+  {
+    "id": "MOB-06",
+    "category": "MOB",
+    "name": { "ja": "画面回転の破壊", "en": "Orientation Disruption" },
+    "definition": { "ja": "広告表示により表示方向/レイアウトが大きく変化" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 2, "obstruction": 2, "interactionFriction": 3, "mobileImpact": 3 }
+  }
+]

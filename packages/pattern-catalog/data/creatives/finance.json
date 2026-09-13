@@ -1,0 +1,350 @@
+[
+  {
+    "id": "cr-finance-0001",
+    "kind": "finance",
+    "tags": [
+      "countdown",
+      "warning"
+    ],
+    "brand": "未確認ローン",
+    "headline": "審査は3秒で完了",
+    "body": "完了するのは審査ではなく申込です",
+    "cta": "申し込む",
+    "legal": "※審査の結果ご利用いただけない場合があります",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-finance-0002",
+    "kind": "finance",
+    "tags": [
+      "native"
+    ],
+    "brand": "未確認ローン",
+    "headline": "来店は不要です",
+    "body": "来店できる店舗がありません",
+    "cta": "詳しくはこちら",
+    "legal": "※実在の金融機関ではありません",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-finance-0003",
+    "kind": "finance",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "あやとり証券",
+    "headline": "手数料が実質0円",
+    "body": "実質の内訳は非公開です",
+    "cta": "口座を作る",
+    "legal": "※各種手数料が別途かかります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-finance-0004",
+    "kind": "finance",
+    "tags": [
+      "freebie",
+      "quiz"
+    ],
+    "brand": "あやとり証券",
+    "headline": "初心者でも安心",
+    "body": "安心なだけで、増えるとは限りません",
+    "cta": "無料で学ぶ",
+    "legal": "※投資判断はご自身の責任で",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0005",
+    "kind": "finance",
+    "tags": [
+      "warning"
+    ],
+    "brand": "謎の投資塾",
+    "headline": "月利は非公開です",
+    "body": "非公開であることが最大の実績です",
+    "cta": "資料を請求",
+    "legal": "※将来の成果を保証しません",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-finance-0006",
+    "kind": "finance",
+    "tags": [
+      "testimonial"
+    ],
+    "brand": "謎の投資塾",
+    "headline": "受講生の声",
+    "body": "受講生は全員スタッフの家族です",
+    "cta": "体験談を読む",
+    "legal": "※体験談は架空の人物によるものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0007",
+    "kind": "finance",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ムゲンカード",
+    "headline": "年会費が永年無料",
+    "body": "使わなければ、たしかに無料です",
+    "cta": "申し込む",
+    "legal": "※条件により年会費が発生します",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0008",
+    "kind": "finance",
+    "tags": [
+      "prize"
+    ],
+    "brand": "ムゲンカード",
+    "headline": "ポイント還元5%",
+    "body": "還元先は当社のポイントのみです",
+    "cta": "詳しく見る",
+    "legal": "※還元率には上限があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0009",
+    "kind": "finance",
+    "tags": [
+      "warning"
+    ],
+    "brand": "トクトクカード",
+    "headline": "リボ払いが便利",
+    "body": "便利さの対価は利息です",
+    "cta": "試算する",
+    "legal": "※手数料が別途かかります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-finance-0010",
+    "kind": "finance",
+    "tags": [
+      "prize",
+      "urgent"
+    ],
+    "brand": "トクトクカード",
+    "headline": "今なら8000ポイント",
+    "body": "受け取りには12の条件があります",
+    "cta": "条件を見る",
+    "legal": "※特典には適用条件があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0011",
+    "kind": "finance",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "ダミー保険",
+    "headline": "月々500円から",
+    "body": "この「から」の上限は書いてありません",
+    "cta": "見積もる",
+    "legal": "※保険料は条件により異なります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0012",
+    "kind": "finance",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ダミー保険",
+    "headline": "告知は簡単3項目",
+    "body": "4項目目からが本番です",
+    "cta": "告知内容",
+    "legal": "※告知義務違反は解除の事由です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-finance-0013",
+    "kind": "finance",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ホゲホゲ銀行",
+    "headline": "金利が上がります",
+    "body": "上がるのは借入金利のほうです",
+    "cta": "金利を見る",
+    "legal": "※適用金利は審査によります",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-finance-0014",
+    "kind": "finance",
+    "tags": [
+      "mobile"
+    ],
+    "brand": "ホゲホゲ銀行",
+    "headline": "スマホで完結",
+    "body": "完結したあとに書類が郵送されます",
+    "cta": "手続きへ",
+    "legal": "※一部書面のお手続きが必要です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0015",
+    "kind": "finance",
+    "tags": [
+      "native"
+    ],
+    "brand": "ヨクバリ資産",
+    "headline": "ほったらかし運用",
+    "body": "ほったらかすと手数料だけが動きます",
+    "cta": "資料を見る",
+    "legal": "※運用成果は保証されません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0016",
+    "kind": "finance",
+    "tags": [
+      "native"
+    ],
+    "brand": "ヨクバリ資産",
+    "headline": "分散が大事です",
+    "body": "当社の商品3つに分散できます",
+    "cta": "商品を見る",
+    "legal": "※元本割れの可能性があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0017",
+    "kind": "finance",
+    "tags": [
+      "quiz",
+      "warning"
+    ],
+    "brand": "未確認ローン",
+    "headline": "ご融資が可能です",
+    "body": "可能性がある、という意味です",
+    "cta": "診断する",
+    "legal": "※ご利用は計画的に",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-finance-0018",
+    "kind": "finance",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "あやとり証券",
+    "headline": "キャンペーン延長",
+    "body": "延長は今回で17回目です",
+    "cta": "参加する",
+    "legal": "※予告なく終了する場合があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0019",
+    "kind": "finance",
+    "tags": [
+      "freebie",
+      "urgent"
+    ],
+    "brand": "謎の投資塾",
+    "headline": "無料セミナー",
+    "body": "無料なのは会場までの道のりです",
+    "cta": "席を取る",
+    "legal": "※セミナー後に有料講座の案内があります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-finance-0020",
+    "kind": "finance",
+    "tags": [
+      "system",
+      "warning"
+    ],
+    "brand": "ムゲンカード",
+    "headline": "ご利用明細のお知らせ",
+    "body": "身に覚えのない明細はありません",
+    "cta": "明細を見る",
+    "legal": "※架空の明細に関する案内です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0021",
+    "kind": "finance",
+    "tags": [
+      "countdown",
+      "urgent"
+    ],
+    "brand": "トクトクカード",
+    "headline": "あと3日で失効",
+    "body": "失効するのは3日後に付与される分です",
+    "cta": "確認する",
+    "legal": "※ポイントには有効期限があります",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-finance-0022",
+    "kind": "finance",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ダミー保険",
+    "headline": "見直すと得をする",
+    "body": "得をするのは主に当社です",
+    "cta": "無料相談",
+    "legal": "※相談は無料です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0023",
+    "kind": "finance",
+    "tags": [
+      "native"
+    ],
+    "brand": "ホゲホゲ銀行",
+    "headline": "手数料を下げました",
+    "body": "下げたのは1回だけです",
+    "cta": "詳しくはこちら",
+    "legal": "※所定の手数料がかかります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0024",
+    "kind": "finance",
+    "tags": [
+      "ranking"
+    ],
+    "brand": "ヨクバリ資産",
+    "headline": "ランキング1位",
+    "body": "当社の3商品の中での1位です",
+    "cta": "1位を見る",
+    "legal": "※ランキングは自社調べです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-finance-0025",
+    "kind": "finance",
+    "tags": [
+      "urgent",
+      "loud"
+    ],
+    "brand": "謎の投資塾",
+    "headline": "限定30名です",
+    "body": "30名は毎週入れ替わります",
+    "cta": "申し込む",
+    "legal": "※定員は目安です",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-finance-0026",
+    "kind": "finance",
+    "tags": [
+      "countdown",
+      "warning",
+      "loud"
+    ],
+    "brand": "未確認ローン",
+    "headline": "あと3秒で終了",
+    "body": "終了してもこの画面はまた出ます",
+    "cta": "今すぐ確認",
+    "legal": "※本広告は架空のものです",
+    "theme": "danger"
+  }
+]

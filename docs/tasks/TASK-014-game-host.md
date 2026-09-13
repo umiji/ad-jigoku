@@ -67,3 +67,33 @@ apps/web/src/game/a11yProfile.ts        matchMedia から AccessibilityProfile �
 
 - acceptance criteria を全て満たす
 - `GameHost.tsx` が 200 行以内（ロジックが漏れ出していない証拠）
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-14）
+
+### 決定ログ
+
+#### 2026-09-13 宿主ループは React から独立した純粋な駆動器（loop.ts）+ 薄い hook（useEngine）
+- 決定: `advanceFrame(loop, dt, hidden, reading)` が固定ステップ分割・intent 適用・phase 停止を担い、`useEngine` は rAF と setState だけ。再レンダは state 参照が変わったフレームのみ
+- 却下案: useEffect + setInterval → フレーム同期せず、hidden 制御と決定論的な intent 順序が崩れる
+- 出典: GAME_ENGINE_DESIGN §5
+
+#### 2026-09-13 未登録 shellId は GenericShell にフォールバック
+- 決定: AdLayer は `shells[shellId] ?? GenericShell`。TASK-013A/B の本実装が入るまでも「画面上でゲームが動く」を保証し、見えたら未実装の印
+- 出典: TASK-014 acceptance「noop simulator でも可」
+
+#### 2026-09-14 /game は mounted 後にのみ描画（hydration mismatch 回避）
+- 決定: seed を URL から読むため SSR と CSR の出力がずれる。`GameEntry` は mount 後に `GameEntryClient` を描く
+- 出典: e2e（desktop）で検出した hydration エラー
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/web test → 29 tests（intentFromEvent / a11yProfile / effects / loop / frame / hud）
+$ npx playwright test e2e/game.spec.ts → 10 passed（mobile + desktop）: 出現→閉じる→HUD 追従、SAFE-03/05/06/12、読了→設問→クリア→再挑戦、reduced-motion
+$ step() 実測（headless, stage-1 3600 tick）: avg 0.004ms / p95 0.006ms / max 0.88ms（要件 2ms 以内）
+GameHost.tsx: 111 行（200 行以内）。AdLayer に条件分岐によるゲームロジックなし（shellId → コンポーネント選択のみ）
+```

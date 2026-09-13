@@ -1,0 +1,67 @@
+/*
+ * `/dev/components`（部位の確認ページ）のレイアウトだけ。
+ * 部位そのものの見た目は packages/ui 側が持つ。ここで上書きしない。
+ */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-24);
+  align-items: flex-start;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  align-items: flex-start;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-inline-size: var(--space-128);
+}
+
+.slot-body {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--target-tap-min);
+  padding: var(--space-8);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-subtle);
+}
+
+/*
+ * 当たり判定を目で見えるようにする（このページだけの補助線）。
+ * outline は使わない。フォーカスリング（:focus-visible）を上書きしてしまうため。
+ */
+.show-hitbox [data-target]::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  border: 1px dashed var(--color-accent-success);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-24);
+}
+
+/* 広告 1 枚ぶんの枠。シェルの代わりに幅と影だけ与える */
+.popup {
+  position: relative;
+  inline-size: 100%;
+}
+
+@media (width >= 48rem) {
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .popup {
+    max-inline-size: calc(var(--space-192) * 2);
+  }
+}
