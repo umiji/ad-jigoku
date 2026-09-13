@@ -1,0 +1,5 @@
+export { BrowserFrame, type BrowserFrameProps } from './BrowserFrame'
+export { FakeUrlBar } from './FakeUrlBar'
+export { FakeBackButton } from './FakeBackButton'
+export { FakeScrollContainer, FAKE_SCROLL_PX_PER_LINE } from './FakeScrollContainer'
+export { FRAME_CAPABILITIES, hasCapability, fakeUrl, looksLikeRealDomain, FAKE_HOST, FAKE_SCHEME } from './frameCapabilities'

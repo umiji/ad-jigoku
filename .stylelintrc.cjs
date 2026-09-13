@@ -57,4 +57,16 @@ module.exports = {
     // 背景の質感レイヤーなど、長い data URI を 1 行で持つ
     'declaration-block-no-redundant-longhand-properties': null,
   },
+  overrides: [
+    {
+      // CSS Modules は `styles.navButton` / `styles['is-active']` のどちらでも参照できるので camelCase と kebab-case を許可する
+      files: ['**/*.module.css'],
+      rules: {
+        'selector-class-pattern': [
+          '^[a-z][a-zA-Z0-9-]*$',
+          { message: 'CSS Modules のクラス名は camelCase か kebab-case（styles.fooBar / styles["foo-bar"]）' },
+        ],
+      },
+    },
+  ],
 }

@@ -30,6 +30,9 @@
     "jsdom": "^30.0.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.7"
+    "vitest": "^3.2.7",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/dom": "^10.4.1"
   }
 }
