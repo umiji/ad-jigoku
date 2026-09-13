@@ -56,3 +56,25 @@
 
 ライフサイクル: `entering`（`ENTER_STEPS` = 14 step ≈ 240ms）→ `visible` → `closable`（`closableAtStep`。SAFE-01 で有限）→
 `closing`（`CLOSING_STEPS` 後に除去）。`closableAtStep` は entering 完了より前にならない。
+
+## behaviors/ — 実装済みの挙動（TASK-017〜）
+
+`src/behaviors/index.ts` の `BASELINE_BEHAVIORS` に載っているものだけがステージ生成器の候補になる（AD-2）。
+書き方は `docs/design/BEHAVIOR_GUIDE.md`。id / params 名は `packages/pattern-catalog/README.md §4` の契約表に従う。
+
+| behavior | slot | friction / load | 担うパターン |
+|---|---|---|---|
+| `spawn:immediate` | spawn | 0 / 1 | INT-01 ほか多数 |
+| `spawn:delayed {afterMs}` | spawn | 0 / 1 | ATT-01 / ATT-02 / LAY-01 / DEC-02 / DEC-03（出現時刻は生成器が加算） |
+| `surface:fullscreen` | surface | 0 / 2 | OBS-01（本文を覆い progress を止める） |
+| `close:instant` | close | 0 / 1 | INT-01 |
+| `close:delayed {delayMs}` | close | 1 / 1 | CLS-03（countdown を必ず見せる） |
+| `persist:sticky` | persist | 0 / 1 | OBS-03 |
+
+`registerMvp(registries)` が MVP 8 シェルの宣言（`sim/shells.ts`）と上記をまとめて登録する。
+
+## replay/ と CLI（TASK-012）
+
+- `pnpm game:simulate --seed=X --stage=stage-1 --strategy=optimal|naive|spam|idle|fake-close-victim [--real] [--json]`
+- `pnpm game:preview-stage --seed=X --stage=stage-1 [--device=mobile] [--real]`
+- `pnpm --filter @ad-jigoku/game-engine replay:fixtures` — 回帰フィクスチャの再生成（**挙動を意図的に変えたときだけ**）
