@@ -67,3 +67,48 @@ packages/ui/styles/base.css        背景のノイズ/グレイン/ヴィネッ�
 
 - acceptance criteria を全て満たす
 - `packages/ui` の README に「新しい色が必要になったときの手順（= DESIGN.md を先に直す）」が書かれている
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）。実装はサブエージェント（opus）、検証・コミットはコントローラ
+
+### 決定ログ
+
+#### 2026-09-13 生成物は tokens.css と tailwind-theme.css の 2 本
+- 決定: `tokens/*.ts` から `styles/tokens.css`（`:root` の CSS 変数）と `styles/tailwind-theme.css`（`@theme` に実値）を生成し、`tokens:check` で両方の drift を CI 検出する
+- 却下案: ブリーフ案の `@theme { --color-bg-primary: var(--color-bg-primary) }` → 自己参照カスタムプロパティで無効。`--ad-*` 接頭辞で二重命名 → 1 つの値に 2 つの名前ができる
+- 出典: サブエージェント報告（ARCHITECTURE §10.1「値の重複定義を作らない」を生成で担保）
+
+#### 2026-09-13 Tailwind 既定パレット・スケールを `initial` でリセット
+- 決定: `@theme` 冒頭で `--color-*` / `--font-*` / `--text-*` / `--spacing-*` / `--radius-*` を initial にし、`bg-red-500` / `p-7` / `text-sm` 等が生成されないようにする。z-index / duration は `@utility` でトークンを参照
+- 却下案: lint のみで禁止 → 動的 className（`'w-' + size`）をすり抜ける
+- 出典: ARCHITECTURE §10.3 / OD-1
+
+#### 2026-09-13 フォントは M PLUS 2 Variable 1 ファミリ
+- 決定: `@fontsource-variable/m-plus-2`（日本語対応可変フォント、サブセット + unicode-range + swap）を `--font-sans` に。ファミリ数 1（上限 3）
+- 却下案: Noto Sans JP → 「default system-only appearance」に近く DESIGN §5 の "distinctive" を満たしにくい
+- 付帯条件: DESIGN.md §5 にファミリ名の追記提案が必要（未反映）
+- 出典: session decision
+
+### 作業ログ
+
+- 2026-09-13: tokens/{colors,type,spacing,motion,zIndex,shape,contrast,css-vars,build-css}.ts、styles/{tokens,tailwind-theme,reset,base}.css、.stylelintrc.cjs、Tailwind v4 wiring、/dev/tokens、README、テスト 25 件、CI に lint:css / tokens:check を追加。
+
+### 証拠
+
+```text
+$ pnpm turbo run typecheck lint test --filter=@ad-jigoku/ui --filter=@ad-jigoku/web → 8 successful（ui: 25 tests）
+$ pnpm lint:css → clean / $ pnpm --filter @ad-jigoku/ui tokens:check → OK
+$ color: #ff0000 → color-no-hex / z-index: 9999 → declaration-property-value-disallowed-list（exit 2）
+$ className="w-[123px]" → no-restricted-syntax（任意値禁止）/ z-9999 → 禁止 / GlassCard → 禁止
+$ WCAG AA: 9 組すべて ≥ 4.5:1（最小 text.inverse/accent.danger 5.58）
+$ pnpm --filter @ad-jigoku/web build → ✓ Exporting、/dev/tokens 生成
+```
+
+### 未解決の懸念（次タスクへ）
+
+- DESIGN.md に shadow / easing のトークン定義がない（DESIGN_REQ §18 は要求）。TASK-013 着手時に DESIGN.md への追記を提案する
+- `text.primary` on `accent.danger` は 3.76:1 で AA 不合格。赤地の文字は必ず `text.inverse`
+- `/dev/tokens` が本番の静的書き出しに含まれる（除外ポリシー未定）

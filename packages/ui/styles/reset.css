@@ -1,0 +1,85 @@
+/*
+ * 最小限のモダンリセット。
+ *
+ * 色・フォント・余白といった「見た目」は base.css とトークンが持つ。
+ * ここはブラウザ既定値のばらつきを潰すだけに留める（DESIGN.md §3 MUST 9）。
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+body {
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+dt,
+dd {
+  overflow-wrap: break-word;
+}
+
+/* 日本語の折り返しを不自然に切らない（DESIGN_REQUIREMENTS §3.3） */
+h1,
+h2,
+h3,
+h4 {
+  line-break: strict;
+  text-wrap: balance;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* role="list" を付けたリストだけマーカーを消す（意味を失わせないため） */
+ul[role="list"],
+ol[role="list"] {
+  padding-left: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+table {
+  border-collapse: collapse;
+}

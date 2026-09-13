@@ -16,14 +16,19 @@
     "check-deps": "tsx scripts/check-deps.ts",
     "lint:root": "eslint scripts eslint.config.js",
     "test:scripts": "cd scripts && vitest run",
-    "ci": "turbo run typecheck lint test && pnpm lint:root && pnpm test:scripts && pnpm check-deps",
-    "catalog:validate": "pnpm --filter @ad-jigoku/pattern-catalog catalog:validate"
+    "lint:css": "stylelint \"**/*.css\"",
+    "ci": "turbo run typecheck lint test && pnpm lint:root && pnpm lint:css && pnpm test:scripts && pnpm check-deps && pnpm catalog:parity",
+    "catalog:validate": "pnpm --filter @ad-jigoku/pattern-catalog catalog:validate",
+    "catalog:coverage": "pnpm --filter @ad-jigoku/pattern-catalog catalog:coverage",
+    "catalog:parity": "tsx scripts/catalog-parity.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "@types/node": "^22.20.2",
     "eslint": "^9.39.5",
     "globals": "^16.0.0",
+    "stylelint": "^17.15.0",
+    "stylelint-config-standard": "^40.0.0",
     "tsx": "^4.23.13",
     "turbo": "^2.10.12",
     "typescript": "^5.9.3",

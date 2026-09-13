@@ -13,6 +13,17 @@ import globals from 'globals'
 
 const FORBIDDEN_COMPONENT_NAMES = ['CoolCard', 'ModernCard', 'PremiumCard', 'GlassCard', 'FeatureCard']
 
+const FORBIDDEN_COMPONENT_SELECTORS = FORBIDDEN_COMPONENT_NAMES.flatMap((name) => [
+  {
+    selector: `Identifier[name='${name}']`,
+    message: `${name} は DESIGN.md §21 で禁止された名前。canonical component を使う`,
+  },
+  {
+    selector: `JSXIdentifier[name='${name}']`,
+    message: `${name} は DESIGN.md §21 で禁止された名前。canonical component を使う`,
+  },
+])
+
 /** 純粋層（pattern-catalog / game-engine）で禁止するグローバル */
 const PURE_LAYER_RESTRICTED_GLOBALS = [
   { name: 'Date', message: '時刻を読まない。step()/tick で時間を進める（ADR-002）' },
@@ -29,6 +40,29 @@ const PURE_LAYER_RESTRICTED_GLOBALS = [
 ]
 
 const APPS_PATTERNS = ['@ad-jigoku/web', '@ad-jigoku/web/*', '**/apps/*']
+
+/** className / class に渡される文字列（JSX 属性と clsx 等のオブジェクト引数の両方を拾う） */
+const CLASS_ATTRIBUTE_SELECTORS = [
+  "JSXAttribute[name.name='className']",
+  "JSXAttribute[name.name='class']",
+  "Property[key.name='className']",
+]
+
+/** 上記の中にある「文字列リテラル」と「テンプレートリテラルの静的部分」を指す selector 生成器 */
+const CLASS_VALUE_SELECTORS = CLASS_ATTRIBUTE_SELECTORS.flatMap((attribute) => [
+  (pattern) => `${attribute} Literal[value=${pattern}]`,
+  (pattern) => `${attribute} TemplateElement[value.raw=${pattern}]`,
+])
+
+/** Tailwind の任意値記法 `w-[123px]` / `bg-[#ff0000]` / `[color:red]` */
+const ARBITRARY_VALUE_PATTERN = String.raw`/\[[^\]]*\]/`
+const ARBITRARY_VALUE_MESSAGE =
+  'Tailwind の任意値記法は禁止（ARCHITECTURE §10.3 / OD-1）。tokens に無い値が必要なら DESIGN.md を先に直す'
+
+/** `z-10` / `z-9999` のような z-index 直書き。z-index は DESIGN.md §15 のトークンのみ */
+const RAW_Z_INDEX_PATTERN = String.raw`/(^|\s)-?z-\d+(\s|$)/`
+const RAW_Z_INDEX_MESSAGE =
+  'z-index の数値直書きは禁止（DESIGN.md §15）。globals.css の z-* ユーティリティ（トークン）を使う'
 
 export default tseslint.config(
   {
@@ -142,17 +176,22 @@ export default tseslint.config(
     // ---- DESIGN.md §21: 禁止コンポーネント名 ----
     files: ['**/*.{ts,tsx}'],
     rules: {
+      'no-restricted-syntax': ['error', ...FORBIDDEN_COMPONENT_SELECTORS],
+    },
+  },
+  {
+    // ---- OD-1 / ARCHITECTURE §10.3: Tailwind の任意値記法を禁止 ----
+    // Tailwind は「トークンへのショートハンド」としてのみ使う。
+    // `w-[123px]` / `bg-[#ff0000]` のような任意値と、`z-500` のような z-index 直書きを落とす。
+    // flat config では後ろの設定がルールを上書きするので、§21 の禁止名もここで併せて指定する。
+    files: ['apps/web/**/*.{ts,tsx}', 'packages/ui/**/*.{ts,tsx}'],
+    rules: {
       'no-restricted-syntax': [
         'error',
-        ...FORBIDDEN_COMPONENT_NAMES.flatMap((name) => [
-          {
-            selector: `Identifier[name='${name}']`,
-            message: `${name} は DESIGN.md §21 で禁止された名前。canonical component を使う`,
-          },
-          {
-            selector: `JSXIdentifier[name='${name}']`,
-            message: `${name} は DESIGN.md §21 で禁止された名前。canonical component を使う`,
-          },
+        ...FORBIDDEN_COMPONENT_SELECTORS,
+        ...CLASS_VALUE_SELECTORS.flatMap((node) => [
+          { selector: node(ARBITRARY_VALUE_PATTERN), message: ARBITRARY_VALUE_MESSAGE },
+          { selector: node(RAW_Z_INDEX_PATTERN), message: RAW_Z_INDEX_MESSAGE },
         ]),
       ],
     },

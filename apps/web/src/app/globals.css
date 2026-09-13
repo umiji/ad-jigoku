@@ -1,0 +1,84 @@
+/*
+ * apps/web のグローバルスタイル（OD-1 / ARCHITECTURE.md §10.3）。
+ *
+ * Tailwind は「デフォルトの SaaS 見た目」ではなく、トークンへのショートハンドとしてだけ使う。
+ *   - テーマは packages/ui/styles/tailwind-theme.css（tokens/*.ts の生成物）が唯一の実体
+ *   - Tailwind 既定のパレット / スケールは生成側で `--*-*: initial` により捨ててある
+ *   - 任意値記法（`w-[123px]` / `bg-[#ff0000]`）は eslint で禁止
+ *
+ * preflight（Tailwind 自前のリセット）は使わない。リセットは packages/ui/styles/reset.css。
+ * 2 つのリセットが競合すると、どちらが効いているのか分からなくなるため。
+ */
+
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* 生成物: DESIGN.md §4,5,6,14,15,16 の唯一の実体 */
+@import "@ad-jigoku/ui/styles/tokens.css";
+@import "@ad-jigoku/ui/styles/tailwind-theme.css";
+@import "@ad-jigoku/ui/styles/reset.css" layer(base);
+@import "@ad-jigoku/ui/styles/base.css" layer(base);
+
+/* Tailwind にクラス名を探させる範囲 */
+@source "../";
+@source "../../../../packages/ui/src";
+
+/*
+ * z-index（DESIGN.md §15）。
+ * Tailwind v4 に z-index の theme namespace が無いので、トークンを参照する
+ * ユーティリティとして自前で定義する。`z-500` のような直書きは eslint が落とす。
+ */
+@utility z-page {
+  z-index: var(--z-page);
+}
+
+@utility z-ambient {
+  z-index: var(--z-ambient);
+}
+
+@utility z-sticky {
+  z-index: var(--z-sticky);
+}
+
+@utility z-popup {
+  z-index: var(--z-popup);
+}
+
+@utility z-popup-stack {
+  z-index: var(--z-popup-stack);
+}
+
+@utility z-critical {
+  z-index: var(--z-critical);
+}
+
+@utility z-system {
+  z-index: var(--z-system);
+}
+
+/*
+ * motion duration（DESIGN.md §14）。
+ * これも theme namespace が無いのでユーティリティとして定義する。
+ */
+@utility duration-fast {
+  transition-duration: var(--motion-fast);
+}
+
+@utility duration-normal {
+  transition-duration: var(--motion-normal);
+}
+
+@utility duration-dramatic {
+  transition-duration: var(--motion-dramatic);
+}
+
+@utility duration-escalation {
+  transition-duration: var(--motion-escalation);
+}
+
+/* コンテナ（DESIGN.md §6）。mobile 20px / desktop 32px の切り替えは base.css が持つ */
+@utility container-gutter {
+  padding-inline: var(--container-gutter);
+}
