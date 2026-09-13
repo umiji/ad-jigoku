@@ -21,6 +21,8 @@ export type BrowserFrameProps = {
   /** 偽 URL の path（記事のセクション等）。実 URL とは無関係 */
   path: string
   children: ReactNode
+  /** 偽ブラウザの viewport に固定するレイヤー（広告 / HUD / 結果）。スクロール内容ではなく枠に対して absolute 配置される */
+  overlay?: ReactNode
   onFakeNavigate?: (direction: 'back' | 'forward') => void
   onScrollLines?: (deltaLines: number) => void
   scrollRef?: (el: HTMLDivElement | null) => void
@@ -36,7 +38,7 @@ function readDismissed(): boolean {
   }
 }
 
-export function BrowserFrame({ device, path, children, onFakeNavigate, onScrollLines, scrollRef, forceNotice = false }: BrowserFrameProps) {
+export function BrowserFrame({ device, path, children, overlay, onFakeNavigate, onScrollLines, scrollRef, forceNotice = false }: BrowserFrameProps) {
   const [noticeVisible, setNoticeVisible] = useState(forceNotice)
   useEffect(() => {
     if (forceNotice) return
@@ -79,12 +81,15 @@ export function BrowserFrame({ device, path, children, onFakeNavigate, onScrollL
           </button>
         </div>
       )}
-      <FakeScrollContainer {...(onScrollLines ? { onScrollLines } : {})} {...(scrollRef ? { scrollRef } : {})}>
-        {children}
-      </FakeScrollContainer>
-      <span className={styles.badge} aria-hidden="true">
-        FAKE BROWSER · IN-GAME
-      </span>
+      <div className={styles.viewport} data-testid="frame-viewport">
+        <FakeScrollContainer {...(onScrollLines ? { onScrollLines } : {})} {...(scrollRef ? { scrollRef } : {})}>
+          {children}
+        </FakeScrollContainer>
+        {overlay}
+        <span className={styles.badge} aria-hidden="true">
+          FAKE BROWSER · IN-GAME
+        </span>
+      </div>
     </div>
   )
 }

@@ -19,7 +19,7 @@ async function closeAllClosable(page: Page): Promise<number> {
   for (let i = 0; i < n; i++) {
     const b = buttons.nth(0)
     if (await b.count()) {
-      await b.click({ timeout: 2000 }).catch(() => {})
+      await b.click({ timeout: 1500 }).catch(() => {})
       closed++
     }
   }
@@ -93,8 +93,9 @@ test.describe('/game トライアル', () => {
       for (const q of article.questions) {
         const btn = page.locator(`[data-question="${q.id}"][data-choice="${q.correctChoice}"]`)
         if ((await btn.count()) && (await btn.isEnabled())) {
-          await btn.scrollIntoViewIfNeeded()
-          await btn.click().catch(() => {})
+          // アクションバー（画面下固定）や広告の下に入らないよう中央に寄せてから押す。覆われていれば諦めて次の周回へ
+          await btn.evaluate((el) => el.scrollIntoView({ block: 'center' }))
+          await btn.click({ timeout: 1500 }).catch(() => {})
         }
       }
       // 少しずつ下へ（本文が viewport に見えている間だけ read が進む）

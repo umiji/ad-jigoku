@@ -156,6 +156,15 @@
   outline-offset: 2px;
 }
 
+/* 偽ブラウザの viewport。スクロール内容と、それに固定されるレイヤー（広告 / HUD）の基準 */
+.viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 /* 偽スクロールコンテナ: 実ページの window.scroll には一切触れない */
 .scroll {
   position: relative;
