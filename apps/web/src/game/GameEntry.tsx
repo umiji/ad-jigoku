@@ -2,7 +2,7 @@
 
 import { decodeSeedParams, type RunConfig } from '@ad-jigoku/game-engine'
 import { catalogVersion, loadCatalog } from '@ad-jigoku/pattern-catalog'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { deviceProfileOf, readA11yProfile } from './a11yProfile'
 import { articleRunConfig, pickArticle } from './content'
 import { GameHost } from './GameHost'
@@ -20,6 +20,13 @@ function newSeed(): string {
 }
 
 export function GameEntry() {
+  // seed は URL から読むのでクライアント専用（SSR の出力とズレる hydration mismatch を避ける）
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  return mounted ? <GameEntryClient /> : null
+}
+
+function GameEntryClient() {
   const [attempt, setAttempt] = useState(0)
   const initial = useMemo(() => {
     const query = typeof window !== 'undefined' ? window.location.search : ''
