@@ -108,20 +108,18 @@ type PatternDefinition = {
 
 # 3. GameFacet
 
-GAME_REQUIREMENTS §14 の表を型にしたもの。
+> **v0.2 改訂（`docs/design/DECISIONS_v0.2.md` §1, D2）。** v0.1 は `mechanic` + `simulatorId` という
+> 単一の「挙動」軸でパターンを表現していたが、これは見た目が本質であるカテゴリ E（偽装系）を
+> 表現できなかった。**「見た目シェル（Shell）× 挙動スロット（Behaviors）× 中身（Creative）」の
+> 2軸+データモデルに撤回・差し替える。** 以下は現行の型。v0.1 の `mechanic` / `simulatorId` /
+> `scoreEffect` フィールドは廃止された。
 
 ```ts
 type GameFacet = {
-  /** 描画・挙動の大分類。Simulator の実装単位でもある */
-  mechanic:
-    | 'overlay'          // 画面を覆う
-    | 'sticky'           // 追従する
-    | 'close-friction'   // 閉じにくい
-    | 'deception'        // 偽装する
-    | 'attention'        // 注意を奪う
-    | 'instability'      // レイアウトを揺らす
-    | 'persistence'      // 再出現する
-    | 'density'          // 量で殴る
+  shell: ShellId                                   // 見た目。ShellRegistry のキー
+  behaviors: Partial<Record<Slot, BehaviorSpec>>   // 挙動。スロット毎に最大1つ
+  creative?: CreativeSelector                      // 中身の抽選条件
+  frame?: FrameCapability[]                        // 必要な偽ブラウザ機能（ARCHITECTURE §8.2, DECISIONS_v0.2 §2）
 
   /** 正解となる操作。複数ある場合はどれでも可 */
   playerActions: PlayerAction[]
@@ -134,14 +132,7 @@ type GameFacet = {
   /** 予告の有無。GAME §15.4 難易度は観測可能でなければならない */
   warning: 'none' | 'subtle' | 'explicit'
 
-  timing: {
-    spawnAfterMs?: Range     // 出現タイミング
-    durationMs?: Range       // 自然消滅まで（なければ永続）
-    closableAfterMs?: Range  // 閉じられるようになるまで
-    respawnAfterMs?: Range
-  }
-
-  /** CATALOG §4 の3軸。Game Difficulty の導出に使う */
+  /** CATALOG §4 の3軸。Game Difficulty の導出、および §5.3 の onClear 導出に使う */
   interactionComplexity: 1|2|3|4|5
   uncertainty: 1|2|3|4|5
   timePressure: 1|2|3|4|5
@@ -149,18 +140,29 @@ type GameFacet = {
   comboTags: ComboTag[]
   incompatibleWith: PatternId[]
 
-  scoreEffect:    { onClear: number; onMistake: number; perSecondAlive?: number }
-  patienceEffect: { onSpawn: number; onMistake: number; perSecondAlive?: number }
-
-  /** SimulatorRegistry のキー。複数パターンが同じ simulator を共有してよい */
-  simulatorId: SimulatorId
+  /** perSecondAlive = 放置コスト。Prioritization の threat 計算の入力（GAME_ENGINE_DESIGN §9.4） */
+  patienceEffect: { onSpawn: number; onMistake: number; perSecondAlive: number }
 
   /** 結果画面の教育表示 (GAME §20) */
   education: { ja: string }
 
   /** 最低でもこの時間後には必ず閉じられる（SAFE-01）。省略時はグローバル既定値 */
   maxCloseDelayMsOverride?: number
+
+  // scoreEffect は削除。onClear は難易度3軸の平均から導出する（GAME_ENGINE_DESIGN §9.4）
 }
+
+type Slot =
+  | 'spawn'        // いつ出るか
+  | 'surface'      // どこに・どの大きさで
+  | 'close'        // どう閉じる／閉じにくいか
+  | 'persist'      // 閉じた後どうなるか
+  | 'attention'    // 注意をどう奪うか
+  | 'instability'  // レイアウトをどう揺らすか
+  | 'deception'    // 何に偽装するか
+  | 'hitbox'       // 当たり判定をどう歪めるか
+
+type BehaviorSpec = { id: BehaviorId; params?: Record<string, number | Range> }
 
 type PlayerAction = 'CLOSE' | 'SMASH' | 'DODGE' | 'FOCUS' | 'REPORT' | 'ESCAPE' | 'IGNORE'
 
@@ -173,7 +175,45 @@ type FailureCondition =
 type Range = { min: number; max: number }   // RNG がこの範囲からシードで抽選
 ```
 
-## 3.1 Range と決定論
+## 3.1 Shell（見た目シェル）
+
+```ts
+interface Shell {
+  readonly id: ShellId
+  readonly parts: AdPart[]          // 描画する部位（close / fake-close / cta / media / label ...）
+  readonly supports: Slot[]         // 受け付ける挙動スロット
+  readonly frame?: FrameCapability[]
+  // React コンポーネント + CSS は packages/ui/shells/<id>/ に独立して置く。共通化しない
+}
+```
+
+生成器は `shell.supports ⊇ behaviors のスロット集合` を検証する（V-15、§8）。
+MVP の想定シェル（Q3 で最終確定。TASK-013A/B/C 参照）: `popup` / `interstitial` / `stickyBanner` /
+`videoPlayer` / `fakeDownload` / `fakePlay` / `inlineRect` / `densityStack`。
+
+## 3.2 挙動レジストリ（BehaviorRegistry）
+
+```ts
+interface Behavior<S = unknown> {
+  readonly id: BehaviorId
+  readonly slot: Slot
+  readonly friction: number          // 公平性計算用の重み（GAME_ENGINE_DESIGN §8.2 R4）
+  readonly load: number              // 認知負荷（同 R5）
+  init(params, ctx): S
+  onTick(s, ctx): BehaviorResult<S>
+  onIntent(s, intent, ctx): BehaviorResult<S>
+}
+```
+
+新パターン追加の典型はコードゼロ（既存シェル + 既存挙動の組み合わせを JSON に書くだけ）。
+コードが要るのは「新しいシェル」か「新しい挙動」を足すときだけ（DECISIONS_v0.2 §1.5）。
+
+## 3.3 Creative（中身）
+
+コピー・架空ブランド名・色・画像を数百件のデータとして持ち、`rng('creative')` で抽選する
+（`CreativeSelector`）。実在ブランドを含まないことを CI で検査する（NG ワードリスト。TASK-013D）。
+
+## 3.4 Range と決定論
 
 `Range` はステージ生成時に `rng('timing')` で1回だけ確定し、`StageInstance` に焼き込む。
 実行中に再抽選しない。これがないとリプレイが壊れる（ARCHITECTURE §7.2）。
@@ -247,6 +287,34 @@ type ImproveFacet = {
 
 ---
 
+# 5.5 EscapeFacet
+
+> v0.2 追加（`docs/design/DECISIONS_v0.2.md` §6, D6）。
+
+`improve` = 運営者向け「直し方」。`escape` = **ユーザー向け「逃げ方」**。同じパターン定義に、2つの読者への答えを持つ。
+
+```ts
+type EscapeFacet = {
+  techniques: EscapeTechniqueId[]      // 推奨順
+  note?: { ja: string }                // パターン固有の補足
+}
+
+// data/escape-techniques.json — パターンからは ID 参照するのみ（90パターン分の文章を書かない）
+type EscapeTechnique = {
+  id: string
+  title: { ja: string }
+  kind: 'immediate' | 'preventive'
+  steps: { ja: string; device: 'both' | 'mobile' | 'desktop' }[]
+  browserNative: true                  // 常に true。サードパーティ広告ブロッカーは推奨しない
+}
+```
+
+技法は約15種で足りる（`tap-backdrop` / `browser-back-once` / `reader-mode` / `tab-mute` 等）。
+表示面: 結果画面（culprit のみ）/ `/patterns/[id]` 図鑑ページ / 診断レポートの参考欄
+（PRODUCT §10.5）。
+
+---
+
 # 6. FixtureFacet
 
 ```ts
@@ -296,14 +364,16 @@ computeGameDifficulty(p) =
 | V-02 | Markdown の severity / gameDifficulty と JSON が一致 | error |
 | V-03 | `composedOf` の参照先が存在する | error |
 | V-04 | `incompatibleWith` が対称（A→B なら B→A） | error |
-| V-05 | `simulatorId` に対応する実装が registry にある | error |
+| V-05 | `game.shell` に対応する Shell が ShellRegistry にある（v0.2 で `simulatorId` から改称。DECISIONS_v0.2 §1.3） | error |
 | V-06 | `detectorId` に対応する実装がある | error |
-| V-07 | registry にあるが、どのパターンからも参照されない simulator/detector がない | error |
+| V-07 | registry にあるが、どのパターンからも参照されない shell/behavior/detector がない | error |
 | V-08 | `game.maxCloseDelayMs` がグローバル上限以下（SAFE-01） | error |
 | V-09 | `improve.adFriendlyAlternative` が空でない | error |
 | V-10 | 導出 gameDifficulty とカタログ値の乖離が ±1 以内 | warn |
 | V-11 | `detect.signals` が Probe の収集可能項目に含まれる | error |
 | V-12 | `severitySource: 'hypothesis'` のパターンが公開レポートで仮説である旨を表示できる | info |
+| V-13 | `shell.supports ⊇ behaviors のスロット集合`（DECISIONS_v0.2 §1.3, §3.3 R2） | error |
+| V-14 | `escape.techniques` の参照先が `data/escape-techniques.json` に存在する | error |
 
 ---
 

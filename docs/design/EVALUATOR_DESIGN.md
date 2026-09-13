@@ -253,6 +253,10 @@ type Finding = {
 
 # 6. Scorer
 
+> **v0.2 追加（`DECISIONS_v0.2.md` §8, D10）**: **Vision detector（Layer 3 / AI 判定）は有料診断でのみ実行する。**
+> 無料診断は決定論的検出（Layer 2）のみで完結させ、API 費用が課金時にのみ発生する構造にする。
+> §5.2 の「弱いシグナルだけで断定しない」方針とあわせ、無料診断のスコア説明責任を保つ。
+
 ```ts
 interface Scorer {
   readonly version: string
@@ -369,15 +373,21 @@ Re-audit     [再評価する]
 
 # 9. Job Pipeline
 
+> **v0.2 改訂（`DECISIONS_v0.2.md` §8, D10）。** 診断ワーカーを Fly.io 常駐 + pg-boss から
+> **GitHub Actions** に置き換える。public repo なら実行時間が無制限で使え、固定費が発生しない。
+> オブジェクトストレージも S3 から **Cloudflare R2** に置き換える（`ARCHITECTURE.md §16`）。
+
 ```text
-POST /api/audit          → audit_run(status=queued) を作成 + pg-boss に投入
-GET  /api/audit/:id      → status ポーリング
-worker                   → probe → evidence保存 → detect → score → status=done
+POST /api/audit          → audit_run(status=queued) を作成 + GitHub Actions workflow_dispatch を発火
+GET  /api/audit/:id      → status ポーリング（Actions run の状態を突合）
+workflow_dispatch job    → probe → evidence を R2 に保存 → detect → score → status=done
 ```
 
-- 同一ドメインは同時1本、クールダウンあり
+- `workflow_dispatch` がキュー代わりになる。専用のジョブキュー（pg-boss 等）は不要
+- 同一ドメインは同時1本、クールダウンあり（GitHub Actions の concurrency グループで制御）
 - タイムアウト（90s）でハード打ち切り、部分 evidence でもレポートを出す
 - 失敗理由をユーザーに見せる（「robots.txt で拒否」「タイムアウト」「到達不能」）
+- evidence の構造化データ（`structured.json.gz`）とメディアはいずれも R2 に保存する（§4.1）
 
 ---
 

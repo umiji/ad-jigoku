@@ -41,7 +41,11 @@ apps/web/                               (Next.js 初期化)
 1. Node 22 / pnpm。`packageManager` フィールドで固定
 2. TypeScript strict（`strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes` を有効）
 3. Turborepo のパイプライン: `build` / `typecheck` / `lint` / `test`
-4. `apps/web` は Next.js 15 App Router で初期化。トップページはプレースホルダでよい
+4. `apps/web` は Next.js 15 App Router で初期化。**`next.config` に `output: 'export'` を設定し、
+   Phase 1 の静的書き出しを最初から前提にする**（`docs/design/DECISIONS_v0.2.md` §8, D8）。
+   ホスティングは Cloudflare Pages を前提とし、CD は Pages の GitHub 連携（push → 自動ビルド・デプロイ）
+   に任せる。専用の deploy ワークフローを本タスクでは書かない（Non-goals）。
+   トップページはプレースホルダでよい
 5. **依存検査スクリプト** `scripts/check-deps.ts` を実装する:
    - 各 package の `package.json` の `dependencies` を読み、`ARCHITECTURE.md §5.1` の
      許可マトリクスと突き合わせる

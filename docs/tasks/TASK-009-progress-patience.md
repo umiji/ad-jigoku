@@ -20,6 +20,7 @@ GAME §5.1 の3リソース（Progress / Time / Patience）と、
 packages/game-engine/src/resource/progress.ts
 packages/game-engine/src/resource/patience.ts
 packages/game-engine/src/resource/outcome.ts     クリア/失敗の判定
+packages/game-engine/src/resource/threat.ts      ★ v0.2 追加。Prioritization の脅威モデル
 ```
 
 ## Implementation requirements
@@ -41,6 +42,13 @@ packages/game-engine/src/resource/outcome.ts     クリア/失敗の判定
    - 直近 N 秒の `log` から、patience を最も削ったパターンを特定して `culprit` に記録
    - GAME §15.1「全ての失敗は説明可能」/ §20「今回の主犯」の根拠
 5. クリア/失敗後は intent を受け付けない（`phase` で制御）
+6. **v0.2 追加: threat 計算（`GAME_ENGINE_DESIGN.md §9.4`, `DECISIONS_v0.2.md` §5.2）**。
+   毎 tick、各アクティブ広告について
+   `threat(ad) = drain(ad) + block(ad) - trapRisk(ad)` を計算する:
+   - `drain(ad)` = `patienceEffect.perSecondAlive`
+   - `block(ad)` = 本文の progress を止めているなら定数、そうでなければ 0
+   - `trapRisk(ad)` = `patienceEffect.onMistake` から導出（大きいほど「慌てず後回し」が正解）
+   - 結果は `ActiveAd` に付随させ、TASK-010 の triage bonus 判定で使えるようにする
 
 ## Acceptance criteria
 
@@ -50,6 +58,7 @@ packages/game-engine/src/resource/outcome.ts     クリア/失敗の判定
 - [ ] 失敗時に `culprit` が必ず1つ以上特定される
 - [ ] 「速く処理する」と「安全に処理する」で結果が変わる（テストで両方の戦略を模擬して差が出る）
 - [ ] `cleared` / `failed` 後に intent を送っても状態が変わらない
+- [ ] 各アクティブ広告に毎 tick `threat` が計算され、`GAME_ENGINE_DESIGN.md §9.4` の設計表（自動音声>全画面>バナー>偽×ポップアップ>偽ダウンロード）と順序が一致する
 
 ## Test requirements
 

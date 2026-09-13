@@ -1,8 +1,11 @@
-# TASK-022 — instability（LAY-01 Layout Shift、transform 方式）
+# TASK-022 — instability slot behavior（LAY-01 Layout Shift、transform 方式）
 
 - Milestone: M3 / Phase 1
-- Depends on: 017
+- Depends on: 017, 013B
 - Size: 1 session
+
+> **v0.2 改訂**: 「simulator」を「behavior（`instability` スロット）」に読み替える。
+> **前提条件: 対応する Shell（`inlineRect`）が実装済みであること**（TASK-013B）。
 
 ## Objective
 
@@ -16,8 +19,8 @@
 ## Files to create
 
 ```text
-packages/game-engine/src/simulators/instability.ts
-packages/game-engine/src/simulators/instability.test.ts
+packages/game-engine/src/behaviors/instability.ts
+packages/game-engine/src/behaviors/instability.test.ts
 apps/web/src/game/views/ShiftContainer.tsx
 ```
 

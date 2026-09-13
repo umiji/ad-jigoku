@@ -24,6 +24,9 @@ PRODUCT §9.1 の Basic Report を表示する UI を実装する。
 - 「指定条件下での自動評価」であることを明示（PRODUCT §22）
 - スコアが仮説値ベースであることを適切に表示（OD-11）
 - 検出根拠（evidence）が必ず見える（PRODUCT §8）
+- **AI 判定（Vision detector）は有料診断のみで実行する**（`DECISIONS_v0.2.md` §8, D10 /
+  `EVALUATOR_DESIGN.md §6`）。本タスクの Basic Report は決定論的検出（Layer 2）のみで構成し、
+  Vision advisory を無料スコアに混ぜない
 
 ## Acceptance criteria
 

@@ -1,8 +1,11 @@
-# TASK-020 — sticky / attention（OBS-03 / OBS-06 / ATT-01 / ATT-02）
+# TASK-020 — persist / attention slot behavior（OBS-03 / OBS-06 / ATT-01 / ATT-02）
 
 - Milestone: M3 / Phase 1
-- Depends on: 017
+- Depends on: 017, 013B
 - Size: 1 session
+
+> **v0.2 改訂**: 「simulator」を「behavior（`persist`（追従）/ `attention` スロット）」に読み替える。
+> **前提条件: 対応する Shell（`stickyBanner`, `videoPlayer`）が実装済みであること**（TASK-013B）。
 
 ## Objective
 
@@ -16,9 +19,9 @@
 ## Files to create
 
 ```text
-packages/game-engine/src/simulators/sticky.ts
-packages/game-engine/src/simulators/attention.ts
-packages/game-engine/src/simulators/*.test.ts
+packages/game-engine/src/behaviors/sticky-persist.ts
+packages/game-engine/src/behaviors/attention.ts
+packages/game-engine/src/behaviors/*.test.ts
 apps/web/src/game/views/StickyView.tsx
 ```
 

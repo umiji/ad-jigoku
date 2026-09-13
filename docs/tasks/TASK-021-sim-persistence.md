@@ -1,8 +1,12 @@
-# TASK-021 — persistence（PER-01 Respawn / PER-02 Multi-layer）
+# TASK-021 — persist slot behavior: respawn / multi-layer（PER-01 / PER-02）
 
 - Milestone: M3 / Phase 1
-- Depends on: 017
+- Depends on: 017, 013B
 - Size: 1 session
+
+> **v0.2 改訂**: 「simulator」を「behavior（`persist` スロット）」に読み替える。TASK-020 の
+> sticky-persist とは別パラメータの `persist` behavior（respawn/multi-layer）として実装する。
+> **前提条件: 対応する Shell（`densityStack`）が実装済みであること**（TASK-013B）。
 
 ## Objective
 
@@ -18,8 +22,8 @@
 ## Files to create
 
 ```text
-packages/game-engine/src/simulators/persistence.ts
-packages/game-engine/src/simulators/persistence.test.ts
+packages/game-engine/src/behaviors/persist-respawn.ts
+packages/game-engine/src/behaviors/persist-respawn.test.ts
 ```
 
 ## Implementation requirements

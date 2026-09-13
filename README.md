@@ -13,8 +13,9 @@ Experience → Awareness → Evaluation → Improvement → Better UX
 **設計フェーズ。実装コードはまだ存在しない。**
 
 - 要件: 確定（`docs/requirements/`）
-- アーキテクチャ: v0.1 レビュー済み → **v0.2 決定（`docs/design/DECISIONS_v0.2.md`）**。各文書への反映は `docs/HANDOFF_DOC_UPDATE.md`
-- タスク分解: 完了（`docs/tasks/` に 51 タスク）
+- アーキテクチャ: **v0.2 反映済み**（`docs/design/DECISIONS_v0.2.md`。Shell×Behaviors の2軸モデル、
+  BrowserFrame、エンカウンターテンプレート、Prioritization、escape facet、Cloudflare Pages/Actions 移行）
+- タスク分解: 完了（`docs/tasks/` に 59 タスク。v0.2 で 013A/013B/013C/013D/014A/024A/024B/046A を追加）
 - 実装: 未着手（TASK-001 から）
 
 ## ドキュメント
@@ -46,7 +47,7 @@ Experience → Awareness → Evaluation → Improvement → Better UX
 | [`PATTERN_SCHEMA.md`](docs/design/PATTERN_SCHEMA.md) | Shared Kernel のスキーマ |
 | [`GAME_ENGINE_DESIGN.md`](docs/design/GAME_ENGINE_DESIGN.md) | ヘッドレス決定論エンジン |
 | [`EVALUATOR_DESIGN.md`](docs/design/EVALUATOR_DESIGN.md) | 実サイト評価パイプライン |
-| [`adr/`](docs/design/adr/) | 設計判断の記録（8件） |
+| [`adr/`](docs/design/adr/) | 設計判断の記録（12件） |
 
 ## アーキテクチャの要点（3行）
 
@@ -59,7 +60,7 @@ Experience → Awareness → Evaluation → Improvement → Better UX
 > **annoying by design, safe by implementation.**
 
 広告UXのダークパターンをパロディにするが、このサイト自身がダークパターンになってはいけない。
-安全性は「気をつける」ではなく**自動テスト（SAFE-01..11）で強制する**。
+安全性は「気をつける」ではなく**自動テスト（SAFE-01..13）で強制する**。
 
 > **Ads = Bad ではなく、User-hostile Ad UX = Bad.**
 

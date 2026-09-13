@@ -198,23 +198,35 @@ function makeRng(seed: string): Rng {
 
 ---
 
-# 7. Simulator Registry
+# 7. BehaviorRegistry + ShellRegistry
+
+> **v0.2 改訂（`DECISIONS_v0.2.md` §1, D2。ADR-009）。** v0.1 の単一 `SimulatorRegistry` /
+> `PatternSimulator` は廃止する。挙動しか表現できず、見た目が本質のカテゴリ E（偽装系）を
+> 表現できなかったため。**Shell（見た目）と Behavior（挙動）を別レジストリに分離する。**
 
 ```ts
-interface PatternSimulator<S = unknown> {
-  readonly id: SimulatorId
-
-  spawn(ctx: SpawnContext): { sim: S; view: ViewState; closableAfterMs: number }
-
-  onTick(sim: S, ctx: SimContext): SimResult<S>
-
-  onIntent(sim: S, intent: Intent, ctx: SimContext): SimResult<S>
+interface Shell {
+  readonly id: ShellId
+  readonly parts: AdPart[]          // close / fake-close / cta / media / label ...
+  readonly supports: Slot[]         // 受け付ける挙動スロット
+  readonly frame?: FrameCapability[]
+  // React コンポーネント + CSS は packages/ui/shells/<id>/ に独立して置く。共通化しない
 }
 
-type SimResult<S> = {
+interface Behavior<S = unknown> {
+  readonly id: BehaviorId
+  readonly slot: Slot                // spawn/surface/close/persist/attention/instability/deception/hitbox
+  readonly friction: number          // 公平性計算用の重み（§8.2 R4）
+  readonly load: number              // 認知負荷（§8.2 R5）
+  init(params: Record<string, number>, ctx: SpawnContext): S
+  onTick(s: S, ctx: SimContext): BehaviorResult<S>
+  onIntent(s: S, intent: Intent, ctx: SimContext): BehaviorResult<S>
+}
+
+type BehaviorResult<S> = {
   sim: S
   view?: Partial<ViewState>
-  /** エンジンへの要求。simulator は state を直接いじらない */
+  /** エンジンへの要求。behavior は state を直接いじらない */
   outcome?:
     | { kind: 'closed' }
     | { kind: 'mistake'; reason: MistakeReason }
@@ -225,22 +237,28 @@ type SimResult<S> = {
 }
 ```
 
-## 7.1 MVP で実装する simulator（GAME §23 の15パターンをカバー）
+- **ShellRegistry**: `register(shell)` / `resolve(id)`。重複 ID を拒否
+- **BehaviorRegistry**: `register(behavior)` / `resolve(id, slot)`。スロット不一致を拒否
+- 広告インスタンス = `Shell × Behaviors（スロット毎に最大1）× Creative`。生成時に
+  `shell.supports ⊇ 使用スロット` を検証する（`close:moving` は close 部位のあるシェルにしか差せない）
 
-パターン数 15 に対し simulator は **8つ**で足りる。共有できるものは共有する。
+## 7.1 MVP で実装するシェル × 挙動（GAME §23 の15パターンをカバー）
 
-| SimulatorId | カバーするパターン |
-|---|---|
-| `overlay` | INT-01 Popup, OBS-01 Fullscreen Overlay |
-| `sticky` | OBS-03 Sticky Bottom, OBS-06 Floating Video |
-| `close-friction` | CLS-03 Delayed, CLS-01 Tiny, CLS-05 Moving |
-| `fake-close` | CLS-11 Fake Close |
-| `deceptive-cta` | DEC-02 Fake Download, DEC-03 Fake Play |
-| `attention` | ATT-01 Auto-play Video, ATT-02 Auto-play Sound(simulated) |
-| `instability` | LAY-01 Layout Shift |
-| `persistence` | PER-01 Respawn, PER-02 Multi-layer |
+パターン数 15 に対し、シェル約8種 × 挙動約20種の組み合わせで表現する（Q3: シェル最終確定は
+TASK-013A/B/C 着手時）。共有できるものは共有する。
 
-そして `COM-03 Sticky + Popup` のような Compound は **simulator を持たない**。
+| Shell | 対応する Behavior（slot） | カバーするパターン |
+|---|---|---|
+| `popup` | close:instant/delayed/moving/fake（close） | INT-01 Popup, CLS-03 Delayed, CLS-01 Tiny, CLS-05 Moving, CLS-11 Fake Close |
+| `interstitial` | surface:fullscreen（surface） | OBS-01 Fullscreen Overlay |
+| `stickyBanner` | persist:sticky（persist） | OBS-03 Sticky Bottom |
+| `videoPlayer` | persist:sticky（persist）, attention:autoplay-video/sound（attention） | OBS-06 Floating Video, ATT-01 Auto-play Video, ATT-02 Auto-play Sound(simulated) |
+| `fakeDownload` | deception:fake-download（deception） | DEC-02 Fake Download |
+| `fakePlay` | deception:fake-play（deception） | DEC-03 Fake Play |
+| `inlineRect` | instability:shift（instability） | LAY-01 Layout Shift |
+| `densityStack` | persist:respawn/multi-layer（persist） | PER-01 Respawn, PER-02 Multi-layer |
+
+そして `COM-03 Sticky + Popup` のような Compound は **専用の Shell/Behavior を持たない**。
 ステージ生成器が複数パターンを同時に起動するだけで成立する。これが Compound を独立実装しない理由。
 
 ## 7.2 ATT-02 Auto-play Sound の扱い（重要）
@@ -258,37 +276,109 @@ type SimResult<S> = {
 
 # 8. Stage Generator
 
+> **v0.2 改訂（`DECISIONS_v0.2.md` §3, D4）。** v0.1 の「候補から k 個ランダム抽選」は
+> 無数のバリエーションを作れるが面白さを保証しない（純粋ランダムは手作りに劣る、というローグライクの
+> 既知の教訓）。**エンカウンターテンプレートによる構造化生成**に置き換える。
+
+## 8.1 エンカウンターテンプレート
+
+ステージ = テンプレートの列。テンプレート = 役割スロットの列。生成器が役割ごとにカタログから埋める。
+
+```ts
+type EncounterTemplate = {
+  id: string
+  roles: RoleSlot[]
+  spacingMs: Range                     // 役割間の出現間隔
+}
+type RoleSlot = {
+  role: 'interrupt' | 'trap' | 'pressure' | 'wildcard' | 'finale'
+  categories?: PatternCategoryCode[]   // 例: trap → ['DEC','CLS']
+  difficulty?: Range
+  requireTags?: ComboTag[]
+  forced?: PatternId                   // チュートリアル・ステージ導入用
+}
+```
+
+例（Stage 3「なんかおかしくない？」の1エンカウンター）:
+`[ {interrupt: INT/OBS, diff 1-2}, {trap: DEC/CLS, diff 3-4}, {wildcard} ]`
+
+- 物語ステージ: テンプレートを固く（役割・カテゴリを絞る）→ **同じ「起承転結」で中身だけ変わる**
+- Endless: テンプレートを緩く、ウェーブごとに難易度帯を上げる
+- テンプレート自体もデータ（`data/templates/*.json`）
+
 ```ts
 function generateStage(cfg: {
   stageDef: StageDefinition
+  templates: EncounterTemplate[]
   catalog: PatternDefinition[]
   rng: Rng
 }): ScheduledSpawn[]
 ```
 
-アルゴリズム:
+## 8.2 合成妥当性ルール（生成時に全チェック）
+
+| ルール | 内容 | 違反時 |
+|---|---|---|
+| R1 スロット排他 | 1広告内で同一スロットに2挙動は不可 | 構造上不可能（型） |
+| R2 シェル互換 | `shell.supports ⊇ 使用スロット` | 候補から除外 |
+| R3 ペア非互換 | カタログの `incompatibleWith`（対称） | 除外 |
+| R4 摩擦上限 | 1広告内の `Σ behavior.friction ≤ FRICTION_CAP` | 除外（moving + tiny + delayed の同時は物理的に不公平） |
+| R5 認知負荷予算 | 同時アクティブ広告の `Σ load ≤ LOAD_BUDGET[device]` | 出現を遅延 |
+| R6 SAFE-01 | 全広告が `MAX_CLOSE_DELAY_MS` 以内に閉じられる | 除外 |
+| R7 難易度帯 | 生成結果の難易度が目標帯 ± tolerance | 棄却して再抽選（最大 N 回） |
+| R8 frame 要件 | `pattern.frame ⊆ profile capabilities` | 除外 |
+
+R4・R5 が v0.1 になかった。**個々のパターンが公平でも、組み合わせは不公平になり得る**。ここで止める。
+`FRICTION_CAP` / `LOAD_BUDGET` の初期値は TASK-008 実装時に仮置きし、面白さゲート（GAME §7）で調整する（Q1）。
+
+アルゴリズム（v0.2 版。R1〜R8 をこの中で検査する）:
 
 ```text
-1. stageDef の difficulty band / category weight で候補パターンを絞る
-2. game facet を持ち、simulator が registry に存在するものだけ残す  ← AD-2
-3. incompatibleWith を満たさない組み合わせを除外
-4. rng('stage') で必要数を抽選
-5. rng('timing') で各 Range を確定値に焼き込む
-6. 同時出現数の上限（mobile では少なく）を適用       ← DESIGN §19
-7. SAFE-01 検査: 全 spawn の closableAt が上限以内
-8. ScheduledSpawn[] を返す（以降、実行中に再抽選しない）
+1. stageDef からテンプレート列を選ぶ（物語ステージは固定、Endless は緩い）
+2. テンプレートの各 RoleSlot について、difficulty band / categories で候補パターンを絞る
+3. game facet を持ち、shell が ShellRegistry に存在するものだけ残す  ← AD-2
+4. R2（シェル互換）・R3（ペア非互換）を満たさない候補を除外
+5. rng('stage') で各 RoleSlot を1つ抽選（rendezvous hashing。§8.4）
+6. rng('timing') で各 Range を確定値に焼き込む
+7. R4（摩擦上限）・R5（認知負荷予算）・R8（frame 要件）を適用
+8. 同時出現数の上限（mobile では少なく）を適用       ← DESIGN §19
+9. R6（SAFE-01）検査: 全 spawn の closableAt が上限以内
+10. R7（難易度帯）検査。収まらなければ棄却して再抽選（最大 N 回）
+11. ScheduledSpawn[] を返す（以降、実行中に再抽選しない）
 ```
 
-**ステージ定義はデータ。** GAME §12 の Stage 1-5 は `data/stages/*.json` になる。
-ハードコードしない（GAME §13）。
+**ステージ定義・テンプレート定義はデータ。** GAME §12 の Stage 1-5 は `data/stages/*.json`、
+テンプレートは `data/templates/*.json` になる。ハードコードしない（GAME §13）。
 
-## 8.1 難易度カーブ
+## 8.3 難易度カーブ
 
 `StageDifficulty = Pattern Difficulty + Interaction Complexity + Uncertainty + Time Pressure + Combo Complexity`
 （GAME §11）
 
-これは**生成後に計算して検証する**。狙った難易度帯に収まらない生成結果は棄却して再抽選（最大N回）。
+これは**生成後に計算して検証する**（R7）。狙った難易度帯に収まらない生成結果は棄却して再抽選（最大N回）。
 「seed によっては理不尽に難しい」を構造的に防ぐ（GAME §15 Fairness）。
+
+## 8.4 seed の安定性（rendezvous hashing）
+
+カタログにパターンを追加すると、配列インデックス抽選では**過去の全 seed の結果が変わる**。
+共有された Seed Challenge が壊れる。
+
+対策: 候補ごとに `w = hash(seed, stream, patternId)` を計算し、上位 k を採る（rendezvous / HRW hashing）。
+パターン追加は「新パターンの w が上位に入った場合」だけ結果を変える。既存 seed の大半は保存される。
+
+加えて seed URL に `catalogVersion` を含め、不一致時は「旧バージョンの地獄です」と明示する。
+黙って違う結果を出さない。
+
+## 8.5 テスト方針（組み合わせ爆発への回答）
+
+全組み合わせのテストは不可能。以下で代替する。
+
+1. **挙動を単体で**（約 20 個）
+2. **シェルを単体で**（約 8〜15 個、視覚回帰）
+3. **カタログ定義の 90 通り**を通す
+4. **property test**: ランダム seed × 1000 で R1〜R8 と SAFE-01 が成立
+5. **残余リスクを明示**: 個別の組み合わせの「理不尽さ」は CI では検出できない。プレイテストで発見し、
+   `incompatibleWith` と `friction` 値に還元する運用にする
 
 ---
 
@@ -309,8 +399,10 @@ GAME §9.1 の明示的な禁止:
 つまり `score += pattern.severity` は禁止。
 プレイヤーの得点源は **「難しい状況を切り抜けたこと」** であって「ひどい広告に遭遇したこと」ではない。
 
-実装上は `scoreEffect.onClear` をパターン個別に持ち（PATTERN_SCHEMA §3）、
-severity からの自動導出をしない。これにより「severity を上げたら得点が上がる」事故を防ぐ。
+> **v0.2 改訂（`DECISIONS_v0.2.md` §5.3）**: v0.1 はパターン個別の手打ち値 `scoreEffect.onClear`
+> を持たせていたが、これは廃止した。`onClear` は難易度3軸（`interactionComplexity` /
+> `uncertainty` / `timePressure`）の平均から導出する（§9.4.1）。severity からは引き続き導出しない。
+> これにより「severity を上げたら得点が上がる」事故を防ぎつつ、90パターン分の手調整を不要にする。
 
 ## 9.2 Patience
 
@@ -333,6 +425,46 @@ severity からの自動導出をしない。これにより「severity を上�
 RAGE MODE (GAME §9.3) は演出（`Effect`）としてエンジンが発行し、実装は宿主側。
 **ただし「視覚的に読めなくなる」ほどやらない**（GAME §9.3 の但し書き）。
 `accessibility.reducedMotion` 時は強度を落とす。
+
+## 9.4 Prioritization（優先順位づけ）と threat
+
+> v0.2 追加（`DECISIONS_v0.2.md` §5, D5）。**GAME §7.4「今どれを処理するのが一番危険か」が
+> 要件の最重要スキルとして位置づけられているにもかかわらず、v0.1 にはこれを評価する仕組みが
+> なく、どの順で処理しても同スコアだった。** この節でその欠落を埋める。
+
+各アクティブ広告に、毎 tick 計算される **threat** を持たせる。
+
+```ts
+threat(ad) = drain(ad)          // patienceEffect.perSecondAlive（放置コスト）
+           + block(ad)          // 本文を覆って progress を止めているか（0 or 定数）
+           - trapRisk(ad)       // 焦って触ると大ダメージ（onMistake が大きい）→ 後回しが正解
+```
+
+設計上の狙い（例）:
+
+| 種別 | drain | block | trapRisk | 正解 |
+|---|---|---|---|---|
+| 自動音声 | 高 | 0 | 低 | **最優先で止める** |
+| 全画面オーバーレイ | 中 | 高 | 低 | 次に閉じる |
+| 下部固定バナー | 低 | 中 | 低 | 余裕があれば |
+| 偽×付きポップアップ | 0 | 中 | **高** | **慌てず最後に、慎重に** |
+| 偽ダウンロード | 0 | 0 | 高 | **触らない（REPORT）** |
+
+「近いものから押す」「全部即座に閉じる」が最適にならない。判断が要る。
+
+### 9.4.1 評価（triage bonus）
+
+広告を処理した瞬間、**その時点で最も threat の高い広告を処理したか**を判定し、正しければ
+triage bonus。連続で正しければ chain に乗る（§9.3 の既存コンボ機構に統合）。
+ヘッドレスで決定論的に計算できる。
+
+スコアの `onClear` はパターン個別の手打ち値（v0.1 の `scoreEffect`）を廃止し、難易度3軸から導出する:
+
+```text
+onClear = BASE × mean(interactionComplexity, uncertainty, timePressure)
+```
+
+severity からは導出しない（GAME §9.1 の禁止を維持）。90 パターンの手調整を不要にするため。
 
 ---
 
@@ -390,6 +522,8 @@ type ReplayRecord = {
 
 # 13. Open Questions
 
+0. **`FRICTION_CAP` / `LOAD_BUDGET` の初期値（Q1、`DECISIONS_v0.2.md` §9）**。
+   TASK-008 実装時に仮置きし、面白さゲート（GAME §7）のプレイテストで調整する。
 1. **Patience の回復量**。ゼロにすると単調減少ゲームになる。実プレイで調整。
 2. **同時出現数の上限**。mobile 2 / desktop 4 を初期値にしたいが要プレイテスト。
 3. **`IGNORE` アクションの UI 表現**。`DEC-02 Fake Download` は「押さないのが正解」だが、

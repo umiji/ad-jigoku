@@ -673,7 +673,16 @@ HellProgress
 EscapePanel
 GameEntry
 AuditEntry
+BrowserFrame
+AdSlot
+EscapeCard
 ```
+
+`BrowserFrame` / `AdSlot` / `EscapeCard` は v0.2 で追加された（`docs/design/DECISIONS_v0.2.md` §2, §8.1, §6）。
+
+- `BrowserFrame`: ゲーム領域を包む偽ブラウザ UI。実ブラウザの外観を模倣しない（SAFE-12）
+- `AdSlot`: `provider: 'simulated' | 'network'` を持つ広告枠。ルートごとに許可される provider が異なる（§18.5）
+- `EscapeCard`: `escape` facet を表示するユーザー向け脱出ノウハウカード
 
 If a new component is needed, first determine whether an existing canonical component can be extended.
 

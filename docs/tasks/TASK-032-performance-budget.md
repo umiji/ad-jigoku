@@ -56,6 +56,8 @@ lighthouserc.json
 ## Definition of Done
 
 - acceptance criteria を全て満たす
-- **M5 完了 = Phase 1 (Game MVP) 完成**
+- **M5 完了 = Phase 1 (Game MVP) 完成。ただし v0.2 (`DECISIONS_v0.2.md` §7, D7) により、
+  「Phase 1 完成」は TASK-024B 面白さゲートを通過済みであることに依存する。**
+  ゲートを通過していなければ、本タスクが技術的に完了していても Phase 1 は完成扱いにしない
 - GAME §24 の MVP Acceptance Criteria を実際に評価し、結果を記録する
-  （特に **Second-run rate** をプレイテストで確認する）
+  （特に **Second-run rate** をプレイテストで確認する。ゲートの通過条件は TASK-024B を参照）

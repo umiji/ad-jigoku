@@ -1,35 +1,40 @@
-# TASK-007 — SimulatorRegistry と ViewState 契約
+# TASK-007 — BehaviorRegistry + ShellRegistry と ViewState 契約
 
 - Milestone: M1 / Phase 1
 - Depends on: 006
 - Size: 1 session
 
+> **v0.2 改訂**: 本タスクは v0.1 の「SimulatorRegistry」を「BehaviorRegistry + ShellRegistry」に
+> 差し替える（`DECISIONS_v0.2.md` §1, ADR-009）。
+
 ## Objective
 
-`PatternSimulator` インターフェースとレジストリを実装し、
+`Shell` / `Behavior` インターフェースと2つのレジストリを実装し、
 `ViewState`（宿主が描画するための宣言的記述）の契約を確定する。
 
 ## Context
 
 `ARCHITECTURE.md §7.3`、`GAME_ENGINE_DESIGN.md §7`。
 AD-2（パターン追加でエンジンを書き換えない）の実現部分。
-**`ViewState` の設計がここで固まると、以降の simulator 実装と UI 実装が並行できる。**
+**`ViewState` の設計がここで固まると、以降の shell/behavior 実装と UI 実装が並行できる。**
 
 ## Files to create
 
 ```text
-packages/game-engine/src/sim/types.ts         PatternSimulator, SimContext, SimResult
-packages/game-engine/src/sim/registry.ts      register / resolve / listRegistered
+packages/game-engine/src/sim/types.ts         Shell, Behavior, SimContext, BehaviorResult
+packages/game-engine/src/sim/shell-registry.ts       register / resolve / listRegistered (Shell)
+packages/game-engine/src/sim/behavior-registry.ts    register / resolve / listRegistered (Behavior)
 packages/game-engine/src/sim/view.ts          ViewState
-packages/game-engine/src/sim/noop.ts          テスト用のダミー simulator
+packages/game-engine/src/sim/noop.ts          テスト用のダミー shell + behavior
 ```
 
 ## Implementation requirements
 
-1. `PatternSimulator` は `GAME_ENGINE_DESIGN.md §7` の通り
+1. `Shell` / `Behavior` は `GAME_ENGINE_DESIGN.md §7` の通り
 2. **`ViewState` に DOM の話を書かない。** 論理的な記述のみ:
    ```ts
    type ViewState = {
+     shellId: ShellId                 // ★ v0.2 追加。どの Shell コンポーネントで描画するか
      surface: 'overlay' | 'sticky-bottom' | 'sticky-top' | 'inline' | 'corner' | 'fullscreen'
      anchor?: { xPercent: number; yPercent: number }
      sizeHint: 'small' | 'medium' | 'large' | 'fullscreen'
@@ -42,26 +47,30 @@ packages/game-engine/src/sim/noop.ts          テスト用のダミー simulator
    ```
 3. `AdPartState` は `{ part, visible, enabled, emphasis, hitboxScale }`。
    `hitboxScale` は `pointerPrecision: 'coarse'` のとき最小 44px を保証するために使う
-4. `registry.register(sim)` は重複 ID を拒否する
+4. `shellRegistry.register(shell)` / `behaviorRegistry.register(behavior)` はそれぞれ重複 ID を拒否する
 5. `SimContext` に `rng` / `a11y` / `tuning` / `elapsedMs` を渡す。**`state` 全体は渡さない**
-   （simulator が他の広告の状態に依存しないようにする＝独立テスト可能にする / GAME §25.4）
-6. `step()` に simulator 呼び出しを組み込む:
-   `tick` → 全 active ad の `onTick`、`point`/`action` → 対象 ad の `onIntent`
-7. `SimResult.outcome` をエンジンが解釈して state を更新する。simulator は state を触らない
+   （behavior が他の広告の状態に依存しないようにする＝独立テスト可能にする / GAME §25.4）
+6. `step()` に呼び出しを組み込む:
+   `tick` → 全 active ad の各アクティブ behavior の `onTick`、`point`/`action` → 対象 ad の
+   対象 behavior の `onIntent`
+7. `BehaviorResult.outcome` をエンジンが解釈して state を更新する。behavior は state を触らない
+8. 生成時に `shell.supports ⊇ 使用スロット` を検証する（V-13。`PATTERN_SCHEMA.md §8`）
 
 ## Acceptance criteria
 
-- [ ] noop simulator を登録してゲームに出せる
+- [ ] noop shell + noop behavior を登録してゲームに出せる
 - [ ] `MotionCue` / `surface` の全値が `DESIGN.md §8, §14, §15` の語彙と対応している
 - [ ] `SimContext` に `GameState` が含まれていない
-- [ ] 未登録の `simulatorId` を持つパターンをステージに入れようとするとエラーになる
+- [ ] 未登録の `shellId` を持つパターンをステージに入れようとするとエラーになる
+- [ ] `shell.supports` に含まれないスロットへの behavior 割り当てがエラーになる
 - [ ] `ViewState` に DOM / CSS の型が一切出てこない
 
 ## Test requirements
 
-- レジストリの重複登録拒否
-- noop simulator を使った spawn → tick → close の一連の流れ
-- simulator が他の広告の状態にアクセスできないことのテスト（型レベルで十分）
+- 両レジストリの重複登録拒否
+- noop shell/behavior を使った spawn → tick → close の一連の流れ
+- behavior が他の広告の状態にアクセスできないことのテスト（型レベルで十分）
+- `shell.supports` 検証のテスト（違反時にエラーになること）
 
 ## Definition of Done
 

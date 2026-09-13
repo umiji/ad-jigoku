@@ -66,6 +66,10 @@ Actual deceptive advertisements must never be deployed as part of the game.
 
 All hostile ad behavior is simulated locally.
 
+> **v0.2 更新**: 「実広告ネットワークを含めない」は **ゲーム内では** という限定付きに改訂された。
+> コンテンツページ（記事・ランキング・図鑑・レポート）における実広告の扱いは
+> `PRODUCT_REQUIREMENTS.md` §18.5 Ad Placement Policy を参照（`docs/design/DECISIONS_v0.2.md` §8.1, D9）。
+
 ---
 
 # 3. Player Fantasy
@@ -578,7 +582,7 @@ However:
 - game UI should remain readable
 - real brands should not be required
 - simulated ads should use fictional content
-- no real ad network code
+- no real ad network code **in the game itself**（コンテンツページの扱いは PRODUCT §18.5 参照）
 - no real tracking scripts
 - no real deceptive outbound links
 
