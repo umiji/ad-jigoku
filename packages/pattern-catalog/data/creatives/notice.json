@@ -1,0 +1,357 @@
+[
+  {
+    "id": "cr-notice-0001",
+    "kind": "notice",
+    "tags": [
+      "warning",
+      "system"
+    ],
+    "brand": "ホゲOSサポート",
+    "headline": "重要なお知らせ",
+    "body": "ご利用の端末で3件の問題が見つかりました",
+    "cta": "詳細を確認",
+    "legal": "※これは広告です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-notice-0002",
+    "kind": "notice",
+    "tags": [
+      "warning",
+      "system",
+      "loud"
+    ],
+    "brand": "ホゲOSサポート",
+    "headline": "更新が必要です",
+    "body": "更新しないと何も起きませんが、不安になります",
+    "cta": "今すぐ更新",
+    "legal": "※実際のシステム通知ではありません",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-notice-0003",
+    "kind": "notice",
+    "tags": [
+      "system"
+    ],
+    "brand": "ホゲOSサポート",
+    "headline": "電池の減りが早い",
+    "body": "原因はこの広告を表示していることです",
+    "cta": "原因を見る",
+    "legal": "※本広告は架空のものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0004",
+    "kind": "notice",
+    "tags": [
+      "warning",
+      "system"
+    ],
+    "brand": "ダミー通信",
+    "headline": "ご利用料金のお知らせ",
+    "body": "今月のご利用料金が確定しました（架空）",
+    "cta": "明細を見る",
+    "legal": "※実在の請求ではありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0005",
+    "kind": "notice",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ダミー通信",
+    "headline": "回線速度が低下中",
+    "body": "混雑の原因はあなたの端末ではありません",
+    "cta": "改善方法",
+    "legal": "※通信料はお客様のご負担となります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-notice-0006",
+    "kind": "notice",
+    "tags": [
+      "warning",
+      "system",
+      "mobile"
+    ],
+    "brand": "ピヨピヨ配送",
+    "headline": "お荷物のお預かり",
+    "body": "ご不在のため持ち帰りました（架空の荷物）",
+    "cta": "再配達依頼",
+    "legal": "※このお知らせは実在の通知ではありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0007",
+    "kind": "notice",
+    "tags": [
+      "countdown",
+      "mobile"
+    ],
+    "brand": "ピヨピヨ配送",
+    "headline": "配達員が近くにいます",
+    "body": "あと3分で到着します。荷物はありません",
+    "cta": "地図を見る",
+    "legal": "※位置情報は取得していません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0008",
+    "kind": "notice",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ヨクワカラン社",
+    "headline": "規約が変わりました",
+    "body": "変更点は全部で312項目あります",
+    "cta": "同意する",
+    "legal": "※同意しない方法は用意されていません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0009",
+    "kind": "notice",
+    "tags": [
+      "warning",
+      "system"
+    ],
+    "brand": "ヨクワカラン社",
+    "headline": "アカウント確認",
+    "body": "あなたのアカウントは実在しません",
+    "cta": "確認する",
+    "legal": "※架空のアカウントに関する通知です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-notice-0010",
+    "kind": "notice",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ホニャララ保険",
+    "headline": "満期のご案内",
+    "body": "ご加入いただいていない保険が満期です",
+    "cta": "手続きへ",
+    "legal": "※ご契約は存在しません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0011",
+    "kind": "notice",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ホニャララ保険",
+    "headline": "見直しませんか",
+    "body": "見直した結果、だいたい高くなります",
+    "cta": "無料相談",
+    "legal": "※保険料は条件により異なります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0012",
+    "kind": "notice",
+    "tags": [
+      "native"
+    ],
+    "brand": "カラッポ不動産",
+    "headline": "査定額が出ました",
+    "body": "築40年の物件が新築より高い理由とは",
+    "cta": "査定を見る",
+    "legal": "※査定額は概算です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0013",
+    "kind": "notice",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "カラッポ不動産",
+    "headline": "空室が1件だけ",
+    "body": "その1件は毎日空いています",
+    "cta": "詳しく見る",
+    "legal": "※在庫状況は変動します",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0014",
+    "kind": "notice",
+    "tags": [
+      "warning",
+      "system",
+      "loud"
+    ],
+    "brand": "謎のセキュリティ",
+    "headline": "警告が3件あります",
+    "body": "警告の内容は警告があることです",
+    "cta": "対処する",
+    "legal": "※本広告は架空のものです",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-notice-0015",
+    "kind": "notice",
+    "tags": [
+      "system"
+    ],
+    "brand": "謎のセキュリティ",
+    "headline": "スキャンが完了",
+    "body": "検出された問題は0件。それでも不安ですね",
+    "cta": "結果を見る",
+    "legal": "※スキャンは実行していません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0016",
+    "kind": "notice",
+    "tags": [
+      "warning",
+      "system",
+      "desktop"
+    ],
+    "brand": "自称システム",
+    "headline": "ブラウザが古い",
+    "body": "最新版でもこの表示は出ます",
+    "cta": "更新方法",
+    "legal": "※実際のブラウザ通知ではありません",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-notice-0017",
+    "kind": "notice",
+    "tags": [
+      "system"
+    ],
+    "brand": "自称システム",
+    "headline": "空き容量が不足",
+    "body": "この広告を閉じると1MB空きます",
+    "cta": "空きを作る",
+    "legal": "※容量は解放されません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0018",
+    "kind": "notice",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ダミー市役所",
+    "headline": "お手続きのご案内",
+    "body": "手続きの案内をする手続きのご案内です",
+    "cta": "案内を見る",
+    "legal": "※実在の自治体ではありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0019",
+    "kind": "notice",
+    "tags": [
+      "countdown",
+      "urgent"
+    ],
+    "brand": "ダミー市役所",
+    "headline": "受付は本日まで",
+    "body": "明日も同じ表示が出ます",
+    "cta": "受付へ進む",
+    "legal": "※受付期限は毎日更新されます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-notice-0020",
+    "kind": "notice",
+    "tags": [
+      "warning",
+      "system"
+    ],
+    "brand": "ホゲホゲ銀行",
+    "headline": "ログイン通知",
+    "body": "見覚えのないログインはありませんでした",
+    "cta": "履歴を見る",
+    "legal": "※実在の金融機関ではありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0021",
+    "kind": "notice",
+    "tags": [
+      "system"
+    ],
+    "brand": "ホゲホゲ銀行",
+    "headline": "通帳が更新可能",
+    "body": "更新しても記帳する内容はありません",
+    "cta": "更新する",
+    "legal": "※架空の口座に関する案内です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0022",
+    "kind": "notice",
+    "tags": [
+      "system"
+    ],
+    "brand": "未確認メール便",
+    "headline": "メールが届きません",
+    "body": "届いていないことをお知らせします",
+    "cta": "受信設定",
+    "legal": "※このお知らせ自体は届いています",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0023",
+    "kind": "notice",
+    "tags": [
+      "warning"
+    ],
+    "brand": "未確認メール便",
+    "headline": "迷惑メールが1件",
+    "body": "この案内も迷惑メールに分類されました",
+    "cta": "確認する",
+    "legal": "※分類は自動で行われます",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0024",
+    "kind": "notice",
+    "tags": [
+      "freebie",
+      "warning"
+    ],
+    "brand": "トンデモ工務店",
+    "headline": "点検のお知らせ",
+    "body": "無料点検の結果、必ず工事が必要になります",
+    "cta": "点検を頼む",
+    "legal": "※点検は無料、工事は有料です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-notice-0025",
+    "kind": "notice",
+    "tags": [
+      "native"
+    ],
+    "brand": "トンデモ工務店",
+    "headline": "近所で工事中です",
+    "body": "ご挨拶に伺うための口実を探しています",
+    "cta": "話を聞く",
+    "legal": "※訪問予定はありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-notice-0026",
+    "kind": "notice",
+    "tags": [
+      "countdown",
+      "warning",
+      "loud"
+    ],
+    "brand": "ホゲOSサポート",
+    "headline": "あと3秒で自動実行",
+    "body": "何が実行されるかは書いてありません",
+    "cta": "中止する",
+    "legal": "※実際には何も実行されません",
+    "theme": "danger"
+  }
+]

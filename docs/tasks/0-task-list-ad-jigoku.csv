@@ -15,7 +15,7 @@ TASK-013,2026-09-12,2026-09-13,canonical広告コンポーネント基盤（part
 TASK-013A,2026-09-13,2026-09-13,Shell: popup/interstitial/stickyBanner/inlineRect,未着手,TASK-013,docs/tasks/TASK-013A-shell-generic.md
 TASK-013B,2026-09-13,2026-09-13,Shell: videoPlayer/densityStack,未着手,TASK-013,docs/tasks/TASK-013B-shell-media.md
 TASK-013C,2026-09-13,2026-09-13,Shell: fakeDownload/fakePlay（専用デザイン）,未着手,TASK-013,docs/tasks/TASK-013C-shell-deceptive.md
-TASK-013D,2026-09-13,2026-09-13,Creativeデータ基盤（数百件+実在ブランドNG検査）,未着手,TASK-004,docs/tasks/TASK-013D-creative-data.md
+TASK-013D,2026-09-13,2026-09-13,Creativeデータ基盤（数百件+実在ブランドNG検査）,完了,TASK-004,docs/tasks/TASK-013D-creative-data.md
 TASK-014,2026-09-12,2026-09-12,ゲームホスト（rAF/ViewState→DOM/入力→Intent）,未着手,"TASK-007, TASK-013",docs/tasks/TASK-014-game-host.md
 TASK-014A,2026-09-13,2026-09-13,BrowserFrame（偽ブラウザ枠）,未着手,TASK-014,docs/tasks/TASK-014A-browser-frame.md
 TASK-015,2026-09-12,2026-09-12,偽記事コンテンツ面と読了・設問メカニクス,未着手,TASK-014,docs/tasks/TASK-015-content-surface.md

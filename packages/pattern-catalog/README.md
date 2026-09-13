@@ -35,6 +35,7 @@ facet のカバレッジは `pnpm catalog:coverage` で確認する。
 | `pnpm catalog:validate --verbose` | zod parse + V-01..V-14（データ単体で検査できるもの） |
 | `pnpm catalog:parity` | Markdown ↔ JSON の severity / gameDifficulty 一致検査。差分があれば「JSON をどう直すか」を出して exit 1 |
 | `pnpm catalog:coverage` | facet カバレッジ表 |
+| `pnpm check-creatives`（root） | Creative のコピーに実在ブランドが混入していないか検査。1 件でもあれば exit 1 |
 
 `catalog:parity` は CI（`.github/workflows/ci.yml`）と root の `pnpm ci` に組み込まれている。
 
@@ -155,3 +156,97 @@ V-05 / V-13 で落ちる。**JSON だけ先に増やさない。**
 - `AD_UX_PATTERN_CATALOG.md` にないパターン ID を JSON に足さない（CLAUDE.md §2.4）
 - 実在企業の広告・ブランド・コピーを `name` / `definition` / `education` / `improve` に書かない（DESIGN.md §3）
 - `improve.adFriendlyAlternative` に「広告をやめる」と書かない。「広告は出したまま、UX を直す」だけを書く（V-09 / PRODUCT §31）
+
+---
+
+## 7. Creative（広告の中身。TASK-013D / DECISIONS_v0.2 §1.4）
+
+```text
+data/creatives/<kind>.json        架空ブランド・コピーのデータ（312 件）
+src/creative/schema.ts            zod スキーマと統制語彙（kind / tag / theme）
+src/creative/selector.ts          読み込み（静的 import + メモ化）と決定論的な抽選
+src/creative/ng-check.ts          実在ブランド NG 検査の純粋ロジック
+../../data/ng-words/brands.json   NG ワードリスト（リポジトリ root。240 語）
+../../scripts/check-creative-brands.ts  上記を突き合わせる薄い CLI（`pnpm check-creatives`）
+```
+
+`広告インスタンス = Shell（見た目） × Behaviors（挙動） × Creative（中身）`。
+MVP のシェルは 8 種しかないので、**「同じ広告ばかりに見える」（DECISIONS_v0.2 §4 C4）を防ぐ変数は
+実質ここしかない。**
+
+### 7.1 Q4 の決定（DECISIONS_v0.2 §9 / TASK-013D DoD）
+
+| 項目 | 決定 |
+|---|---|
+| 初期目標件数 | **300 件**（実際の投入は **312 件** = 12 kind × 26） |
+| 生成方法 | **AI が下書き → NG ワード検査を CI で機械実行 → 人のレビュー**。3 段目（人の目視レビュー）は**未実施**。実装者は AI であり、自分の書いたコピーを自分で「実在ブランドなし」と保証していない。CI が担保しているのは「NG リストに載っている語が入っていないこと」だけである |
+| 検査の位置づけ | NG リストは**網羅ではなく既知分の防波堤**。リストにない実在ブランドは通る。公開前に人が一度通しで読むこと |
+
+### 7.2 件数
+
+**312 件 / 架空ブランド 94 種 / `legal` 付き 310 件（99.4%）。**
+
+| kind | 件数 | 架空ブランド | 使っている theme |
+|---|---:|---:|---|
+| `sale` | 26 | 14 | danger / popup / popupDark / warning |
+| `notice` | 26 | 12 | danger / popup / warning |
+| `download` | 26 | 8 | danger / popup / warning |
+| `video` | 26 | 7 | danger / popup / popupDark / warning |
+| `app` | 26 | 9 | danger / popup / popupDark / warning |
+| `dating` | 26 | 6 | danger / popup / popupDark / warning |
+| `finance` | 26 | 8 | danger / popup / warning |
+| `health` | 26 | 8 | danger / popup / warning |
+| `game` | 26 | 7 | danger / popupDark |
+| `news` | 26 | 6 | danger / popup / popupDark / warning |
+| `survey` | 26 | 5 | danger / popup / warning |
+| `subscription` | 26 | 6 | danger / popup / warning |
+
+`theme` は **DESIGN.md §4 の役割名**（`popup` / `popupDark` / `danger` / `warning`）であって色ではない。
+Creative に生のカラーコードは持たせない（色を持たせた瞬間にデザイントークンが二重管理になる）。
+
+### 7.3 抽選が決定論である理由
+
+抽選は `selectCreative(creatives, selector, creativeIndex)` の 1 本だけで、**乱数を引かない**。
+
+エンジンはステージ生成のときに `rng('creative')` を 1 回引いて `creativeIndex`（0..999999）を
+`ScheduledSpawn` に焼いている（`game-engine/src/stage/generate.ts` の `bakeSpawn`）。
+UI はその index を持ってきて引くだけ。実行中に引き直さないので、同じ seed なら常に同じ広告が出る（ADR-002）。
+
+プールは **`id` の昇順に並べ替えてから**剰余を取る。JSON ファイルの並び順を変えただけで
+同じ seed のリプレイが変わる、という事故を防ぐため。
+
+`filterCreatives` は `kinds`（いずれかに一致）と `tags`（全部を持っている）の AND。
+**0 件になったら全件にフォールバックする。** 中身が空の広告を描くくらいなら、題材が合っていない
+広告を描くほうがマシだから。
+
+### 7.4 Creative を追加する手順
+
+1. `data/creatives/<kind>.json` に追記する。`id` は `cr-<kind>-<4桁連番>`、**全ファイルを通して一意**
+2. `tags` は `src/creative/schema.ts` の `CREATIVE_TAGS`（統制語彙）から選ぶ。自由文字列は入らない
+3. 文字数上限: `brand` 2..14 / `headline` 24 / `body` 60 / `cta` 12 / `legal` 60
+4. `pnpm check-creatives`（root）— 実在ブランド検査
+5. `pnpm --filter @ad-jigoku/pattern-catalog test` — 件数・kind 別下限・id 一意・抽選の決定論
+
+### 7.5 NG ワードを追加する手順
+
+`data/ng-words/brands.json`（リポジトリ root）の `terms` に 1 行 1 語で足して、`updated` を更新する。
+配列はソート済み・重複なしで保つ（`scripts/check-creative-brands.test.ts` が検査している）。
+
+判定は両辺を正規化してからの**部分一致**である（`normalizeForBrandCheck`）。
+
+1. NFKC（`ａｍａｚｏｎ` / 半角カタカナ `ｱﾏｿﾞﾝ` を正規形へ）
+2. 小文字化
+3. ひらがな → カタカナ（`あまぞん`）
+4. 空白・記号の除去（`amazon prime` / `ア・マ・ゾ・ン`）
+
+そのため **2 文字程度の短い語を入れてはいけない。** 無関係な架空コピーに巻き添えで一致する。
+`au` ではなく `auひかり` / `auペイ`、`LINE` ではなく `linemo` のように、
+誤検知が出ない長さまで具体化して登録する。
+
+### 7.6 禁止事項
+
+- 実在の企業 / 商品 / 有名人 / ドメイン名を書かない（DESIGN.md §3 MUST NOT 9）。
+  **1 文字違いの近似表記（`Gooogle` の類）も禁止。** 検査を通っても意図が悪いものは通してはいけない
+- URL を書かない（`headline` / `body` / `legal` すべて）
+- `theme` に生の色コードを書かない（DESIGN.md §4）
+- **NG 検査に落ちたときに NG リストから語を外して通さない。** 直すのはコピーのほう

@@ -15,3 +15,38 @@ export {
   type MarkdownCatalogEntry,
 } from './validate'
 export { default as catalogVersion } from './version.json'
+
+// --- Creative（広告の中身。TASK-013D / DECISIONS_v0.2 §1.4）---
+export {
+  CREATIVE_KINDS,
+  CREATIVE_TAGS,
+  CREATIVE_THEMES,
+  CREATIVE_TEXT_FIELDS,
+  CREATIVE_ID_RE,
+  creativeSchema,
+  creativeKindSchema,
+  creativeTagSchema,
+  creativeThemeSchema,
+  type Creative,
+  type CreativeKind,
+  type CreativeTag,
+  type CreativeTheme,
+  type CreativeTextField,
+} from './creative/schema'
+export {
+  loadCreatives,
+  resetCreativeCache,
+  parseCreatives,
+  parseCreativeFiles,
+  filterCreatives,
+  selectCreative,
+  CreativeParseError,
+} from './creative/selector'
+export {
+  findBrandViolations,
+  normalizeForBrandCheck,
+  parseNgWordList,
+  ngWordListSchema,
+  type BrandViolation,
+  type NgWordList,
+} from './creative/ng-check'

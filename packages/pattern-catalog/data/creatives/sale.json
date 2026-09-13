@@ -1,0 +1,345 @@
+[
+  {
+    "id": "cr-sale-0001",
+    "kind": "sale",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "ホゲホゲ市場",
+    "headline": "本日限り 全品半額",
+    "body": "在庫がなくなり次第、静かに終了します",
+    "cta": "今すぐ見る",
+    "legal": "※一部対象外の商品があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0002",
+    "kind": "sale",
+    "tags": [
+      "countdown",
+      "urgent"
+    ],
+    "brand": "ホゲホゲ市場",
+    "headline": "あと3分で値段が戻る",
+    "body": "この画面を閉じると価格は元に戻ります",
+    "cta": "価格を見る",
+    "legal": "※タイマーは目安です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-sale-0003",
+    "kind": "sale",
+    "tags": [
+      "urgent",
+      "prize"
+    ],
+    "brand": "激安ピヨピヨ堂",
+    "headline": "クーポン90%OFF",
+    "body": "受け取りは1人1回まで。忘れると消えます",
+    "cta": "受け取る",
+    "legal": "※クーポンには有効期限があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0004",
+    "kind": "sale",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "激安ピヨピヨ堂",
+    "headline": "ポイント50倍デー",
+    "body": "本日エントリーした方だけ、明日から50倍",
+    "cta": "エントリー",
+    "legal": "※上限は3000ポイントです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0005",
+    "kind": "sale",
+    "tags": [
+      "urgent",
+      "loud"
+    ],
+    "brand": "トクトクモール",
+    "headline": "カート内の商品が1点",
+    "body": "見ているうちに残り1点になりました",
+    "cta": "カートを見る",
+    "legal": "※在庫数は常に1点です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-sale-0006",
+    "kind": "sale",
+    "tags": [
+      "native"
+    ],
+    "brand": "トクトクモール",
+    "headline": "送料が無料になる",
+    "body": "あと1点で送料無料。何を足すかはお任せ",
+    "cta": "商品を探す",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0007",
+    "kind": "sale",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "深夜の通販王",
+    "headline": "午前3時だけの特価",
+    "body": "眠れない人のための特別価格をご用意",
+    "cta": "特価を見る",
+    "legal": "※深夜以外は通常価格です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-sale-0008",
+    "kind": "sale",
+    "tags": [
+      "native"
+    ],
+    "brand": "深夜の通販王",
+    "headline": "1台で12役の調理器",
+    "body": "使わない機能が11個ついてお得です",
+    "cta": "詳しく見る",
+    "legal": "※画像はイメージです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0009",
+    "kind": "sale",
+    "tags": [
+      "testimonial"
+    ],
+    "brand": "量子スリッパ",
+    "headline": "履くと2mm浮きます",
+    "body": "当社比。浮遊感には個人差があります",
+    "cta": "試してみる",
+    "legal": "※効果には個人差があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0010",
+    "kind": "sale",
+    "tags": [
+      "ranking"
+    ],
+    "brand": "量子スリッパ",
+    "headline": "売上No.1のスリッパ",
+    "body": "自社調べ。当社の全スリッパ3種のうちで1位",
+    "cta": "ランキング",
+    "legal": "※No.1は自社比です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0011",
+    "kind": "sale",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "ムゲン特価市",
+    "headline": "値下げしました",
+    "body": "値下げ前の価格は表示できません",
+    "cta": "価格を見る",
+    "legal": "※価格は税込表示です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0012",
+    "kind": "sale",
+    "tags": [
+      "native"
+    ],
+    "brand": "ムゲン特価市",
+    "headline": "箱買いでさらに安い",
+    "body": "1箱144個入り。置き場所は各自ご用意ください",
+    "cta": "箱で買う",
+    "legal": "※画像はイメージです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0013",
+    "kind": "sale",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ゾンビ定期便",
+    "headline": "買い忘れを自動で補充",
+    "body": "買っていない物まで自動的に届きます",
+    "cta": "はじめる",
+    "legal": "※初回のみ無料。以降は自動更新です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-sale-0014",
+    "kind": "sale",
+    "tags": [
+      "native"
+    ],
+    "brand": "カラフル雑貨店",
+    "headline": "あなたにおすすめ",
+    "body": "さっき見ていた物によく似た別の物です",
+    "cta": "見てみる",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0015",
+    "kind": "sale",
+    "tags": [
+      "urgent",
+      "loud"
+    ],
+    "brand": "カラフル雑貨店",
+    "headline": "いま17人が見ています",
+    "body": "この数字はページを開くたびに増えます",
+    "cta": "急いで見る",
+    "legal": "※閲覧人数は演出です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-sale-0016",
+    "kind": "sale",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "スーパーホゲ電機",
+    "headline": "旧型が最安値",
+    "body": "新型が出たので旧型を全力で売ります",
+    "cta": "在庫を見る",
+    "legal": "※在庫がなくなり次第終了です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0017",
+    "kind": "sale",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "スーパーホゲ電機",
+    "headline": "5年保証を無料付帯",
+    "body": "保証の対象は本体以外の付属品です",
+    "cta": "詳しくはこちら",
+    "legal": "※保証範囲は約款によります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0018",
+    "kind": "sale",
+    "tags": [
+      "prize"
+    ],
+    "brand": "とりあえず通販",
+    "headline": "迷ったらこれ",
+    "body": "何を買うか決まっていない方向けの福袋です",
+    "cta": "中身を見る",
+    "legal": "※中身はお選びいただけません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0019",
+    "kind": "sale",
+    "tags": [
+      "native"
+    ],
+    "brand": "とりあえず通販",
+    "headline": "返品は30日以内",
+    "body": "返品用の箱は別売りです",
+    "cta": "条件を見る",
+    "legal": "※送料はお客様のご負担です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0020",
+    "kind": "sale",
+    "tags": [
+      "native"
+    ],
+    "brand": "モグモグ牧場",
+    "headline": "産地直送の謎野菜",
+    "body": "名前はまだありませんが、味は確かです",
+    "cta": "注文する",
+    "legal": "※収穫状況により品目が変わります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0021",
+    "kind": "sale",
+    "tags": [
+      "urgent"
+    ],
+    "brand": "モグモグ牧場",
+    "headline": "今だけ1kg増量",
+    "body": "増えるのは重さで、個数ではありません",
+    "cta": "増量分を見る",
+    "legal": "※増量は予告なく終了します",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0022",
+    "kind": "sale",
+    "tags": [
+      "prize"
+    ],
+    "brand": "未来のポチ袋",
+    "headline": "来年の福袋を予約",
+    "body": "中身は来年のスタッフが考えます",
+    "cta": "予約する",
+    "legal": "※中身は変更になる場合があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0023",
+    "kind": "sale",
+    "tags": [
+      "prize",
+      "loud"
+    ],
+    "brand": "ダミー百貨店",
+    "headline": "招待された方だけ",
+    "body": "この招待は全員に送られています",
+    "cta": "入場する",
+    "legal": "※招待制ではありません",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-sale-0024",
+    "kind": "sale",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ダミー百貨店",
+    "headline": "会員価格で買える",
+    "body": "会員登録は購入後に自動で行われます",
+    "cta": "会員になる",
+    "legal": "※退会はお問い合わせフォームからのみ",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-sale-0025",
+    "kind": "sale",
+    "tags": [
+      "native"
+    ],
+    "brand": "ホゲマート",
+    "headline": "レジ横の誘惑",
+    "body": "買う予定のなかった物ばかり集めました",
+    "cta": "見てしまう",
+    "legal": "※後悔は返品対象外です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-sale-0026",
+    "kind": "sale",
+    "tags": [
+      "countdown",
+      "urgent",
+      "loud"
+    ],
+    "brand": "ホゲマート",
+    "headline": "あと3秒で終了",
+    "body": "終了しても3秒後にまた始まります",
+    "cta": "今すぐ確認",
+    "legal": "※本広告は架空のものです",
+    "theme": "danger"
+  }
+]

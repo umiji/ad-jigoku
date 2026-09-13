@@ -1,0 +1,352 @@
+[
+  {
+    "id": "cr-app-0001",
+    "kind": "app",
+    "tags": [
+      "mobile",
+      "native"
+    ],
+    "brand": "アプリ名Z",
+    "headline": "アプリで見ると快適",
+    "body": "快適さの内訳は掲載していません",
+    "cta": "アプリで開く",
+    "legal": "※アプリの利用は無料です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0002",
+    "kind": "app",
+    "tags": [
+      "mobile"
+    ],
+    "brand": "アプリ名Z",
+    "headline": "続きはアプリで",
+    "body": "ブラウザでも読めますが教えません",
+    "cta": "入手する",
+    "legal": "※一部機能はアプリ限定です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-app-0003",
+    "kind": "app",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ホゲメモ帳",
+    "headline": "メモが消えません",
+    "body": "消す機能を実装し忘れました",
+    "cta": "入手する",
+    "legal": "※不具合は仕様です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0004",
+    "kind": "app",
+    "tags": [
+      "freebie",
+      "mobile"
+    ],
+    "brand": "ホゲメモ帳",
+    "headline": "同期は3秒で完了",
+    "body": "同期先はまだ決まっていません",
+    "cta": "無料で始める",
+    "legal": "※通信環境により異なります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0005",
+    "kind": "app",
+    "tags": [
+      "mobile"
+    ],
+    "brand": "ピヨトーク",
+    "headline": "友だちが1人います",
+    "body": "その1人は運営の公式アカウントです",
+    "cta": "はじめる",
+    "legal": "※実在のサービスではありません",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-app-0006",
+    "kind": "app",
+    "tags": [
+      "warning",
+      "mobile",
+      "loud"
+    ],
+    "brand": "ピヨトーク",
+    "headline": "通知が127件",
+    "body": "127件のうち126件は広告です",
+    "cta": "確認する",
+    "legal": "※通知は設定で切れます",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-app-0007",
+    "kind": "app",
+    "tags": [
+      "recurring"
+    ],
+    "brand": "ムゲン電卓",
+    "headline": "広告のない電卓",
+    "body": "広告のない画面は有料です",
+    "cta": "詳しくはこちら",
+    "legal": "※広告非表示は課金が必要です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0008",
+    "kind": "app",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ムゲン電卓",
+    "headline": "四則演算に対応",
+    "body": "対応しているのは足し算だけです",
+    "cta": "入手する",
+    "legal": "※機能は順次追加予定です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0009",
+    "kind": "app",
+    "tags": [
+      "freebie",
+      "quiz"
+    ],
+    "brand": "すきま時間工房",
+    "headline": "1日3分で変わる",
+    "body": "変わるのは3分の使い道だけです",
+    "cta": "無料で試す",
+    "legal": "※効果には個人差があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0010",
+    "kind": "app",
+    "tags": [
+      "ranking"
+    ],
+    "brand": "すきま時間工房",
+    "headline": "継続率98%",
+    "body": "分母は継続した人だけです",
+    "cta": "はじめる",
+    "legal": "※数値は自社調べです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0011",
+    "kind": "app",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "深呼吸メソッド",
+    "headline": "息を吸って、吐く",
+    "body": "有料版では吸うところから始まります",
+    "cta": "無料で始める",
+    "legal": "※医療行為ではありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0012",
+    "kind": "app",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "深呼吸メソッド",
+    "headline": "睡眠の質を可視化",
+    "body": "可視化するだけで改善はしません",
+    "cta": "記録を見る",
+    "legal": "※効果を保証するものではありません",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-app-0013",
+    "kind": "app",
+    "tags": [
+      "mobile"
+    ],
+    "brand": "ダミー翻訳機",
+    "headline": "108言語に対応",
+    "body": "対応とは表示できるという意味です",
+    "cta": "入手する",
+    "legal": "※翻訳の精度は保証しません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0014",
+    "kind": "app",
+    "tags": [
+      "freebie"
+    ],
+    "brand": "ダミー翻訳機",
+    "headline": "オフラインでも動く",
+    "body": "動きますが、翻訳はできません",
+    "cta": "試してみる",
+    "legal": "※一部機能は通信が必要です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0015",
+    "kind": "app",
+    "tags": [
+      "recurring",
+      "freebie"
+    ],
+    "brand": "三日坊主英会話",
+    "headline": "4日目からが本番",
+    "body": "3日でやめた方向けの機能はありません",
+    "cta": "無料体験",
+    "legal": "※体験後は自動更新されます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-app-0016",
+    "kind": "app",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "三日坊主英会話",
+    "headline": "1日1単語だけ",
+    "body": "1年で365単語、10年で3650単語です",
+    "cta": "はじめる",
+    "legal": "※学習効果には個人差があります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0017",
+    "kind": "app",
+    "tags": [
+      "quiz",
+      "native"
+    ],
+    "brand": "ぐるぐる占い館",
+    "headline": "今日の運勢は普通",
+    "body": "普通の日を大切にしましょう",
+    "cta": "運勢を見る",
+    "legal": "※占い結果は娯楽です",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-app-0018",
+    "kind": "app",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "ぐるぐる占い館",
+    "headline": "相性を診断します",
+    "body": "診断の結果は相手にも届きます",
+    "cta": "診断する",
+    "legal": "※実際には送信されません",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-app-0019",
+    "kind": "app",
+    "tags": [
+      "warning",
+      "mobile"
+    ],
+    "brand": "アプリ名Z",
+    "headline": "評価をお願いします",
+    "body": "星5以外は次の画面に進めません",
+    "cta": "評価する",
+    "legal": "※評価は任意です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-app-0020",
+    "kind": "app",
+    "tags": [
+      "mobile"
+    ],
+    "brand": "ホゲメモ帳",
+    "headline": "データを移行できます",
+    "body": "移行先は同じアプリです",
+    "cta": "移行する",
+    "legal": "※データは失われません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0021",
+    "kind": "app",
+    "tags": [
+      "mobile"
+    ],
+    "brand": "ピヨトーク",
+    "headline": "既読はつきません",
+    "body": "送信もされていません",
+    "cta": "送ってみる",
+    "legal": "※メッセージは保存されません",
+    "theme": "popupDark"
+  },
+  {
+    "id": "cr-app-0022",
+    "kind": "app",
+    "tags": [
+      "countdown",
+      "loud"
+    ],
+    "brand": "ムゲン電卓",
+    "headline": "広告が消えるまで3秒",
+    "body": "3秒後に別の広告が出ます",
+    "cta": "待つ",
+    "legal": "※広告は継続して表示されます",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-app-0023",
+    "kind": "app",
+    "tags": [
+      "warning",
+      "mobile"
+    ],
+    "brand": "すきま時間工房",
+    "headline": "通知を許可しますか",
+    "body": "許可しない選択肢は下のほうにあります",
+    "cta": "許可する",
+    "legal": "※通知は後から変更できます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-app-0024",
+    "kind": "app",
+    "tags": [
+      "freebie",
+      "recurring"
+    ],
+    "brand": "深呼吸メソッド",
+    "headline": "初回7日間は無料",
+    "body": "8日目に自動で課金されます",
+    "cta": "7日間試す",
+    "legal": "※無料期間終了後は自動的に有料になります",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-app-0025",
+    "kind": "app",
+    "tags": [
+      "native"
+    ],
+    "brand": "ダミー翻訳機",
+    "headline": "この文章も翻訳可能",
+    "body": "翻訳すると意味が変わります",
+    "cta": "翻訳する",
+    "legal": "※翻訳結果は参考です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-app-0026",
+    "kind": "app",
+    "tags": [
+      "countdown",
+      "urgent"
+    ],
+    "brand": "三日坊主英会話",
+    "headline": "あと3秒で特典終了",
+    "body": "終了後にもう一度出てきます",
+    "cta": "特典を見る",
+    "legal": "※特典の内容は変更になる場合があります",
+    "theme": "danger"
+  }
+]

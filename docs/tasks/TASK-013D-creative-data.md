@@ -55,3 +55,37 @@ data/ng-words/brands.json                           NG ワードリスト（実�
 
 - acceptance criteria を全て満たす
 - Q4（Creative データの初期件数と生成方法）の決定内容が README に記録されている
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-13）。実装はサブエージェント（opus）、検証・コミットはコントローラ
+
+### 決定ログ
+
+#### 2026-09-13 Q4: Creative の初期件数は 300（実績 312）、生成 AI 下書き + NG ワード CI + 人間レビュー（未実施）
+- 決定: 12 kind × 26 件 = 312 件、架空ブランド 94 種、NG ワード 240 語。人間による全件レビューはローンチ前の残作業として README §7.1 に明記
+- 却下案: 100 件 → 「同じ広告ばかりに見える」（C4）を解消できない
+- 出典: DECISIONS_v0.2 §9 Q4 / packages/pattern-catalog/README.md §7
+
+#### 2026-09-13 selectCreative は乱数を持たない純粋関数
+- 決定: `pool.sort(byId)[creativeIndex % n]`。creativeIndex は生成器が rng('creative') で 1 回だけ引いた値。JSON の並び順を変えてもリプレイが壊れない
+- 出典: PATTERN_SCHEMA §3.3 / GAME_ENGINE_DESIGN §6
+
+#### 2026-09-13 NG 検査は NFKC + 小文字化 + ひらがな→カタカナ + 記号除去で正規化
+- 決定: `Amazon` / `アマゾン` / `ａｍａｚｏｎ` / `あまぞん` を同一視。短い語（au / LINE 等）は誤爆するので具体形（auひかり 等）で登録
+- 出典: session decision（README §7.5）
+
+### 証拠
+
+```text
+$ pnpm turbo run typecheck lint test --filter=@ad-jigoku/pattern-catalog → 127 tests passed（creatives 24）
+$ pnpm test:scripts → 34 passed（check-creative-brands 16）
+$ pnpm check-creatives → OK（NG ワード 240 件、違反 0 件）
+$ （cr-sale-0001.brand を "Amazon" に）→ exit 1「data/creatives/sale.json › cr-sale-0001.brand: "amazon"」→ revert
+```
+
+### 未解決の懸念
+
+- 人間による全 312 件のレビュー未実施（特に health / finance）。一文字違いの類似（Gooogle 等）は機械検出不可

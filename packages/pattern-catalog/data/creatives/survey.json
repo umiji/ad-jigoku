@@ -1,0 +1,352 @@
+[
+  {
+    "id": "cr-survey-0001",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "3秒診断ラボ",
+    "headline": "3秒でわかる診断",
+    "body": "診断の結果は全員同じです",
+    "cta": "診断する",
+    "legal": "※診断は娯楽です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0002",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "3秒診断ラボ",
+    "headline": "あなたのタイプは",
+    "body": "タイプは4つ全部が当てはまります",
+    "cta": "結果を見る",
+    "legal": "※結果は自動生成です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0003",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "なんでもアンケート",
+    "headline": "2問で終わります",
+    "body": "3問目からが本編です",
+    "cta": "回答する",
+    "legal": "※所要時間は目安です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0004",
+    "kind": "survey",
+    "tags": [
+      "prize",
+      "quiz"
+    ],
+    "brand": "なんでもアンケート",
+    "headline": "回答でポイント進呈",
+    "body": "進呈は抽選で1名です",
+    "cta": "参加する",
+    "legal": "※当選者数には限りがあります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0005",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "ホゲリサーチ",
+    "headline": "いまの気分はどれ",
+    "body": "どれを選んでも同じ画面に進みます",
+    "cta": "答える",
+    "legal": "※回答は保存されません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0006",
+    "kind": "survey",
+    "tags": [
+      "quiz",
+      "warning"
+    ],
+    "brand": "ホゲリサーチ",
+    "headline": "満足度を教えて",
+    "body": "不満の選択肢は用意していません",
+    "cta": "評価する",
+    "legal": "※アンケートは自社調べです",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-survey-0007",
+    "kind": "survey",
+    "tags": [
+      "ranking",
+      "quiz"
+    ],
+    "brand": "ピヨピヨ調査団",
+    "headline": "1万人に聞きました",
+    "body": "聞いたのは社内の人に1万回です",
+    "cta": "結果を見る",
+    "legal": "※調査は自社調べです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0008",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "ピヨピヨ調査団",
+    "headline": "あなたはどっち派",
+    "body": "第三の選択肢はありません",
+    "cta": "投票する",
+    "legal": "※投票結果は演出です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0009",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "ダミー統計局",
+    "headline": "平均より上ですか",
+    "body": "平均は回答したあとに決まります",
+    "cta": "確かめる",
+    "legal": "※統計的な根拠はありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0010",
+    "kind": "survey",
+    "tags": [
+      "warning"
+    ],
+    "brand": "ダミー統計局",
+    "headline": "データを提供しました",
+    "body": "提供先は掲載していません",
+    "cta": "詳しくはこちら",
+    "legal": "※データは架空です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-survey-0011",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "3秒診断ラボ",
+    "headline": "相性診断はこちら",
+    "body": "相手の同意は取れていません",
+    "cta": "診断する",
+    "legal": "※診断は娯楽です",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0012",
+    "kind": "survey",
+    "tags": [
+      "quiz",
+      "countdown"
+    ],
+    "brand": "なんでもアンケート",
+    "headline": "最後の1問です",
+    "body": "この「最後の1問」が7問あります",
+    "cta": "次へ進む",
+    "legal": "※質問数は変動します",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-survey-0013",
+    "kind": "survey",
+    "tags": [
+      "prize",
+      "loud"
+    ],
+    "brand": "ホゲリサーチ",
+    "headline": "当選しました",
+    "body": "当選したのはアンケートへの参加権です",
+    "cta": "受け取る",
+    "legal": "※当選者数には限りがあります",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0014",
+    "kind": "survey",
+    "tags": [
+      "countdown",
+      "urgent"
+    ],
+    "brand": "ピヨピヨ調査団",
+    "headline": "あと3人で締切",
+    "body": "3人は毎分補充されます",
+    "cta": "急いで答える",
+    "legal": "※定員は目安です",
+    "theme": "danger"
+  },
+  {
+    "id": "cr-survey-0015",
+    "kind": "survey",
+    "tags": [
+      "native"
+    ],
+    "brand": "ダミー統計局",
+    "headline": "2026年の傾向",
+    "body": "傾向は毎年ほぼ同じです",
+    "cta": "資料を見る",
+    "legal": "※調査は自社調べです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0016",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "3秒診断ラボ",
+    "headline": "脳年齢を測定",
+    "body": "測定しているのは指の速さです",
+    "cta": "測ってみる",
+    "legal": "※医療行為ではありません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0017",
+    "kind": "survey",
+    "tags": [
+      "freebie",
+      "recurring"
+    ],
+    "brand": "なんでもアンケート",
+    "headline": "無料で参加できる",
+    "body": "参加したあとに会員登録が必要です",
+    "cta": "参加する",
+    "legal": "※後から登録が必要です",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-survey-0018",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "ホゲリサーチ",
+    "headline": "ご意見を募集中",
+    "body": "いただいた意見は集計されません",
+    "cta": "送信する",
+    "legal": "※回答は保存されません",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0019",
+    "kind": "survey",
+    "tags": [
+      "native"
+    ],
+    "brand": "ピヨピヨ調査団",
+    "headline": "あなたの声が反映",
+    "body": "反映先は次に出る広告です",
+    "cta": "声を届ける",
+    "legal": "※本広告は架空のものです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0020",
+    "kind": "survey",
+    "tags": [
+      "ranking"
+    ],
+    "brand": "ダミー統計局",
+    "headline": "回答者の98%が",
+    "body": "98%の内訳は掲載していません",
+    "cta": "詳細を見る",
+    "legal": "※調査は自社調べです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0021",
+    "kind": "survey",
+    "tags": [
+      "quiz",
+      "recurring"
+    ],
+    "brand": "3秒診断ラボ",
+    "headline": "結果はメールで",
+    "body": "メールアドレスのほうが本題です",
+    "cta": "結果を受け取る",
+    "legal": "※メールが配信されます",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-survey-0022",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "なんでもアンケート",
+    "headline": "ご協力ありがとう",
+    "body": "お礼にアンケートをもう1つどうぞ",
+    "cta": "次に答える",
+    "legal": "※続けて表示されます",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0023",
+    "kind": "survey",
+    "tags": [
+      "quiz"
+    ],
+    "brand": "ホゲリサーチ",
+    "headline": "1問だけ答えて",
+    "body": "答えると2問目が現れます",
+    "cta": "答える",
+    "legal": "※質問数は変動します",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0024",
+    "kind": "survey",
+    "tags": [
+      "ranking",
+      "quiz"
+    ],
+    "brand": "ピヨピヨ調査団",
+    "headline": "あなたは何位か",
+    "body": "参加者1名の中での順位です",
+    "cta": "順位を見る",
+    "legal": "※ランキングは自社調べです",
+    "theme": "popup"
+  },
+  {
+    "id": "cr-survey-0025",
+    "kind": "survey",
+    "tags": [
+      "warning",
+      "quiz"
+    ],
+    "brand": "ダミー統計局",
+    "headline": "匿名で回答できる",
+    "body": "匿名の定義は当社が決めます",
+    "cta": "回答する",
+    "legal": "※個人情報は取得しません",
+    "theme": "warning"
+  },
+  {
+    "id": "cr-survey-0026",
+    "kind": "survey",
+    "tags": [
+      "countdown",
+      "video",
+      "loud"
+    ],
+    "brand": "3秒診断ラボ",
+    "headline": "あと3秒で結果",
+    "body": "結果の前に広告が3本あります",
+    "cta": "結果を見る",
+    "legal": "※広告が表示されます",
+    "theme": "danger"
+  }
+]
