@@ -1,5 +1,6 @@
 import type { ActiveAd, ViewState } from '@ad-jigoku/game-engine'
 import { STEP_MS } from '@ad-jigoku/game-engine'
+import { loadCreatives, selectCreative, type Creative, type PatternDefinition } from '@ad-jigoku/pattern-catalog'
 
 /**
  * ViewState → Shell コンポーネントへ渡す props の変換（TASK-014 要件 5）。
@@ -11,7 +12,8 @@ import { STEP_MS } from '@ad-jigoku/game-engine'
  *     parts: AdPartState[]（visible / enabled / emphasis / hitboxScale / anchor）,
  *     motion: MotionCue[]（reducedMotion 適用済み）,
  *     countdown?: { remainingMs }, badge?: string, offset?: { yPercent }, anchor?,
- *     creativeIndex: number（013D の selectCreative に渡す）,
+ *     creative: Creative（013D。生成時に引いた creativeIndex とパターンの CreativeSelector から決定論的に解決済み）,
+ *     creativeIndex: number,
  *     reducedMotion: boolean,
  *   }
  * shell はこれと `data-target` / `data-instance` 属性だけで描画する。
@@ -28,6 +30,7 @@ export type ShellProps = {
   badge?: string | undefined
   offset?: { yPercent: number } | undefined
   anchor?: { xPercent: number; yPercent: number } | undefined
+  creative: Creative
   creativeIndex: number
   reducedMotion: boolean
   /** 出現からの経過（ms）。演出用 */
@@ -36,9 +39,10 @@ export type ShellProps = {
 
 const MOTION_ONLY_CUES = new Set<ViewState['motion'][number]>(['shake', 'drift', 'sticky-track', 'pulse'])
 
-export function shellPropsOf(ad: ActiveAd, step: number, reducedMotion: boolean): ShellProps {
+export function shellPropsOf(ad: ActiveAd, step: number, reducedMotion: boolean, pattern: PatternDefinition | undefined): ShellProps {
   const v = ad.view
   const motion = reducedMotion ? v.motion.filter((m) => !MOTION_ONLY_CUES.has(m)) : v.motion
+  const creative = selectCreative(loadCreatives(), pattern?.game?.creative, ad.creativeIndex)
   return {
     instanceId: ad.instanceId,
     lifecycle: ad.lifecycle,
@@ -51,6 +55,7 @@ export function shellPropsOf(ad: ActiveAd, step: number, reducedMotion: boolean)
     badge: v.badge,
     offset: reducedMotion ? undefined : v.offset,
     anchor: v.anchor,
+    creative,
     creativeIndex: ad.creativeIndex,
     reducedMotion,
     ageMs: Math.max(0, (step - ad.spawnedAtStep) * STEP_MS),

@@ -1,6 +1,7 @@
 'use client'
 
 import type { ActiveAd } from '@ad-jigoku/game-engine'
+import type { PatternDefinition } from '@ad-jigoku/pattern-catalog'
 import type { ComponentType } from 'react'
 import styles from './adlayer.module.css'
 import { shellPropsOf, type ShellProps } from './shellProps'
@@ -12,11 +13,11 @@ import { shellPropsOf, type ShellProps } from './shellProps'
  */
 export type ShellComponentMap = Readonly<Record<string, ComponentType<ShellProps>>>
 
-export function AdLayer({ ads, step, reducedMotion, shells, fallback }: { ads: readonly ActiveAd[]; step: number; reducedMotion: boolean; shells: ShellComponentMap; fallback: ComponentType<ShellProps> }) {
+export function AdLayer({ ads, step, reducedMotion, shells, fallback, byId }: { ads: readonly ActiveAd[]; step: number; reducedMotion: boolean; shells: ShellComponentMap; fallback: ComponentType<ShellProps>; byId: ReadonlyMap<string, PatternDefinition> }) {
   return (
     <div className={styles.layer} data-testid="ad-layer" aria-live="polite">
       {ads.map((ad) => {
-        const props = shellPropsOf(ad, step, reducedMotion)
+        const props = shellPropsOf(ad, step, reducedMotion, byId.get(ad.patternId))
         const Shell = shells[ad.shellId] ?? fallback
         const stack = String(Math.min(5, Math.max(0, props.stackIndex)))
         const style = props.anchor ? ({ '--ad-x': `${props.anchor.xPercent}%`, '--ad-y': `${props.anchor.yPercent}%` } as React.CSSProperties) : undefined

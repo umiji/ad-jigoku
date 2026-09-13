@@ -92,7 +92,7 @@ export function GameHost({ config, article, shells, onRestart }: GameHostProps) 
     <div className={styles.host} data-shake={fx.shake > 0 ? 'true' : 'false'} data-rage={fx.rage} data-phase={state.phase} data-testid="game-host" onClick={onPointer}>
       <BrowserFrame device={config.device} path={`article/${article.id}`} onScrollLines={(d) => dispatch({ t: 'scroll', deltaLines: d })} scrollRef={(el) => (scrollEl.current = el)}>
         <ArticleSurface article={article} readLines={state.progress.read} answered={state.answered} lastChoices={lastChoices} onAnswer={onAnswer} onVisibilityChange={setReading} />
-        <AdLayer ads={state.ads} step={state.step} reducedMotion={state.a11y.reducedMotion} shells={shells} fallback={GenericShell} />
+        <AdLayer ads={state.ads} step={state.step} reducedMotion={state.a11y.reducedMotion} shells={shells} fallback={GenericShell} byId={byId} />
         <Hud state={state} byId={byId} onAction={onAction} />
         {fx.stamp && (
           <div className={styles.stamp} role="status">

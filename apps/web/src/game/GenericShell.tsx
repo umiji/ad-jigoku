@@ -18,9 +18,9 @@ export function GenericShell(p: ShellProps) {
   const cta = part('cta')
   return (
     <div className={styles.box} data-testid={`shell-${p.instanceId}`} data-generic-shell>
-      <div className={styles.meta}>PR · {p.instanceId}</div>
-      <div className={styles.headline}>広告（汎用シェル）</div>
-      <p className={styles.body}>このシェルの本実装は TASK-013A/B。</p>
+      <div className={styles.meta}>PR · {p.creative.brand}</div>
+      <div className={styles.headline}>{p.creative.headline}</div>
+      {p.creative.body && <p className={styles.body}>{p.creative.body}</p>}
       {p.countdown && p.countdown.remainingMs > 0 && (
         <div className={styles.countdown} aria-live="polite">
           {formatCountdown(p.countdown.remainingMs)}
@@ -28,8 +28,8 @@ export function GenericShell(p: ShellProps) {
       )}
       {p.badge && <div className={styles.badge}>{p.badge}</div>}
       {cta?.visible && (
-        <button type="button" className={styles.cta} data-target="cta" aria-label="広告のボタン（押すと誤クリック扱い）">
-          今すぐ確認
+        <button type="button" className={styles.cta} data-target="cta" aria-label={`広告のボタン「${p.creative.cta}」（押すと誤クリック扱い）`}>
+          {p.creative.cta}
         </button>
       )}
       {close?.visible && (
