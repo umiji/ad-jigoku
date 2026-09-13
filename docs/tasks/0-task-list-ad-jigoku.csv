@@ -3,7 +3,7 @@ TASK-001,2026-09-12,2026-09-13,monorepo基盤とツールチェーン,完了,無
 TASK-002,2026-09-12,2026-09-12,デザイントークンとDESIGN.md強制lint,未着手,TASK-001,docs/tasks/TASK-002-design-tokens.md
 TASK-003,2026-09-12,2026-09-13,パターンスキーマとバリデータ,完了,TASK-001,docs/tasks/TASK-003-pattern-schema.md
 TASK-004,2026-09-12,2026-09-12,カタログMarkdown→JSON変換（全パターン）,未着手,TASK-003,docs/tasks/TASK-004-catalog-data.md
-TASK-005,2026-09-12,2026-09-12,決定論プリミティブ（RNG/固定ステップ/state hash）,未着手,TASK-001,docs/tasks/TASK-005-deterministic-primitives.md
+TASK-005,2026-09-12,2026-09-13,決定論プリミティブ（RNG/固定ステップ/state hash）,完了,TASK-001,docs/tasks/TASK-005-deterministic-primitives.md
 TASK-006,2026-09-12,2026-09-12,GameStateとstep() reducer骨格,未着手,"TASK-004, TASK-005",docs/tasks/TASK-006-game-state-reducer.md
 TASK-007,2026-09-12,2026-09-13,BehaviorRegistry + ShellRegistryとViewState契約,未着手,TASK-006,docs/tasks/TASK-007-simulator-registry.md
 TASK-008,2026-09-12,2026-09-13,ステージ生成器（エンカウンターテンプレート+R1-R8）,未着手,TASK-007,docs/tasks/TASK-008-stage-generator.md

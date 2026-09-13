@@ -1,2 +1,2 @@
-// @ad-jigoku/game-engine — stub (TASK-001). Real exports arrive in later tasks.
-export {}
+// @ad-jigoku/game-engine — ヘッドレス決定論エンジン（ADR-002）
+export * from './core'
