@@ -1,0 +1,12 @@
+{
+  "id": "stage-1",
+  "name": { "ja": "まだ普通のサイト" },
+  "templateIds": ["opener", "pressure-pair", "opener"],
+  "encounterGapMs": { "min": 3000, "max": 5000 },
+  "targetDifficulty": { "min": 1, "max": 2.5 },
+  "durationMs": 60000,
+  "contentLength": 48,
+  "categoryWeights": { "INT": 2, "OBS": 2 },
+  "forcedPatterns": ["INT-01"],
+  "escalation": { "startIntensity": 0, "endIntensity": 0.3 }
+}

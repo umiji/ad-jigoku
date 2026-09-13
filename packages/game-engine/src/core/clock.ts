@@ -14,7 +14,8 @@ export function elapsedMs(step: number): number {
 
 /** ms を固定ステップ数に変換（切り上げ）。閉じられるまでの待機などの「最低でも N ステップ」に使う */
 export function msToSteps(ms: number): number {
-  return Math.ceil(ms / STEP_MS)
+  // 7300 / 16.666… = 438.00000000000006 のような浮動小数誤差で 1 step 余計に切り上げないよう、微小量を引く
+  return Math.ceil(ms / STEP_MS - 1e-9)
 }
 
 export type Accumulator = { steps: number; acc: number }
