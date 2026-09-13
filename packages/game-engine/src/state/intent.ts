@@ -2,7 +2,7 @@ import type { PlayerAction } from '@ad-jigoku/pattern-catalog'
 
 /** GAME_ENGINE_DESIGN.md §4 Intent（入力）。ピクセル座標は持たない（§4.1） */
 
-export type AdPart = 'close' | 'fake-close' | 'cta' | 'body' | 'media' | 'label' | 'decoy'
+export type AdPart = 'close' | 'fake-close' | 'cta' | 'body' | 'media' | 'label' | 'legal' | 'decoy'
 
 export type TargetRef =
   | { kind: 'ad'; instanceId: string; part: AdPart }

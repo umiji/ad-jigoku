@@ -86,6 +86,7 @@ function defaultOutcome(env: StepEnv, ad: ActiveAd, intent: Extract<Intent, { t:
         return { kind: 'mistake', reason: 'clicked-ad' }
       case 'body':
       case 'label':
+      case 'legal':
         return undefined
     }
   }

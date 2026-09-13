@@ -98,11 +98,22 @@ function generateOnce(input: GenerateInput, salt: number): GenerateResult {
       chosen.push(pick)
       const components = componentsOf(pick, byId)
       components.forEach((component, ci) => {
-        const spawnMs = scheduleTime(cursorMs, spawns, byId, registries, maxConcurrent, loadBudget, component, warnings)
-        cursorMs = spawnMs
         // パラメータ焼き込みはスロット固有の RNG で行う: あるスロットのパターンが変わっても他スロットの確定値が動かない（seed 安定性）
         const slotRng = makeRng(`${seed}#${salt}:${key}:${ci}`)
-        spawns.push(bakeSpawn(component, `e${encounterIndex}-r${roleIndex}-${ci}-${seq++}`, msToSteps(spawnMs), slotRng, role.role, pick.id))
+        const baked = bakeBehaviors(component, slotRng)
+        // spawn:delayed {afterMs}: 出現を afterMs だけ遅らせる（behavior 自身は出現後にしか動けないので生成器が担う）
+        const afterMs = baked.behaviors.spawn?.id === 'spawn:delayed' ? (baked.behaviors.spawn.params['afterMs'] ?? 0) : 0
+        const spawnMs = scheduleTime(cursorMs + afterMs, spawns, byId, registries, maxConcurrent, loadBudget, component, warnings)
+        cursorMs = spawnMs - afterMs
+        spawns.push({
+          instanceId: `e${encounterIndex}-r${roleIndex}-${ci}-${seq++}`,
+          atStep: msToSteps(spawnMs),
+          patternId: component.id,
+          shellId: component.game.shell ?? '',
+          behaviors: baked.behaviors,
+          creativeIndex: baked.creativeIndex,
+          role: pick.id === component.id ? role.role : `${role.role}:${pick.id}`,
+        })
         if (components.length > 1) cursorMs += 250 // COM の構成要素はほぼ同時（わずかにずらす）
       })
       const spacing = pickFromRange(template.spacingMs, rng('timing'))
@@ -167,7 +178,9 @@ function choosePattern(c: ChooseInput): GamePattern | undefined {
 /**
  * R5 認知負荷予算と同時出現上限を満たす出現時刻を決める（満たさなければ遅らせる）。
  * 「同時」の定義: 出現から LOAD_WINDOW_MS の間はその広告が存在するとみなす。
- * 新しい出現時刻 t に対して (t - W, t] にある出現数 < maxConcurrent かつ Σ load + 自分 ≤ budget。
+ * 新しい出現 t を加えた後、t と「t より後にある既存出現の時刻」のそれぞれで
+ * 存在数 < maxConcurrent かつ Σ load ≤ budget を満たすまで t を遅らせる
+ * （spawn:delayed により既存より前に挿入されることがあるため、後ろの時点も検査する）。
  */
 function scheduleTime(
   desiredMs: number,
@@ -179,27 +192,33 @@ function scheduleTime(
   next: GamePattern,
   warnings: GenerationWarning[],
 ): number {
-  let ms = desiredMs
+  const windowSteps = msToSteps(LOAD_WINDOW_MS)
+  const loadOfSpawn = (s: ScheduledSpawn) => {
+    const p = byId.get(s.patternId)
+    return p && isGamePattern(p) ? loadOf(p, registries) : 1
+  }
   const nextLoad = loadOf(next, registries)
+  const fits = (atStep: number): boolean => {
+    const all = [...spawns.map((s) => ({ step: s.atStep, load: loadOfSpawn(s) })), { step: atStep, load: nextLoad }]
+    const checkpoints = all.filter((s) => s.step >= atStep).map((s) => s.step)
+    for (const t of checkpoints) {
+      const present = all.filter((s) => t - s.step >= 0 && t - s.step <= windowSteps)
+      if (present.length > maxConcurrent) return false
+      if (present.reduce((sum, s) => sum + s.load, 0) > loadBudget) return false
+    }
+    return true
+  }
+  let ms = desiredMs
   for (let i = 0; i < MAX_DELAY_ITERATIONS; i++) {
-    const atStep = msToSteps(ms)
-    const active = spawns.filter((s) => {
-      const dSteps = atStep - s.atStep
-      return dSteps >= 0 && dSteps <= msToSteps(LOAD_WINDOW_MS)
-    })
-    const load = active.reduce((sum, s) => {
-      const p = byId.get(s.patternId)
-      return sum + (p && isGamePattern(p) ? loadOf(p, registries) : 1)
-    }, 0)
-    if (active.length < maxConcurrent && load + nextLoad <= loadBudget) return ms
+    if (fits(msToSteps(ms))) return ms
     ms += SPAWN_DELAY_STEP_MS
     if (i === 0) warnings.push({ code: 'R5-delayed', message: `${next.id} の出現を認知負荷予算/同時上限のため遅延` })
   }
   return ms
 }
 
-/** Range を確定値へ焼き込む（PATTERN_SCHEMA §3.4） */
-function bakeSpawn(p: GamePattern, instanceId: string, atStep: number, rng: Rng, role: string, sourceId: PatternId): ScheduledSpawn {
+/** Range を確定値へ焼き込む（PATTERN_SCHEMA §3.4）。creativeIndex も同じスロット RNG から引く */
+function bakeBehaviors(p: GamePattern, rng: Rng): { behaviors: ScheduledSpawn['behaviors']; creativeIndex: number } {
   const behaviors: Partial<Record<Slot, { id: BehaviorId; params: Record<string, number> }>> = {}
   for (const slot of usedSlots(p)) {
     const spec = p.game.behaviors?.[slot]
@@ -209,8 +228,7 @@ function bakeSpawn(p: GamePattern, instanceId: string, atStep: number, rng: Rng,
     behaviors[slot] = { id: spec.id, params }
   }
   const creativeIndex = Math.floor(rng('creative')() * 1_000_000)
-  const spawn: ScheduledSpawn = { instanceId, atStep, patternId: p.id, shellId: p.game.shell ?? '', behaviors, creativeIndex, role: sourceId === p.id ? role : `${role}:${sourceId}` }
-  return spawn
+  return { behaviors, creativeIndex }
 }
 
 function looseTemplates(stageDef: StageDefinition, wave: number, rng: Rng): EncounterTemplate[] {

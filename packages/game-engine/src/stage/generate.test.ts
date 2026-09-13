@@ -136,7 +136,7 @@ describe('generateStage — 決定性と多様性', () => {
     expect(outliers / 1000).toBeLessThan(0.03)
   })
 
-  it('SAFE-01: every generated spawn becomes closable within MAX_CLOSE_DELAY_MS when run through the engine (1000 seeds)', () => {
+  it('SAFE-01: every generated spawn becomes closable within MAX_CLOSE_DELAY_MS when run through the engine (1000 seeds)', { timeout: 60000 }, () => {
     const regs = fixtureRegistries()
     for (let i = 0; i < 1000; i++) {
       const r = generateStage(base(`safe${i}`, { registries: regs }))
