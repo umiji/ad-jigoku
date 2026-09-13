@@ -17,13 +17,13 @@
     "lint:root": "eslint scripts eslint.config.js",
     "test:scripts": "cd scripts && vitest run",
     "lint:css": "stylelint \"**/*.css\"",
-    "ci": "turbo run typecheck lint test && pnpm lint:root && pnpm lint:css && pnpm test:scripts && pnpm check-deps && pnpm catalog:parity && pnpm check-creatives",
     "catalog:validate": "pnpm --filter @ad-jigoku/pattern-catalog catalog:validate",
     "catalog:coverage": "pnpm --filter @ad-jigoku/pattern-catalog catalog:coverage",
     "catalog:parity": "tsx scripts/catalog-parity.ts",
     "check-creatives": "tsx scripts/check-creative-brands.ts",
     "game:preview-stage": "pnpm --filter @ad-jigoku/game-engine game:preview-stage",
-    "game:simulate": "pnpm --filter @ad-jigoku/game-engine game:simulate"
+    "game:simulate": "pnpm --filter @ad-jigoku/game-engine game:simulate",
+    "verify": "turbo run typecheck lint test && pnpm lint:root && pnpm lint:css && pnpm test:scripts && pnpm check-deps && pnpm catalog:parity && pnpm check-creatives"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

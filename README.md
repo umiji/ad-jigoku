@@ -69,7 +69,7 @@ Experience → Awareness → Evaluation → Improvement → Better UX
 ```bash
 pnpm install                 # Node 22 / pnpm 10（packageManager で固定）
 pnpm dev                     # apps/web を http://localhost:3000 で起動
-pnpm ci                      # typecheck → lint → test → check-deps（CI と同じ）
+pnpm verify                  # typecheck → lint → test → check-deps → parity → creatives（CI と同じ。`pnpm ci` は pnpm 予約語）
 ```
 
 依存方向（`ARCHITECTURE.md §5.1`）は `pnpm check-deps` と ESLint で機械的に強制される。
