@@ -18,6 +18,11 @@ const BASE_URL = `http://127.0.0.1:${PORT}`
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
+  // next dev はページを最初に開いた瞬間にその場でコンパイルする。
+  // webServer の待機は /dev/components/ しか見ないので、他のルート（/dev/shells/ 等）は
+  // 「テスト開始後に初回コンパイル」となり、遅い CI ランナーでは既定の 30s を超える。
+  // CI だけ余裕を持たせる（ローカルは短いままにして遅さに気づけるようにする）。
+  timeout: process.env.CI ? 60_000 : 30_000,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['list']] : [['list']],
