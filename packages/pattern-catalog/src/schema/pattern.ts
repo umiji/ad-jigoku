@@ -55,6 +55,15 @@ export const patternDefinitionSchema = z
     if (p.category !== 'COM' && p.composedOf) {
       ctx.addIssue({ code: 'custom', path: ['composedOf'], message: 'composedOf は COM-* のみ' })
     }
+    if (p.game) {
+      if (p.category === 'COM') {
+        if (p.game.shell !== undefined || p.game.behaviors !== undefined)
+          ctx.addIssue({ code: 'custom', path: ['game', 'shell'], message: 'COM-* は専用の shell / behaviors を持たない（composedOf を同時起動する。GAME_ENGINE_DESIGN §7.1）' })
+      } else {
+        if (p.game.shell === undefined) ctx.addIssue({ code: 'custom', path: ['game', 'shell'], message: '単独パターンの game facet は shell が必須' })
+        if (p.game.behaviors === undefined) ctx.addIssue({ code: 'custom', path: ['game', 'behaviors'], message: '単独パターンの game facet は behaviors が必須' })
+      }
+    }
     if (p.game?.incompatibleWith.includes(p.id)) {
       ctx.addIssue({ code: 'custom', path: ['game', 'incompatibleWith'], message: '自分自身を incompatibleWith に含められない' })
     }

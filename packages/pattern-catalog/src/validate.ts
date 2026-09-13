@@ -73,18 +73,19 @@ export function validateCatalog(catalog: readonly PatternDefinition[], options: 
       }
       // V-05 / V-13: shell の存在と supports
       const shells = options.impl?.shells
-      if (shells) {
+      if (shells && g.shell !== undefined) {
         const supports = shells.get(g.shell)
         if (!supports) push('V-05', 'error', `shell "${g.shell}" が ShellRegistry に存在しない`, p.id)
         else {
-          const used = (Object.keys(g.behaviors) as Slot[]).filter((s) => g.behaviors[s] !== undefined)
+          const behaviors = g.behaviors ?? {}
+          const used = (Object.keys(behaviors) as Slot[]).filter((s) => behaviors[s] !== undefined)
           for (const s of used) if (!supports.includes(s)) push('V-13', 'error', `shell "${g.shell}" はスロット "${s}" を supports に含まない`, p.id)
         }
       }
       const behaviors = options.impl?.behaviors
       if (behaviors) {
         for (const s of SLOTS) {
-          const spec = g.behaviors[s]
+          const spec = g.behaviors?.[s]
           if (spec && !behaviors.has(spec.id)) push('V-05', 'error', `behavior "${spec.id}" が BehaviorRegistry に存在しない`, p.id)
         }
       }

@@ -35,13 +35,20 @@ describe('PatternDefinition', () => {
       const r = patternDefinitionSchema.safeParse(p)
       expect(r.success, `${p.id}: ${r.success ? '' : JSON.stringify(r.error.issues)}`).toBe(true)
     }
-    expect(patternDefinitionSchema.parse(SAMPLE_CLS_11).game?.behaviors.close?.id).toBe('close:fake')
+    expect(patternDefinitionSchema.parse(SAMPLE_CLS_11).game?.behaviors?.close?.id).toBe('close:fake')
     expect(patternDefinitionSchema.parse(SAMPLE_COM_12).composedOf).toHaveLength(3)
   })
 
   it('rejects category/id mismatch', () => {
     const r = patternDefinitionSchema.safeParse({ ...SAMPLE_CLS_11, category: 'INT' })
     expect(r.success).toBe(false)
+  })
+
+  it('COM-* game facet has no shell/behaviors; standalone patterns require both', () => {
+    const comWithShell = { ...SAMPLE_COM_12, game: { ...SAMPLE_COM_12.game!, shell: 'popup', behaviors: {} } }
+    expect(patternDefinitionSchema.safeParse(comWithShell).success).toBe(false)
+    const { shell: _s, ...noShell } = SAMPLE_CLS_11.game!
+    expect(patternDefinitionSchema.safeParse({ ...SAMPLE_CLS_11, game: noShell }).success).toBe(false)
   })
 
   it('requires composedOf for COM-* and forbids it elsewhere', () => {

@@ -105,8 +105,13 @@ export type PatienceEffect = z.infer<typeof patienceEffectSchema>
 
 export const gameFacetSchema = z
   .object({
-    shell: shellIdSchema,
-    behaviors: z.partialRecord(slotSchema, behaviorSpecSchema),
+    /**
+     * shell / behaviors は単独パターン（非 COM）では必須。
+     * COM-*（Compound）は専用の Shell/Behavior を持たず、生成器が `composedOf` の構成要素を同時に起動する
+     * （GAME_ENGINE_DESIGN §7.1）。整合性は patternDefinitionSchema 側で検査する。
+     */
+    shell: shellIdSchema.optional(),
+    behaviors: z.partialRecord(slotSchema, behaviorSpecSchema).optional(),
     creative: creativeSelectorSchema.optional(),
     frame: z.array(frameCapabilitySchema).optional(),
 
@@ -129,7 +134,7 @@ export const gameFacetSchema = z
   })
   .superRefine((g, ctx) => {
     // BehaviorSpec の id プレフィックスがキーのスロットと一致すること（R1 スロット排他を型+検証で守る）
-    for (const [slot, spec] of Object.entries(g.behaviors)) {
+    for (const [slot, spec] of Object.entries(g.behaviors ?? {})) {
       if (spec && !spec.id.startsWith(`${slot}:`)) {
         ctx.addIssue({
           code: 'custom',

@@ -62,11 +62,7 @@ export const SAMPLE_COM_12: PatternDefinition = {
   dimensions: { persistence: 3, interruption: 3, cumulativeEffect: 3, timeCost: 2 },
   composedOf: ['PER-01', 'PER-02', 'INT-01'],
   game: {
-    shell: 'densityStack',
-    behaviors: {
-      spawn: { id: 'spawn:immediate' },
-      persist: { id: 'persist:multi-layer', params: { layers: { min: 3, max: 5 }, respawnDelayMs: { min: 400, max: 900 } } },
-    },
+    // COM-* は専用 shell / behaviors を持たない。composedOf を生成器が同時起動する（GAME_ENGINE_DESIGN §7.1）
     playerActions: ['CLOSE', 'SMASH', 'ESCAPE'],
     failureCondition: { kind: 'patience-zero' },
     warning: 'none',
