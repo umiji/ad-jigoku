@@ -1,0 +1,155 @@
+[
+  {
+    "id": "COM-01",
+    "category": "COM",
+    "name": { "ja": "ポップアップ＋極小×", "en": "Popup + Tiny Close" },
+    "definition": { "ja": "ポップアップ＋極小×" },
+    "severity": 14,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 3, "obstruction": 2, "interactionFriction": 3, "mobileImpact": 3, "cumulativeEffect": 3 },
+    "composedOf": ["INT-01", "CLS-01"]
+  },
+  {
+    "id": "COM-02",
+    "category": "COM",
+    "name": { "ja": "ポップアップ＋偽×", "en": "Popup + Fake Close" },
+    "definition": { "ja": "ポップアップ＋偽×" },
+    "severity": 19,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "interruption": 3, "obstruction": 2, "interactionFriction": 3, "deception": 3, "cumulativeEffect": 3 },
+    "composedOf": ["INT-01", "CLS-11"]
+  },
+  {
+    "id": "COM-03",
+    "category": "COM",
+    "name": { "ja": "固定広告＋ポップアップ", "en": "Sticky + Popup" },
+    "definition": { "ja": "固定広告＋ポップアップ" },
+    "severity": 15,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 3, "obstruction": 3, "interactionFriction": 2, "persistence": 2, "mobileImpact": 3, "cumulativeEffect": 3 },
+    "composedOf": ["OBS-03", "INT-01"],
+    "game": {
+      "creative": { "kinds": ["sale", "notice"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 4,
+      "uncertainty": 2,
+      "timePressure": 3,
+      "comboTags": ["sticky", "popup"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 8, "onMistake": 8, "perSecondAlive": 1.5 },
+      "education": { "ja": "下のバナーで画面が狭くなっているところへポップアップが乗る。1つずつなら軽いのに、重なると本文が丸ごと消える典型。" }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "固定バナーで既に減っている表示領域の上にオーバーレイが乗るため、実質的に本文がゼロになる。個々の広告は基準内でも、合計では全画面広告と変わらない。" },
+      "recommendations": [
+        { "ja": "固定バナー表示中はオーバーレイを出さない（同時表示の排他ルールを持つ）。", "effort": "medium", "expectedSeverityReduction": 7 },
+        { "ja": "同時に表示する広告の合計面積に上限を設ける。", "effort": "medium", "expectedSeverityReduction": 4 }
+      ],
+      "adFriendlyAlternative": { "ja": "どちらの枠も消さなくてよい。表示タイミングをずらして排他にするだけで、合計インプレッションを保ったまま体感の地獄が消える。" }
+    }
+  },
+  {
+    "id": "COM-04",
+    "category": "COM",
+    "name": { "ja": "固定動画＋自動音声", "en": "Sticky + Video + Sound" },
+    "definition": { "ja": "固定動画＋自動音声" },
+    "severity": 17,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "obstruction": 2, "attentionHijacking": 3, "persistence": 3, "mobileImpact": 3, "cumulativeEffect": 3 },
+    "composedOf": ["OBS-06", "ATT-02"]
+  },
+  {
+    "id": "COM-05",
+    "category": "COM",
+    "name": { "ja": "偽×＋誤操作誘発", "en": "Fake Close + Tap Hijack" },
+    "definition": { "ja": "偽×＋誤操作誘発" },
+    "severity": 20,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "deception": 3, "interactionFriction": 3, "mobileImpact": 3, "cumulativeEffect": 3 },
+    "composedOf": ["CLS-11", "ACC-05"]
+  },
+  {
+    "id": "COM-06",
+    "category": "COM",
+    "name": { "ja": "レイアウト変動＋固定広告", "en": "Layout Shift + Sticky" },
+    "definition": { "ja": "レイアウト変動＋固定広告" },
+    "severity": 15,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "obstruction": 2, "interactionFriction": 3, "persistence": 2, "mobileImpact": 3, "cumulativeEffect": 3 },
+    "composedOf": ["LAY-01", "OBS-03"]
+  },
+  {
+    "id": "COM-07",
+    "category": "COM",
+    "name": { "ja": "再出現＋多層ポップアップ", "en": "Respawn + Multi-layer" },
+    "definition": { "ja": "再出現＋多層ポップアップ" },
+    "severity": 19,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "interruption": 3, "persistence": 3, "obstruction": 2, "timeCost": 3, "cumulativeEffect": 3 },
+    "composedOf": ["PER-01", "PER-02"]
+  },
+  {
+    "id": "COM-08",
+    "category": "COM",
+    "name": { "ja": "待機＋全画面広告", "en": "Countdown + Interstitial" },
+    "definition": { "ja": "待機＋全画面広告" },
+    "severity": 15,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 3, "obstruction": 3, "timeCost": 3, "mobileImpact": 2, "cumulativeEffect": 3 },
+    "composedOf": ["TIME-01", "INT-07"]
+  },
+  {
+    "id": "COM-09",
+    "category": "COM",
+    "name": { "ja": "ネイティブ偽装＋偽CTA", "en": "Native Camouflage + Fake CTA" },
+    "definition": { "ja": "ネイティブ偽装＋偽CTA" },
+    "severity": 19,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "deception": 3, "interactionFriction": 3, "mobileImpact": 2, "cumulativeEffect": 3 },
+    "composedOf": ["DEC-01", "DEC-04"]
+  },
+  {
+    "id": "COM-10",
+    "category": "COM",
+    "name": { "ja": "モバイル密度スタック", "en": "Mobile Density Stack" },
+    "definition": { "ja": "高広告密度＋固定広告＋ポップアップ" },
+    "severity": 20,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "interruption": 3, "obstruction": 3, "interactionFriction": 3, "persistence": 2, "mobileImpact": 3, "cumulativeEffect": 3 },
+    "composedOf": ["OBS-09", "OBS-03", "INT-01"]
+  },
+  {
+    "id": "COM-11",
+    "category": "COM",
+    "name": { "ja": "音声＋遮蔽＋待機", "en": "Audio + Popup + Delayed Close" },
+    "definition": { "ja": "音声＋遮蔽＋待機" },
+    "severity": 18,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "interruption": 3, "obstruction": 2, "attentionHijacking": 3, "timeCost": 3, "cumulativeEffect": 3 },
+    "composedOf": ["ATT-02", "INT-01", "CLS-03"]
+  },
+  {
+    "id": "COM-12",
+    "category": "COM",
+    "name": { "ja": "無限地獄", "en": "Infinite Hell" },
+    "definition": { "ja": "複数広告を閉じても連続出現" },
+    "severity": 20,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "interruption": 3, "obstruction": 2, "persistence": 3, "timeCost": 3, "mobileImpact": 2, "cumulativeEffect": 3 },
+    "composedOf": ["PER-01", "PER-02", "INT-01"]
+  }
+]

@@ -14,7 +14,8 @@
     "typecheck": "tsc -p tsconfig.json",
     "lint": "pnpm -w exec eslint packages/pattern-catalog",
     "test": "vitest run",
-    "catalog:validate": "tsx bin/catalog-validate.ts"
+    "catalog:validate": "tsx bin/catalog-validate.ts",
+    "catalog:coverage": "tsx bin/catalog-coverage.ts"
   },
   "dependencies": {
     "zod": "^4.6.4"

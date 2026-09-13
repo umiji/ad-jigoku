@@ -1,0 +1,263 @@
+[
+  {
+    "id": "CLS-01",
+    "category": "CLS",
+    "name": { "ja": "極小の閉じるボタン", "en": "Tiny Close" },
+    "definition": { "ja": "閉じるボタンが極端に小さい" },
+    "severity": 5,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "interactionFriction": 3, "timeCost": 1, "mobileImpact": 3, "cumulativeEffect": 1 },
+    "game": {
+      "shell": "popup",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "close": { "id": "close:tiny", "params": { "visualScale": 0.5 } }
+      },
+      "creative": { "kinds": ["sale", "notice"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 3,
+      "uncertainty": 1,
+      "timePressure": 2,
+      "comboTags": ["popup", "tiny-close"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 5, "onMistake": 6, "perSecondAlive": 0.6 },
+      "education": { "ja": "×が小さすぎて押せないポップアップ。指の幅より小さい閉じるボタンは、事実上「閉じさせる気がない」と同じ意味になる。" }
+    },
+    "detect": {
+      "layer": 2,
+      "signals": ["dom.boundingBoxes", "interaction.hitboxMap", "viewport.size"],
+      "detectorId": "tiny-close-hitbox",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "minTapTargetPx": 44 }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "閉じる操作が何度も外れ、そのたびに広告を踏む恐怖が上乗せされる。指の接触面積より小さい×は、モバイルでは狙って押せない。" },
+      "recommendations": [
+        { "ja": "閉じるボタンのタップ領域を 44×44px 以上にする（見た目のアイコンは小さいままでよい）。", "effort": "low", "expectedSeverityReduction": 4 },
+        { "ja": "オーバーレイの外側タップでも閉じられるようにする。", "effort": "low", "expectedSeverityReduction": 2 }
+      ],
+      "adFriendlyAlternative": { "ja": "広告枠のサイズはそのままでよい。×の当たり判定だけを 44px に広げれば、インプレッションを落とさずに離脱だけが減る。" }
+    }
+  },
+  {
+    "id": "CLS-02",
+    "category": "CLS",
+    "name": { "ja": "低コントラストの閉じるボタン", "en": "Low-Contrast Close" },
+    "definition": { "ja": "背景と×のコントラストが低い" },
+    "severity": 6,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "interactionFriction": 3, "timeCost": 1, "mobileImpact": 2 }
+  },
+  {
+    "id": "CLS-03",
+    "category": "CLS",
+    "name": { "ja": "遅れて出る閉じるボタン", "en": "Delayed Close" },
+    "definition": { "ja": "一定時間経過まで閉じるUIが出ない" },
+    "severity": 8,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "interruption": 2, "interactionFriction": 2, "timeCost": 3, "cumulativeEffect": 1 },
+    "game": {
+      "shell": "popup",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "close": { "id": "close:delayed", "params": { "delayMs": { "min": 2000, "max": 4000 } } }
+      },
+      "creative": { "kinds": ["sale", "notice"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "explicit",
+      "interactionComplexity": 2,
+      "uncertainty": 2,
+      "timePressure": 2,
+      "comboTags": ["popup", "delayed-close", "countdown"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 5, "onMistake": 5, "perSecondAlive": 1 },
+      "education": { "ja": "「あと3秒」と待たされるポップアップ。失われているのは3秒ではなく、さっきまで読んでいた集中のほう。" },
+      "maxCloseDelayMsOverride": 4000
+    },
+    "detect": {
+      "layer": 2,
+      "signals": ["timeline.closeDelay", "dom.snapshot", "dom.boundingBoxes"],
+      "detectorId": "close-delay-timer",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "maxCloseDelayMs": 2000 }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "閉じられない数秒間、ユーザーは「読む」でも「離れる」でもない宙ぶらりんに置かれる。待たされた記憶は広告主ではなくサイトへの不信として残る。" },
+      "recommendations": [
+        { "ja": "閉じるまでの待機を 2 秒以内にする。", "effort": "low", "expectedSeverityReduction": 4 },
+        { "ja": "残り秒数を必ず可視化し、いつ閉じられるかを予測可能にする。", "effort": "low", "expectedSeverityReduction": 2 }
+      ],
+      "adFriendlyAlternative": { "ja": "広告は出したまま、×を最初から表示する。強制的に見せた数秒より、閉じられるのに見てしまった数秒のほうが印象に残る。" }
+    }
+  },
+  {
+    "id": "CLS-04",
+    "category": "CLS",
+    "name": { "ja": "動画再生中は閉じられない", "en": "Video-Gated Close" },
+    "definition": { "ja": "動画再生中は閉じられない/制限される" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interruption": 2, "interactionFriction": 3, "attentionHijacking": 2, "timeCost": 3 }
+  },
+  {
+    "id": "CLS-05",
+    "category": "CLS",
+    "name": { "ja": "動き回る閉じるボタン", "en": "Moving Close" },
+    "definition": { "ja": "閉じるボタンが移動する" },
+    "severity": 14,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interactionFriction": 3, "deception": 2, "timeCost": 2, "mobileImpact": 2, "cumulativeEffect": 2 },
+    "game": {
+      "shell": "popup",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "close": { "id": "close:moving", "params": { "intervalMs": { "min": 700, "max": 1200 }, "maxMoves": 6 } }
+      },
+      "creative": { "kinds": ["sale", "app"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 4,
+      "uncertainty": 3,
+      "timePressure": 4,
+      "comboTags": ["popup", "moving-close"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 6, "onMistake": 10, "perSecondAlive": 1.5 },
+      "education": { "ja": "押そうとすると逃げる×。偶然ではなく、そう実装されている。焦って連打するほど広告本体を踏む確率が上がる。" }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "閉じる操作が「狙い」を要求される作業に変わる。狙いが外れた先には広告本体があり、誤クリックが収益になる構造そのものが不信を生む。" },
+      "recommendations": [
+        { "ja": "閉じるボタンを固定位置に置き、表示中は一切動かさない。", "effort": "low", "expectedSeverityReduction": 9 },
+        { "ja": "広告本体と×の間に最低 8px の安全余白を設ける。", "effort": "low", "expectedSeverityReduction": 3 }
+      ],
+      "adFriendlyAlternative": { "ja": "動きで注目を取りたいなら、動かすのはクリエイティブの中身だけにして、×は常に同じ場所に固定する。" }
+    }
+  },
+  {
+    "id": "CLS-06",
+    "category": "CLS",
+    "name": { "ja": "画面端すれすれの閉じるボタン", "en": "Edge-Hugging Close" },
+    "definition": { "ja": "画面端ぎりぎりに配置される" },
+    "severity": 7,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interactionFriction": 3, "timeCost": 1, "mobileImpact": 3 }
+  },
+  {
+    "id": "CLS-07",
+    "category": "CLS",
+    "name": { "ja": "他のUIと重なる閉じるボタン", "en": "Overlapping Close" },
+    "definition": { "ja": "×が別UI/広告要素と重なる" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "obstruction": 2, "interactionFriction": 3, "mobileImpact": 2, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "CLS-08",
+    "category": "CLS",
+    "name": { "ja": "×に見えない閉じるアイコン", "en": "Ambiguous Close" },
+    "definition": { "ja": "閉じるアイコンが×として認識しにくい" },
+    "severity": 8,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "interactionFriction": 2, "deception": 2, "timeCost": 1 }
+  },
+  {
+    "id": "CLS-09",
+    "category": "CLS",
+    "name": { "ja": "画面外にある閉じる操作", "en": "Close Outside Viewport" },
+    "definition": { "ja": "閉じる操作が初期viewport外にある" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "obstruction": 2, "interactionFriction": 3, "timeCost": 2, "mobileImpact": 3 }
+  },
+  {
+    "id": "CLS-10",
+    "category": "CLS",
+    "name": { "ja": "複数の閉じる候補", "en": "Multiple Close Targets" },
+    "definition": { "ja": "複数の×候補があり本物が分かりにくい" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interactionFriction": 3, "deception": 3, "timeCost": 2, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "CLS-11",
+    "category": "CLS",
+    "name": { "ja": "偽の閉じるボタン", "en": "Fake Close" },
+    "definition": { "ja": "閉じるように見える要素が広告クリック等を発生させる" },
+    "severity": 18,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "interactionFriction": 3, "deception": 3, "mobileImpact": 2, "cumulativeEffect": 2 },
+    "game": {
+      "shell": "popup",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "close": { "id": "close:fake", "params": { "decoyCount": { "min": 1, "max": 2 } } }
+      },
+      "creative": { "kinds": ["sale", "notice"] },
+      "playerActions": ["CLOSE", "REPORT"],
+      "failureCondition": { "kind": "wrong-target" },
+      "warning": "subtle",
+      "interactionComplexity": 3,
+      "uncertainty": 4,
+      "timePressure": 3,
+      "comboTags": ["popup", "fake-close"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 5, "onMistake": 25, "perSecondAlive": 0 },
+      "education": { "ja": "閉じるためのUIに見せかけて別の操作を誘導するパターン。放置してもほとんど減らない。慌てて押すほど損をするので、落ち着いて最後に処理するのが正解。" }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "「閉じる」という最も基本的な約束が破られる。一度踏んだユーザーは、以降そのサイトのあらゆるUIを信用しなくなる。" },
+      "recommendations": [
+        { "ja": "×の見た目を持つ要素からは、閉じる以外の遷移を一切発火させない。", "effort": "medium", "expectedSeverityReduction": 12 },
+        { "ja": "広告フレーム外に、サイト側が実装した本物の閉じる操作を1つだけ置く。", "effort": "medium", "expectedSeverityReduction": 4 }
+      ],
+      "adFriendlyAlternative": { "ja": "広告面積は維持したまま、×を1つだけにして本物にする。誤クリック由来のクリックは短期の数字を上げるが、再訪率を確実に削る。" }
+    }
+  },
+  {
+    "id": "CLS-12",
+    "category": "CLS",
+    "name": { "ja": "誤解を誘う閉じる文言", "en": "Misleading Close Label" },
+    "definition": { "ja": "「閉じる」と思わせる文言/UIが別操作を行う" },
+    "severity": 17,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "interactionFriction": 3, "deception": 3, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "CLS-13",
+    "category": "CLS",
+    "name": { "ja": "精密操作を要求する閉じる", "en": "Close Requires Precision" },
+    "definition": { "ja": "極端に狭いクリック領域で正確な操作が必要" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interactionFriction": 3, "timeCost": 2, "mobileImpact": 3 }
+  },
+  {
+    "id": "CLS-14",
+    "category": "CLS",
+    "name": { "ja": "閉じても復活する広告", "en": "Close State Reset" },
+    "definition": { "ja": "閉じた後、ページ遷移/更新等で再び同じ広告が出る" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 2, "persistence": 3, "timeCost": 2, "cumulativeEffect": 2 }
+  }
+]

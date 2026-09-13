@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ACC-01",
+    "category": "ACC",
+    "name": { "ja": "ナビゲーション隣接広告", "en": "Ad Near Navigation" },
+    "definition": { "ja": "ナビゲーションと広告が近接" },
+    "severity": 10,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interactionFriction": 3, "deception": 2, "mobileImpact": 2 }
+  },
+  {
+    "id": "ACC-02",
+    "category": "ACC",
+    "name": { "ja": "CTA隣接広告", "en": "Ad Near CTA" },
+    "definition": { "ja": "CTAと広告が近接し誤操作を誘発" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "interactionFriction": 3, "deception": 2, "mobileImpact": 2 }
+  },
+  {
+    "id": "ACC-03",
+    "category": "ACC",
+    "name": { "ja": "操作UI隣接広告", "en": "Ad Near Game/UI" },
+    "definition": { "ja": "操作UIと広告が近接" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interactionFriction": 3, "deception": 2, "mobileImpact": 3, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "ACC-04",
+    "category": "ACC",
+    "name": { "ja": "見えないクリック領域", "en": "Invisible Click Zone" },
+    "definition": { "ja": "見た目以上に大きな広告クリック領域" },
+    "severity": 15,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interactionFriction": 3, "deception": 3, "mobileImpact": 3, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "ACC-05",
+    "category": "ACC",
+    "name": { "ja": "タップの乗っ取り", "en": "Tap Hijack" },
+    "definition": { "ja": "本文操作のつもりが広告操作になる" },
+    "severity": 16,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "interactionFriction": 3, "deception": 3, "mobileImpact": 3, "cumulativeEffect": 3 }
+  },
+  {
+    "id": "ACC-06",
+    "category": "ACC",
+    "name": { "ja": "スクロールの乗っ取り", "en": "Scroll Hijack" },
+    "definition": { "ja": "スクロール操作を広告/別UIが奪う" },
+    "severity": 13,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interruption": 2, "interactionFriction": 3, "attentionHijacking": 2, "mobileImpact": 2 }
+  },
+  {
+    "id": "ACC-07",
+    "category": "ACC",
+    "name": { "ja": "ずれたクリック領域", "en": "Misaligned Click Target" },
+    "definition": { "ja": "見た目とクリック領域が一致しない" },
+    "severity": 13,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "interactionFriction": 3, "deception": 3, "mobileImpact": 2 }
+  },
+  {
+    "id": "ACC-08",
+    "category": "ACC",
+    "name": { "ja": "固定広告のタッチ妨害", "en": "Sticky Ad Touch Trap" },
+    "definition": { "ja": "スマホの固定広告が指操作と干渉" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "obstruction": 2, "interactionFriction": 3, "persistence": 2, "mobileImpact": 3, "cumulativeEffect": 2 }
+  }
+]

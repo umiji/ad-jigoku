@@ -1,0 +1,62 @@
+[
+  {
+    "id": "TIME-01",
+    "category": "TIME",
+    "name": { "ja": "閉じるまでのカウントダウン", "en": "Countdown Before Close" },
+    "definition": { "ja": "閉じるまでカウントダウン" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "timeCost": 3, "interactionFriction": 2, "interruption": 1 }
+  },
+  {
+    "id": "TIME-02",
+    "category": "TIME",
+    "name": { "ja": "閲覧前の待機要求", "en": "Countdown Before Content" },
+    "definition": { "ja": "コンテンツ閲覧前に待機を要求" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "timeCost": 3, "interruption": 3, "obstruction": 2, "mobileImpact": 1 }
+  },
+  {
+    "id": "TIME-03",
+    "category": "TIME",
+    "name": { "ja": "スキップ不能動画", "en": "Unskippable Video" },
+    "definition": { "ja": "一定時間スキップ不能" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "timeCost": 3, "attentionHijacking": 2, "interactionFriction": 2 }
+  },
+  {
+    "id": "TIME-04",
+    "category": "TIME",
+    "name": { "ja": "本文の表示保留", "en": "Delayed Content Reveal" },
+    "definition": { "ja": "広告終了まで本文を表示しない" },
+    "severity": 12,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 3,
+    "dimensions": { "timeCost": 3, "obstruction": 3, "interruption": 2 }
+  },
+  {
+    "id": "TIME-05",
+    "category": "TIME",
+    "name": { "ja": "広告ロードによる待たされ", "en": "Ad Loading Stall" },
+    "definition": { "ja": "広告ロードがページ利用を遅延" },
+    "severity": 9,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 2,
+    "dimensions": { "timeCost": 3, "interactionFriction": 1, "mobileImpact": 2 }
+  },
+  {
+    "id": "TIME-06",
+    "category": "TIME",
+    "name": { "ja": "待機の繰り返し", "en": "Repeated Wait" },
+    "definition": { "ja": "複数箇所で待機が発生" },
+    "severity": 14,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "timeCost": 3, "interruption": 2, "persistence": 2, "cumulativeEffect": 3 }
+  }
+]

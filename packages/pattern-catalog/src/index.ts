@@ -2,6 +2,7 @@
 export * from './schema'
 export { parsePatterns, parseCatalog, CatalogParseError, formatZodError } from './load'
 export * from './query'
+export { loadCatalog, resetCatalogCache } from './data'
 export { computeGameDifficulty, difficultyAxesMean } from './derived'
 export {
   validateCatalog,

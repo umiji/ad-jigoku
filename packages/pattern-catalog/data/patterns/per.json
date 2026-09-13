@@ -1,0 +1,112 @@
+[
+  {
+    "id": "PER-01",
+    "category": "PER",
+    "name": { "ja": "再出現する広告", "en": "Respawning Ad" },
+    "definition": { "ja": "閉じた直後/一定時間後に再出現" },
+    "severity": 13,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "persistence": 3, "interruption": 3, "timeCost": 2, "mobileImpact": 2, "cumulativeEffect": 3 },
+    "game": {
+      "shell": "densityStack",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "persist": { "id": "persist:respawn", "params": { "respawnDelayMs": { "min": 500, "max": 1500 }, "maxRespawns": 2 } }
+      },
+      "creative": { "kinds": ["sale", "notice"] },
+      "playerActions": ["CLOSE", "SMASH"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 3,
+      "uncertainty": 4,
+      "timePressure": 3,
+      "comboTags": ["popup", "respawn"],
+      "incompatibleWith": [],
+      "patienceEffect": { "onSpawn": 5, "onMistake": 8, "perSecondAlive": 1 },
+      "education": { "ja": "閉じたのに戻ってくる広告。「閉じた」という操作の結果が保存されていないだけで、ユーザーには嫌がらせとしか見えない。" }
+    },
+    "detect": {
+      "layer": 2,
+      "signals": ["timeline.popupEvents", "dom.snapshot", "interaction.clickOutcome"],
+      "detectorId": "respawn-state-tracking",
+      "confidence": "deterministic",
+      "scoreContributing": true,
+      "thresholds": { "minRespawnCount": 1 }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "「閉じた」という意思表示が無視される。同じ広告を2回閉じさせた時点で、ユーザーはコンテンツではなく脱出方法を探し始める。" },
+      "recommendations": [
+        { "ja": "閉じた状態をセッション内で保持し、同じ広告を再表示しない。", "effort": "low", "expectedSeverityReduction": 8 },
+        { "ja": "再表示が必要な場合も、同一セッションで最大1回までに制限する。", "effort": "low", "expectedSeverityReduction": 3 }
+      ],
+      "adFriendlyAlternative": { "ja": "再表示の代わりに、閉じられた枠を静かなインライン枠へ置き換える。表示機会は維持しつつ「無視された」感を消せる。" }
+    }
+  },
+  {
+    "id": "PER-02",
+    "category": "PER",
+    "name": { "ja": "多層ポップアップ", "en": "Multi-layer Popup" },
+    "definition": { "ja": "一つ閉じると次の広告が出る" },
+    "severity": 15,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "persistence": 3, "interruption": 3, "obstruction": 2, "timeCost": 3, "cumulativeEffect": 3 },
+    "game": {
+      "shell": "densityStack",
+      "behaviors": {
+        "spawn": { "id": "spawn:immediate" },
+        "persist": { "id": "persist:multi-layer", "params": { "layers": { "min": 2, "max": 3 }, "respawnDelayMs": { "min": 200, "max": 600 } } }
+      },
+      "creative": { "kinds": ["sale", "notice", "app"] },
+      "playerActions": ["CLOSE", "SMASH", "ESCAPE"],
+      "failureCondition": { "kind": "patience-zero" },
+      "warning": "none",
+      "interactionComplexity": 4,
+      "uncertainty": 4,
+      "timePressure": 4,
+      "comboTags": ["popup", "multi-layer"],
+      "incompatibleWith": ["OBS-09"],
+      "patienceEffect": { "onSpawn": 6, "onMistake": 10, "perSecondAlive": 1.5 },
+      "education": { "ja": "閉じたら次が出てくる層構造。1枚ずつ確実に処理するのが唯一の突破口で、連打は偽×を踏む確率を上げるだけ。" }
+    },
+    "improve": {
+      "whyItHurts": { "ja": "閉じる行為が次の広告のトリガーになっているため、ユーザーの操作が全部「損」になる。学習された無力感がそのまま離脱になる。" },
+      "recommendations": [
+        { "ja": "1ページあたりのオーバーレイ表示を1枚までに制限する。", "effort": "medium", "expectedSeverityReduction": 9 },
+        { "ja": "閉じる操作を次の広告の表示トリガーに使わない。", "effort": "low", "expectedSeverityReduction": 4 }
+      ],
+      "adFriendlyAlternative": { "ja": "2枚目以降のオーバーレイをインライン枠に降ろす。枠数は変えずに、画面を占有するのは常に1枚だけにする。" }
+    }
+  },
+  {
+    "id": "PER-03",
+    "category": "PER",
+    "name": { "ja": "固定広告の連続出現", "en": "Repeated Sticky" },
+    "definition": { "ja": "複数の固定広告が順番に出現" },
+    "severity": 13,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "persistence": 3, "obstruction": 3, "interactionFriction": 2, "mobileImpact": 3, "cumulativeEffect": 3 }
+  },
+  {
+    "id": "PER-04",
+    "category": "PER",
+    "name": { "ja": "ページ横断の繰り返し", "en": "Cross-page Repetition" },
+    "definition": { "ja": "ページ遷移しても同じ広告UXが繰り返される" },
+    "severity": 11,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 4,
+    "dimensions": { "persistence": 3, "interruption": 2, "timeCost": 2, "cumulativeEffect": 2 }
+  },
+  {
+    "id": "PER-05",
+    "category": "PER",
+    "name": { "ja": "セッション中の広告増殖", "en": "Session Escalation" },
+    "definition": { "ja": "閲覧を続けるほど広告量/侵入度が増える" },
+    "severity": 15,
+    "severitySource": "hypothesis",
+    "gameDifficulty": 5,
+    "dimensions": { "persistence": 3, "interruption": 3, "obstruction": 2, "timeCost": 2, "cumulativeEffect": 3 }
+  }
+]
