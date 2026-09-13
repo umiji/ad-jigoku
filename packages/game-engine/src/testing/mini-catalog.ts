@@ -43,6 +43,7 @@ type Spec = {
   incompatibleWith?: PatternId[]
   comboTags?: NonNullable<PatternDefinition['game']>['comboTags']
   frame?: NonNullable<PatternDefinition['game']>['frame']
+  correctInaction?: boolean
   composedOf?: PatternId[]
   noGame?: boolean
 }
@@ -66,6 +67,7 @@ export function pattern(spec: Spec): PatternDefinition {
       ...(spec.shell ? { shell: spec.shell } : {}),
       ...(spec.behaviors ? { behaviors: spec.behaviors } : {}),
       ...(spec.frame ? { frame: spec.frame } : {}),
+      ...(spec.correctInaction ? { correctInaction: true } : {}),
       playerActions: ['CLOSE'],
       failureCondition: { kind: 'patience-zero' },
       warning: 'none',
@@ -88,7 +90,9 @@ export const MINI_CATALOG: PatternDefinition[] = [
   pattern({ id: 'CLS-03', category: 'CLS', difficulty: 2, shell: 'popup', behaviors: { spawn: { id: 'spawn:immediate' }, close: { id: 'close:delayed', params: { delayMs: { min: 2000, max: 4000 } } } }, comboTags: ['popup', 'delayed-close'] }),
   pattern({ id: 'CLS-05', category: 'CLS', difficulty: 4, shell: 'popup', behaviors: { spawn: { id: 'spawn:immediate' }, close: { id: 'close:moving' } }, comboTags: ['popup', 'moving-close'] }),
   pattern({ id: 'CLS-11', category: 'CLS', difficulty: 5, shell: 'popup', behaviors: { spawn: { id: 'spawn:immediate' }, close: { id: 'close:fake' } }, comboTags: ['popup', 'fake-close'] }),
-  pattern({ id: 'DEC-02', category: 'DEC', difficulty: 4, shell: 'fakeDownload', behaviors: { spawn: { id: 'spawn:delayed', params: { afterMs: { min: 800, max: 2500 } } }, deception: { id: 'deception:fake-download' } }, comboTags: ['fake-download'] }),
+  pattern({ id: 'DEC-02', category: 'DEC', difficulty: 4, shell: 'fakeDownload', behaviors: { spawn: { id: 'spawn:delayed', params: { afterMs: { min: 800, max: 2500 } } }, deception: { id: 'deception:fake-download' } }, comboTags: ['fake-download'], correctInaction: true }),
+  // close 部位なし + correctInaction なし → 閉じる手段がないので選ばれてはいけない（R6b）
+  pattern({ id: 'DEC-04', category: 'DEC', difficulty: 4, shell: 'fakeDownload', behaviors: { spawn: { id: 'spawn:immediate' }, deception: { id: 'deception:fake-download' } } }),
   // 実装なし（shell 未登録）→ 選ばれてはいけない
   pattern({ id: 'ATT-02', category: 'ATT', difficulty: 3, shell: 'videoPlayer', behaviors: { spawn: { id: 'spawn:immediate' } } }),
   // behavior 未登録 → 選ばれてはいけない

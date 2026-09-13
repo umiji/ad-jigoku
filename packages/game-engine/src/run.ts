@@ -54,6 +54,7 @@ export function createRun(config: RunConfig, registries: Registries = defaultReg
     nextInstanceSeq: 0,
     answered: {},
     scrollLine: 0,
+    drainByPattern: {},
   }
   return { config, state, registries }
 }
@@ -87,7 +88,8 @@ export function step(run: Run, intent: Intent): StepResult {
   const env: StepEnv = { run, tuning: tuningOf(run), rng: cursor.rng, patternById: patternIndex(run.config.catalog) }
   let next = reduce(env, state, intent, effects)
   const rng = cursor.snapshot()
-  if (next !== state || Object.keys(rng).length !== Object.keys(state.rng).length) next = { ...next, rng }
+  // RNG カーソルが進んだら（新ストリーム初期化 or 既存ストリームの前進）必ず書き戻す。参照比較だけだと進みが捨てられる
+  if (next !== state || !sameRng(rng, state.rng)) next = { ...next, rng }
   return { run: next === state ? run : { ...run, state: next }, effects }
 }
 
@@ -137,6 +139,12 @@ function expectedDurationMs(env: StepEnv): number {
   } catch {
     return 60000
   }
+}
+
+function sameRng(a: Record<string, number | undefined>, b: Record<string, number | undefined>): boolean {
+  const ka = Object.keys(a)
+  if (ka.length !== Object.keys(b).length) return false
+  return ka.every((k) => a[k] === b[k])
 }
 
 export function assertNever(x: never): never {

@@ -156,6 +156,8 @@ export type GameState = {
   answered: Record<string, boolean>
   /** 偽スクロールコンテナ内の論理スクロール位置（行）。ピクセルではない */
   scrollLine: number
+  /** perSecondAlive による patience 減少の patternId 別累積（主犯特定用。閉じた広告の分も残る） */
+  drainByPattern: Partial<Record<PatternId, number>>
 }
 
 export type Run = {

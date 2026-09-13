@@ -22,7 +22,7 @@ import { applyMistake, applyOutcome, updateAd } from './outcome'
  * chrome / content への point はここでは無視する（TASK-014A / 015 が扱う）。
  */
 export function handleTargetedIntent(env: StepEnv, state: GameState, intent: Extract<Intent, { t: 'point' | 'action' }>, effects: Effect[]): GameState {
-  const target = intent.t === 'point' ? intent.target : intent.target
+  const target = intent.target
   const ad = target?.kind === 'ad' ? state.ads.find((a) => a.instanceId === target.instanceId) : undefined
   if (!ad) {
     if (intent.t === 'action' && !target) return applyMistake(state, undefined, 'wrong-action', env.tuning.PATIENCE_PENALTY_STRAY_CLICK, effects).state
@@ -62,7 +62,7 @@ export function handleTargetedIntent(env: StepEnv, state: GameState, intent: Ext
   if (!current || current.lifecycle === 'closing') return next
   const outcome = defaultOutcome(env, current, intent, target)
   if (!outcome) return next
-  if (outcome.kind === 'mistake' && (outcome.reason === 'too-early' || outcome.reason === 'wrong-action')) {
+  if (outcome.kind === 'mistake' && (outcome.reason === 'too-early' || outcome.reason === 'wrong-action' || outcome.reason === 'stray-click')) {
     const penalty = outcome.reason === 'too-early' ? env.tuning.PATIENCE_PENALTY_TOO_EARLY : env.tuning.PATIENCE_PENALTY_STRAY_CLICK
     return applyMistake(next, current, outcome.reason, penalty, effects).state
   }
@@ -87,7 +87,8 @@ function defaultOutcome(env: StepEnv, ad: ActiveAd, intent: Extract<Intent, { t:
       case 'body':
       case 'label':
       case 'legal':
-        return undefined
+        // 関係ない場所の連打は軽微なペナルティ（GAME §24: 連打は最適戦略にならない）。action 経由の body 指定は対象指定なので除外
+        return intent.t === 'point' ? { kind: 'mistake', reason: 'stray-click' } : undefined
     }
   }
   switch (intent.action) {

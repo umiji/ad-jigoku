@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { intentFromEvent } from '../intentFromEvent'
 import { ActionBar } from './ActionBar'
-import { availableActions, Hud } from './Hud'
+import { availableActions, Hud, resolveActionTarget } from './Hud'
 import { formatElapsed } from './ProgressBar'
 
 const a11y = { reducedMotion: false, pointerPrecision: 'fine', audioEnabled: false, extendedTimeouts: false } as const
@@ -34,8 +34,10 @@ describe('HUD (TASK-016)', () => {
     expect(dodge.getAttribute('aria-label')).toContain('いまは使えません')
     expect(smash.getAttribute('aria-keyshortcuts')).toBe('1')
     fireEvent.click(smash)
+    expect(onAction).toHaveBeenCalledTimes(1)
     expect(onAction).toHaveBeenCalledWith('SMASH')
-    expect(intentFromEvent({ target: smash })).toEqual({ t: 'action', action: 'SMASH' })
+    // 宿主の click 委譲（intentFromEvent）とは二重に発火しない: data-action を持たない
+    expect(intentFromEvent({ target: smash })).toBeNull()
     // 広告の語彙を使わない（sticky 広告と混同させない）
     const bar = screen.getByTestId('action-bar')
     expect(bar.textContent).not.toMatch(/PR|Sponsored|閉じる|×/)
@@ -52,6 +54,15 @@ describe('HUD (TASK-016)', () => {
     const dec = new Map(byId)
     dec.set('DEC-02', { ...byId.get('DEC-02')!, game: { ...byId.get('DEC-02')!.game!, correctInaction: true } })
     expect(availableActions(deception, dec).has('REPORT')).toBe(true)
+  })
+
+  it('resolveActionTarget: SMASH → 最も threat の高い closable、REPORT → correctInaction の広告、対象がなければ undefined', () => {
+    const none = stateAt(0)
+    expect(resolveActionTarget(none, byId, 'SMASH')).toBeUndefined()
+    const later = stateAt(80)
+    const closable = later.ads.filter((a) => a.lifecycle === 'closable').sort((a, b) => b.threat - a.threat)[0]
+    expect(resolveActionTarget(later, byId, 'SMASH')).toBe(closable?.instanceId)
+    expect(resolveActionTarget(later, byId, 'REPORT')).toBeUndefined()
   })
 
   it('combo indicator distinguishes enemy combos from player chain', () => {

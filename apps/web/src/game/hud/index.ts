@@ -1,4 +1,4 @@
-export { Hud, availableActions } from './Hud'
+export { Hud, availableActions, resolveActionTarget } from './Hud'
 export { PatienceMeter, PATIENCE_LOW, PATIENCE_CRITICAL, PATIENCE_DROP_WARN } from './PatienceMeter'
 export { ProgressBar, formatElapsed } from './ProgressBar'
 export { ComboIndicator } from './ComboIndicator'

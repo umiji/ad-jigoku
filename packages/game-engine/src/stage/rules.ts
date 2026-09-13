@@ -62,6 +62,18 @@ export function loadOf(p: GamePattern, registries: Registries): number {
   return Math.max(1, sum)
 }
 
+/**
+ * R6b: SAFE-01 の「閉じられる」を構造で保証する。
+ * シェルに close 部位があるか、パターンが「押さないのが正解」（correctInaction → REPORT で処理できる）であること。
+ * どちらも無い広告は、時間が来ても画面から消す手段がない。
+ */
+export function hasDismissalAffordance(p: GamePattern, registries: Registries): boolean {
+  if (p.game.correctInaction) return true
+  const shellId = p.game.shell
+  if (!shellId || !registries.shells.has(shellId)) return false
+  return registries.shells.resolve(shellId).parts.includes('close')
+}
+
 /** R6: SAFE-01。宣言された遅延（close:delayed 等の delayMs / maxCloseDelayMsOverride）が上限以内 */
 export function satisfiesSafe01(p: GamePattern, tuning: EngineTuning): boolean {
   const cap = tuning.MAX_CLOSE_DELAY_MS
@@ -104,6 +116,7 @@ export function passesStaticRules(p: GamePattern, f: CandidateFilter): boolean {
   if (comps.length === 0) return false
   for (const c of comps) {
     if (!isImplemented(c, f.registries)) return false
+    if (!hasDismissalAffordance(c, f.registries)) return false
     if (frictionOf(c, f.registries) > f.tuning.FRICTION_CAP) return false
     if (!satisfiesSafe01(c, f.tuning)) return false
     if (!satisfiesFrame(c, f.capabilities)) return false

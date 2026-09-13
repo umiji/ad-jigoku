@@ -1,5 +1,6 @@
 import type { PatternDefinition, PatternId } from '@ad-jigoku/pattern-catalog'
 import type { EngineTuning } from '../config'
+import { msToSteps } from '../core/clock'
 import type { Effect } from '../state/effect'
 import type { GameState } from '../state/types'
 
@@ -30,8 +31,8 @@ export function checkOutcome(state: GameState, tuning: EngineTuning, timeLimitMs
  * 直近 CULPRIT_WINDOW_MS の log から patience を最も削ったパターンを特定する。
  * 該当がなければ全期間で最も削ったパターン、それも無ければ最後に出現したパターン。
  */
-export function findCulprit(state: GameState, tuning: EngineTuning, byId: ReadonlyMap<string, PatternDefinition>): PatternId | undefined {
-  const windowSteps = Math.ceil(tuning.CULPRIT_WINDOW_MS / (1000 / 60))
+export function findCulprit(state: GameState, tuning: EngineTuning, _byId: ReadonlyMap<string, PatternDefinition>): PatternId | undefined {
+  const windowSteps = msToSteps(tuning.CULPRIT_WINDOW_MS)
   const since = state.step - windowSteps
   const tally = (from: number) => {
     const loss = new Map<PatternId, number>()
@@ -39,13 +40,10 @@ export function findCulprit(state: GameState, tuning: EngineTuning, byId: Readon
       if (e.step < from || !e.patternId || e.patienceDelta === undefined || e.patienceDelta >= 0) continue
       loss.set(e.patternId, (loss.get(e.patternId) ?? 0) - e.patienceDelta)
     }
-    // perSecondAlive の drain は毎 tick なので log に出さない。生存中の広告の drain 分をカタログから算出して加算する
-    for (const ad of state.ads) {
-      if (ad.lifecycle === 'closing') continue
-      const aliveSteps = Math.max(0, state.step - Math.max(ad.spawnedAtStep, from))
-      const perSecond = byId.get(ad.patternId)?.game?.patienceEffect.perSecondAlive ?? 0
-      const drain = perSecond * (aliveSteps / 60)
-      if (drain > 0) loss.set(ad.patternId, (loss.get(ad.patternId) ?? 0) + drain)
+    // perSecondAlive の drain は毎 tick なので log に出さない。代わりに tick 側が patternId 別に累積した値を使う
+    // （閉じた広告の drain も含む。窓より前の drain も主犯候補に入る）
+    for (const [id, drain] of Object.entries(state.drainByPattern)) {
+      if (drain !== undefined && drain > 0) loss.set(id as PatternId, (loss.get(id as PatternId) ?? 0) + drain)
     }
     let best: PatternId | undefined
     let bestLoss = 0

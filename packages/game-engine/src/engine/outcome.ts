@@ -1,3 +1,4 @@
+import { msToSteps } from '../core/clock'
 import type { Effect } from '../state/effect'
 import type { ActiveAd, EncounterEvent, GameState, MistakeReason } from '../state/types'
 import type { Outcome } from '../sim/types'
@@ -58,10 +59,9 @@ export function applyOutcome(env: StepEnv, state: GameState, ad: ActiveAd, outco
     case 'spawn': {
       // 派生スポーン（PER-01 respawn / PER-02 multi-layer）。スケジュールに積み、tick 側で通常どおり出現させる
       const seq = state.nextInstanceSeq + 1
-      const src = state.schedule.find((s) => s.instanceId === ad.instanceId) ?? state.log.find((l) => l.instanceId === ad.instanceId)
       const pattern2 = env.patternById.get(outcome.patternId)
       if (!pattern2?.game?.shell || !pattern2.game.behaviors) return { state, effects }
-      const atStep = state.step + Math.ceil((outcome.delayMs ?? 0) / (1000 / 60))
+      const atStep = state.step + msToSteps(outcome.delayMs ?? 0)
       const behaviors: Record<string, { id: string; params: Record<string, number> }> = {}
       for (const [slot, spec] of Object.entries(pattern2.game.behaviors)) {
         if (!spec) continue
@@ -69,7 +69,6 @@ export function applyOutcome(env: StepEnv, state: GameState, ad: ActiveAd, outco
         for (const [k, v] of Object.entries(spec.params ?? {})) params[k] = typeof v === 'number' ? v : Math.round((v.min + v.max) / 2)
         behaviors[slot] = { id: spec.id, params }
       }
-      void src
       const spawn = {
         instanceId: `${ad.instanceId}.${seq}`,
         atStep,

@@ -13,6 +13,9 @@ import { applyOutcome, updateAd, withPatience } from './outcome'
  *  4. 各アクティブ広告の各 behavior の onTick と outcome 適用
  * リソース（perSecondAlive / threat / 勝敗）は TASK-009 が resource/ に置き、run.ts がこの後に呼ぶ。
  */
+/** z 順の上限（UI 側は popup / popup-stack / critical の 3 段に丸める） */
+export const MAX_STACK_INDEX = 5
+
 export function tickAds(env: StepEnv, state: GameState, effects: Effect[]): GameState {
   let next = spawnDue(env, state, effects)
   next = advanceLifecycles(next)
@@ -33,7 +36,7 @@ function spawnDue(env: StepEnv, state: GameState, effects: Effect[]): GameState 
     if (active >= max) break // 上限。残りは持ち越し（順序は保つ）
     const pattern = env.patternById.get(spawn.patternId)
     if (!pattern) throw new Error(`spawn: カタログに無い PatternId "${spawn.patternId}"`)
-    const stackIndex = ads.length === 0 ? 0 : Math.max(...ads.map((a) => a.view.stackIndex)) + 1
+    const stackIndex = ads.length === 0 ? 0 : Math.min(MAX_STACK_INDEX, Math.max(...ads.map((a) => a.view.stackIndex)) + 1)
     const { ad, effects: fx } = instantiateAd({
       spawn,
       pattern,
@@ -86,7 +89,8 @@ function advanceLifecycles(state: GameState): GameState {
     ads.push(next)
   }
   if (!changed) return state
-  const becameClosable = ads.filter((a, i) => a.lifecycle === 'closable' && state.ads.find((o) => o.instanceId === a.instanceId)?.lifecycle !== 'closable' && i >= 0)
+  const wasClosable = new Set(state.ads.filter((o) => o.lifecycle === 'closable').map((o) => o.instanceId))
+  const becameClosable = ads.filter((a) => a.lifecycle === 'closable' && !wasClosable.has(a.instanceId))
   const log = becameClosable.length > 0 ? [...state.log, ...becameClosable.map((a): EncounterEvent => ({ step: state.step, kind: 'closable', patternId: a.patternId, instanceId: a.instanceId }))] : state.log
   return { ...state, ads, log }
 }
@@ -124,11 +128,15 @@ function runBehaviorTicks(env: StepEnv, state: GameState, effects: Effect[]): Ga
 /** 放置コスト（perSecondAlive）を 1 tick 分だけ適用する。TASK-009 が threat と一緒に利用する */
 export function drainPatience(env: StepEnv, state: GameState): GameState {
   let next = state
+  let drainByPattern = state.drainByPattern
   for (const ad of state.ads) {
     if (ad.lifecycle === 'closing') continue
     const perSecond = patternOf(env, ad).game?.patienceEffect.perSecondAlive ?? 0
     if (perSecond <= 0) continue
-    next = withPatience(next, -perSecond / 60)
+    const delta = perSecond / 60
+    next = withPatience(next, -delta)
+    // 主犯特定（GAME §15.1）のため patternId 別に累積する。閉じた後も残る
+    drainByPattern = { ...drainByPattern, [ad.patternId]: (drainByPattern[ad.patternId] ?? 0) + delta }
   }
-  return next
+  return drainByPattern === state.drainByPattern ? next : { ...next, drainByPattern }
 }

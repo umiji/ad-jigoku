@@ -22,6 +22,18 @@ export function availableActions(state: GameState, byId: ReadonlyMap<string, Pat
   return set
 }
 
+/**
+ * 対抗アクションの対象広告を宿主側で解決する（座標を使わない）。
+ * SMASH → 最も threat の高い closable な広告 / REPORT → correctInaction のパターンの広告 / その他 → 最も threat の高い広告
+ */
+export function resolveActionTarget(state: GameState, byId: ReadonlyMap<string, PatternDefinition>, action: PlayerAction): string | undefined {
+  const active = state.ads.filter((a) => a.lifecycle !== 'closing')
+  const byThreat = [...active].sort((a, b) => b.threat - a.threat)
+  if (action === 'SMASH') return byThreat.find((a) => a.lifecycle === 'closable')?.instanceId
+  if (action === 'REPORT') return byThreat.find((a) => byId.get(a.patternId)?.game?.correctInaction)?.instanceId
+  return byThreat[0]?.instanceId
+}
+
 export function Hud({ state, byId, onAction }: { state: GameState; byId: ReadonlyMap<string, PatternDefinition>; onAction?: (action: PlayerAction) => void }) {
   const available = availableActions(state, byId)
   return (

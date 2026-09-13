@@ -5,7 +5,8 @@ import styles from './hud.module.css'
  * 対抗アクションバー（OD-6 / TASK-016 要件 3）。画面下の thumb-zone に固定。
  * - 使えないアクションはグレーアウト（GAME §6「全てのアクションが全てのパターンに効くわけではない」を学習させる）
  * - デスクトップは数字キー 1-5 のショートカット
- * - `data-action` で Intent に変換される（intentFromEvent）
+ * - 発火は `onAction` の 1 経路のみ（宿主が対象広告を解決して Intent にする）。`data-action` は付けない
+ *   （付けると宿主の click 委譲と二重に dispatch される）
  * - sticky 広告と混同されないよう、広告の語彙（PR / CTA / ×）を一切使わない
  */
 export const ACTIONS: readonly { action: PlayerAction; label: string; key: string; primary?: boolean }[] = [
@@ -26,7 +27,7 @@ export function ActionBar({ available, onAction }: { available: ReadonlySet<Play
             key={action}
             type="button"
             className={`${styles.action}${primary ? ` ${styles.actionPrimary}` : ''}`}
-            data-action={action}
+            data-hud-action={action}
             disabled={!enabled}
             aria-keyshortcuts={key}
             aria-label={`${label}（キー ${key}）${enabled ? '' : '・いまは使えません'}`}

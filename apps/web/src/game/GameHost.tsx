@@ -9,7 +9,7 @@ import { createEffectRunner } from './effects'
 import { BrowserFrame } from './frame'
 import { GenericShell } from './GenericShell'
 import styles from './host.module.css'
-import { Hud } from './hud'
+import { Hud, resolveActionTarget } from './hud'
 import { ACTION_KEYS, intentFromEvent } from './intentFromEvent'
 import { watchA11yProfile } from './a11yProfile'
 import { ResultOverlay } from './ResultOverlay'
@@ -62,15 +62,24 @@ export function GameHost({ config, article, shells, onRestart }: GameHostProps) 
     },
     [dispatch],
   )
-  const onAction = useCallback((action: PlayerAction) => dispatch({ t: 'action', action }), [dispatch])
+  // 対抗アクション: 対象広告を宿主側で解決して 1 回だけ dispatch する（アクションバーとキーの両方がここを通る）
+  const stateRef = useRef(state)
+  stateRef.current = state
+  const onAction = useCallback(
+    (action: PlayerAction) => {
+      const instanceId = resolveActionTarget(stateRef.current, byId, action)
+      dispatch(instanceId ? { t: 'action', action, target: { kind: 'ad', instanceId, part: 'body' } } : { t: 'action', action })
+    },
+    [dispatch, byId],
+  )
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const action = ACTION_KEYS[e.key]
-      if (action && !e.metaKey && !e.ctrlKey) dispatch({ t: 'action', action })
+      if (action && !e.metaKey && !e.ctrlKey) onAction(action)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [dispatch])
+  }, [onAction])
 
   const onAnswer = useCallback(
     (questionId: string, choice: number) => {
@@ -82,8 +91,8 @@ export function GameHost({ config, article, shells, onRestart }: GameHostProps) 
 
   const handleRestart = useCallback(() => {
     setLastChoices({})
-    restart()
-    onRestart?.()
+    if (onRestart) onRestart() // 親が key で remount する（新しい seed）
+    else restart()
   }, [restart, onRestart])
 
   const culprit: PatternDefinition | undefined = state.culprit ? byId.get(state.culprit) : undefined

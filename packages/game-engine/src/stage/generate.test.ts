@@ -5,7 +5,7 @@ import { createRun, step } from '../run'
 import type { ScheduledSpawn } from '../state/types'
 import { generateStage, LOAD_WINDOW_MS, type GenerateInput } from './generate'
 import { fixtureRegistries, MINI_CATALOG, pattern } from '../testing/mini-catalog'
-import { frictionOf, isImplemented, satisfiesSafe01, type GamePattern } from './rules'
+import { frictionOf, hasDismissalAffordance, isImplemented, satisfiesSafe01, type GamePattern } from './rules'
 import { decodeSeedParams, encodeSeedParams } from './seed-url'
 import type { StageDefinition } from './types'
 
@@ -34,7 +34,7 @@ const base = (seed: string, extra: Partial<GenerateInput> = {}): GenerateInput =
   ...extra,
 })
 
-const NEVER = ['ATT-02', 'LAY-01', 'CLS-13', 'TIME-02', 'OBS-05']
+const NEVER = ['ATT-02', 'LAY-01', 'CLS-13', 'TIME-02', 'OBS-05', 'DEC-04']
 
 describe('generateStage — 決定性と多様性', () => {
   it('same seed → same ScheduledSpawn[]', () => {
@@ -214,6 +214,10 @@ describe('rules helpers', () => {
     expect(frictionOf(byId('CLS-13'), regs)).toBe(9)
     expect(satisfiesSafe01(byId('TIME-02'), DEFAULT_TUNING)).toBe(false)
     expect(satisfiesSafe01(byId('CLS-03'), DEFAULT_TUNING)).toBe(true)
+    // R6b: 閉じる手段（close 部位 or correctInaction）
+    expect(hasDismissalAffordance(byId('INT-01'), regs)).toBe(true)
+    expect(hasDismissalAffordance(byId('DEC-02'), regs)).toBe(true)
+    expect(hasDismissalAffordance(byId('DEC-04'), regs)).toBe(false)
   })
 })
 
