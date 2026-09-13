@@ -3,6 +3,7 @@ import type { ActiveAd, EncounterEvent, GameState, MistakeReason } from '../stat
 import type { Outcome } from '../sim/types'
 import type { StepEnv } from './context'
 import { patternOf } from './context'
+import { recoverOnCleanClear } from '../resource/patience'
 
 /**
  * BehaviorResult.outcome をエンジンが解釈して state を更新する（TASK-007 要件 7）。
@@ -36,7 +37,8 @@ export function applyOutcome(env: StepEnv, state: GameState, ad: ActiveAd, outco
         // closing 状態は CLOSING_STEPS 後に除去される（tick 側）。closableAtStep を流用せず専用に記録
         closingAtStep: state.step,
       }))
-      return { state: { ...next, log: [...next.log, log] }, effects }
+      // ミスなしで処理できたら微量回復（GAME_ENGINE_DESIGN §9.2）
+      return { state: recoverOnCleanClear({ ...next, log: [...next.log, log] }, ad, env.tuning), effects }
     }
     case 'mistake':
       return applyMistake(state, ad, outcome.reason, pe.onMistake, effects)
@@ -85,7 +87,8 @@ export function applyMistake(state: GameState, ad: ActiveAd | undefined, reason:
     event.instanceId = ad.instanceId
   }
   const mistakes = { ...state.mistakes, [reason]: state.mistakes[reason] + 1 }
-  return { state: withPatience({ ...state, mistakes, combo: { ...state.combo, chain: 0 } }, delta, event), effects }
+  const withCount = ad ? updateAd(state, ad.instanceId, (a) => ({ ...a, mistakeCount: a.mistakeCount + 1 })) : state
+  return { state: withPatience({ ...withCount, mistakes, combo: { ...withCount.combo, chain: 0 } }, delta, event), effects }
 }
 
 export function withPatience(state: GameState, delta: number, event?: EncounterEvent): GameState {

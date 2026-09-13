@@ -6,6 +6,9 @@ import { resolveTuning, type EngineTuning } from './config'
 import { handleTargetedIntent } from './engine/intent'
 import { drainPatience, tickAds } from './engine/tick'
 import type { StepEnv } from './engine/context'
+import { checkOutcome } from './resource/outcome'
+import { applyAnswer, applyRead } from './resource/progress'
+import { computeThreats } from './resource/threat'
 import { defaultRegistries, type Registries } from './sim/registries'
 import { DEFAULT_A11Y_PROFILE, type Intent } from './state/intent'
 import type { Effect } from './state/effect'
@@ -20,14 +23,13 @@ import type { GameState, Run, RunConfig } from './state/types'
 export type StepResult = { run: Run; effects: Effect[] }
 
 export const DEFAULT_CONTENT_TOTAL_LINES = 60
-export const DEFAULT_TASKS_TOTAL = 2
 
 export function createRun(config: RunConfig, registries: Registries = defaultRegistries): Run {
   const tuning = resolveTuning(config.overrides)
   const state: GameState = {
     step: 0,
     phase: 'running',
-    progress: { read: 0, tasksDone: 0, total: config.contentTotalLines ?? DEFAULT_CONTENT_TOTAL_LINES, tasksTotal: DEFAULT_TASKS_TOTAL },
+    progress: { read: 0, tasksDone: 0, total: config.contentTotalLines ?? DEFAULT_CONTENT_TOTAL_LINES, tasksTotal: config.questions?.length ?? 0 },
     elapsedMs: 0,
     patience: tuning.PATIENCE_INITIAL,
     ads: [],
@@ -41,6 +43,7 @@ export function createRun(config: RunConfig, registries: Registries = defaultReg
     mistakes: { 'too-early': 0, 'clicked-ad': 0, 'fake-close': 0, 'stray-click': 0, 'wrong-answer': 0, 'wrong-action': 0 },
     nextInstanceSeq: 0,
     answered: {},
+    scrollLine: 0,
   }
   return { config, state, registries }
 }
@@ -90,11 +93,11 @@ function reduce(env: StepEnv, state: GameState, intent: Intent, effects: Effect[
     case 'action':
       return handleTargetedIntent(env, state, intent, effects)
     case 'scroll':
-      return state
+      return { ...state, scrollLine: Math.max(0, state.scrollLine + intent.deltaLines) }
     case 'read':
-      return state
+      return applyRead(state, env.tuning)
     case 'answer':
-      return state
+      return applyAnswer(state, env.run.config.questions ?? [], intent.questionId, intent.choice, env.tuning)
     case 'a11y':
       return { ...state, a11y: { ...state.a11y, ...intent.profile } }
     default:
@@ -107,6 +110,9 @@ function onTick(env: StepEnv, state: GameState, effects: Effect[]): GameState {
   let next: GameState = { ...state, step: nextStep, elapsedMs: nextStep * STEP_MS }
   next = tickAds(env, next, effects)
   next = drainPatience(env, next)
+  next = computeThreats(next, env.patternById, env.tuning)
+  // 判定は毎 tick の最後に 1 回だけ（TASK-009 要件 3）
+  next = checkOutcome(next, env.tuning, env.run.config.timeLimitMs, effects, env.patternById)
   return next
 }
 

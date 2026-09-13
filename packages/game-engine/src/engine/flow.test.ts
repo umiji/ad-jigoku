@@ -79,7 +79,7 @@ describe('noop shell + behavior: spawn → tick → close の一連の流れ (TA
     const closed = step(run, { t: 'point', target: { kind: 'ad', instanceId: 'ad-1', part: 'close' } })
     expect(closed.run.state.ads[0]?.lifecycle).toBe('closing')
     expect(closed.effects.map((e) => e.kind)).toContain('sound')
-    expect(closed.run.state.log.at(-1)?.kind).toBe('closed')
+    expect(closed.run.state.log.map((l) => l.kind).slice(-2)).toEqual(['closed', 'recover'])
 
     run = tick(closed.run, CLOSING_STEPS)
     expect(run.state.ads).toHaveLength(0)
@@ -101,7 +101,7 @@ describe('noop shell + behavior: spawn → tick → close の一連の流れ (TA
     const smashed = step(run, { t: 'action', action: 'SMASH', target: { kind: 'ad', instanceId: 'ad-1', part: 'body' } })
     expect(smashed.run.state.ads[0]?.lifecycle).toBe('closing')
     expect(smashed.effects.map((e) => e.kind)).toEqual(expect.arrayContaining(['smash', 'stamp']))
-    expect(smashed.run.state.log.at(-1)?.kind).toBe('smashed')
+    expect(smashed.run.state.log.map((l) => l.kind)).toContain('smashed')
   })
 
   it('perSecondAlive drains patience while the ad is alive (1/s → -1 after 60 ticks)', () => {

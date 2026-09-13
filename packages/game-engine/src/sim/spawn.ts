@@ -88,6 +88,7 @@ export function instantiateAd(input: SpawnInput): { ad: ActiveAd; effects: Effec
     view,
     blocksProgress: view.surface === 'fullscreen',
     threat: 0,
+    mistakeCount: 0,
     creativeIndex: spawn.creativeIndex,
   }
   return { ad, effects }

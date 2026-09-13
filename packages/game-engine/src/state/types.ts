@@ -25,6 +25,10 @@ export type RunConfig = {
   schedule?: readonly ScheduledSpawn[]
   /** 記事の総行数（TASK-015 が記事データから渡す）。未指定は既定値 */
   contentTotalLines?: number
+  /** 記事内の設問（TASK-015）。全問正答がクリア条件に加わる。未指定なら読了のみでクリア */
+  questions?: readonly { id: string; correctChoice: number }[]
+  /** 制限時間（従。GAME §30 Q4）。未指定なら無制限 */
+  timeLimitMs?: number
 }
 
 /** 生成時に確定した 1 広告の出現予定（TASK-008 が埋める。以降、実行中に再抽選しない） */
@@ -64,6 +68,8 @@ export type ActiveAd = {
   blocksProgress: boolean
   /** 放置コスト（毎 tick 計算。TASK-009） */
   threat: number
+  /** この広告に対するミス回数（ミスなし処理で patience 回復） */
+  mistakeCount: number
   creativeIndex: number
 }
 
@@ -146,6 +152,8 @@ export type GameState = {
   nextInstanceSeq: number
   /** 記事内の設問の正答状況（TASK-015） */
   answered: Record<string, boolean>
+  /** 偽スクロールコンテナ内の論理スクロール位置（行）。ピクセルではない */
+  scrollLine: number
 }
 
 export type Run = {
