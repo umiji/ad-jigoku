@@ -24,8 +24,8 @@ export type Article = {
   questions: ArticleQuestion[]
 }
 
-/** 1 段落あたりの論理行数（モバイル幅の 20 文字で 1 行、最低 2 行）。読了時間 ≈ 行数 / READ_LINES_PER_SECOND */
-export const CHARS_PER_LINE = 20
+/** 1 段落あたりの論理行数（モバイル幅の 16 文字で 1 行、最低 2 行）。読了時間 ≈ 行数 / READ_LINES_PER_SECOND */
+export const CHARS_PER_LINE = 16
 export function linesOf(paragraph: string): number {
   return Math.max(2, Math.ceil(paragraph.length / CHARS_PER_LINE))
 }
