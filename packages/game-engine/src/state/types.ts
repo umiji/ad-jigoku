@@ -3,6 +3,7 @@ import type { RngState } from '../core/rng'
 import type { AccessibilityProfile } from './intent'
 import type { EngineTuning, DeviceProfile } from '../config'
 import type { ViewState } from '../sim/view'
+import type { Registries } from '../sim/registries'
 
 /** GAME_ENGINE_DESIGN.md §3 State Model */
 
@@ -53,6 +54,8 @@ export type ActiveAd = {
   /** SAFE-01: 必ず有限値（`null` を許さない / §3.1） */
   closableAtStep: number
   lifecycle: Lifecycle
+  /** closing に入ったステップ（CLOSING_STEPS 後に除去） */
+  closingAtStep?: number
   /** スロット毎に最大 1 挙動。sim は behavior 固有の状態。behavior 以外は触らない */
   behaviors: Partial<Record<Slot, ActiveBehavior>>
   /** 宿主が描画するための宣言的記述 */
@@ -148,4 +151,6 @@ export type GameState = {
 export type Run = {
   config: RunConfig
   state: GameState
+  /** Shell / Behavior の実装。シリアライズ対象外（リプレイは config + intents だけで再現する） */
+  registries: Registries
 }

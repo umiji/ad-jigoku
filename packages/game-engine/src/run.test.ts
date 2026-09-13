@@ -77,6 +77,7 @@ describe('createRun / step (TASK-006 骨格)', () => {
   it('cleared / failed 後は intent を受け付けない', () => {
     const run = createRun(baseConfig)
     const done: Run = { ...run, state: { ...run.state, phase: 'failed' } }
+
     const r = step(done, { t: 'tick' })
     expect(r.run).toBe(done)
     expect(r.effects).toEqual([])

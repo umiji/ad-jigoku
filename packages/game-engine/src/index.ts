@@ -4,5 +4,5 @@ export { DEFAULT_TUNING, resolveTuning, type EngineTuning, type DeviceProfile } 
 export * from './state/intent'
 export * from './state/effect'
 export * from './state/types'
-export * from './sim/view'
+export * from './sim'
 export { createRun, step, hashState, tuningOf, type StepResult } from './run'

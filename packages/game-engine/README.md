@@ -26,3 +26,33 @@
   固定ステップ数へ変換し、`dt` を 200ms でクランプする（タブ復帰時の即死防止）。
 - `hash.ts` — キー順固定・浮動小数 6 桁丸めの安定シリアライズ + FNV-1a 64bit。`hashState` の実体。
 - `range.ts` — `Range` からの整数一様抽選。**Range は生成時に 1 回だけ確定し、実行中に再抽選しない。**
+
+## sim/ — Shell / Behavior / ViewState（TASK-007）
+
+- `ShellRegistry` / `BehaviorRegistry` — 重複 ID を拒否。`resolve(id, slot)` はスロット不一致を拒否。
+  `toImplementationMap()` を pattern-catalog の `validateCatalog` に注入すると V-05 / V-07 / V-13 が検査できる。
+- 広告インスタンス = `Shell × Behaviors（スロット毎に最大 1）× Creative`。生成時（`instantiateAd`）に
+  `shell.supports ⊇ 使用スロット` を検証する。未登録の shell / behavior は例外（実装のないパターンは出ない / AD-2）。
+- `Behavior.init / onTick / onIntent` は `BehaviorResult` を返すだけで state を触らない。`outcome` は
+  `engine/outcome.ts` がエンジン側で解釈する。`handled: true` を返さない限り、× / CTA / SMASH / REPORT の
+  **既定ルール**（`engine/intent.ts`）が適用されるので、noop behavior でもゲームが成立する。
+- `SimContext` には `GameState` を渡さない（他の広告に依存させない＝独立テスト可能 / GAME §25.4）。
+
+### ViewState — UI 側が何を描くか（TASK-014 の実装者向け）
+
+| フィールド | UI が描くもの |
+|---|---|
+| `shellId` | どの Shell コンポーネント（`packages/ui/shells/<id>`）で描画するか |
+| `surface` | レイアウト方式。`overlay`=中央浮遊 / `sticky-bottom`・`sticky-top`=viewport 固定 / `inline`=本文中 / `corner`=隅 / `fullscreen`=全画面 |
+| `anchor` | surface 内の相対位置（%）。`overlay` / `corner` のとき有効 |
+| `sizeHint` | `small` / `medium` / `large` / `fullscreen`。実寸はトークンとブレークポイントが決める |
+| `creative` | どのダミー広告素材（TASK-013D）を使うか（`index`） |
+| `parts[]` | 各部位（`close` / `fake-close` / `cta` / `media` / `label` / `body` / `decoy`）の `visible` / `enabled` / `emphasis` / `hitboxScale` / `anchor`。`enabled` が false の × は押せない見た目（カウントダウン中） |
+| `motion[]` | DESIGN §14 の語彙（`enter-scale` / `enter-slide` / `sticky-track` / `close-collapse` / `shake` / `drift` …）。`reducedMotion` 時は UI が動きのあるものを落とす |
+| `countdown` | 残り待機 ms。**必ず見せる**（GAME §15.4） |
+| `stackIndex` | z 順（0 が最背面）。具体的な z-index はトークン（`popup` / `popup_stack` / `critical`）が決める |
+| `offset` | 見た目の縦移動量（%）。`transform` で再現し、document flow は変えない（ADR-006） |
+| `badge` | 「🔊 音声が再生されています」等の偽表示（ATT-02。実際には鳴らさない） |
+
+ライフサイクル: `entering`（`ENTER_STEPS` = 14 step ≈ 240ms）→ `visible` → `closable`（`closableAtStep`。SAFE-01 で有限）→
+`closing`（`CLOSING_STEPS` 後に除去）。`closableAtStep` は entering 完了より前にならない。

@@ -5,7 +5,7 @@ TASK-003,2026-09-12,2026-09-13,パターンスキーマとバリデータ,完了
 TASK-004,2026-09-12,2026-09-12,カタログMarkdown→JSON変換（全パターン）,未着手,TASK-003,docs/tasks/TASK-004-catalog-data.md
 TASK-005,2026-09-12,2026-09-13,決定論プリミティブ（RNG/固定ステップ/state hash）,完了,TASK-001,docs/tasks/TASK-005-deterministic-primitives.md
 TASK-006,2026-09-12,2026-09-13,GameStateとstep() reducer骨格,完了,"TASK-004, TASK-005",docs/tasks/TASK-006-game-state-reducer.md
-TASK-007,2026-09-12,2026-09-13,BehaviorRegistry + ShellRegistryとViewState契約,未着手,TASK-006,docs/tasks/TASK-007-simulator-registry.md
+TASK-007,2026-09-12,2026-09-13,BehaviorRegistry + ShellRegistryとViewState契約,完了,TASK-006,docs/tasks/TASK-007-simulator-registry.md
 TASK-008,2026-09-12,2026-09-13,ステージ生成器（エンカウンターテンプレート+R1-R8）,未着手,TASK-007,docs/tasks/TASK-008-stage-generator.md
 TASK-009,2026-09-12,2026-09-13,Progress/Patience/勝敗判定/threat計算,未着手,TASK-006,docs/tasks/TASK-009-progress-patience.md
 TASK-010,2026-09-12,2026-09-13,スコアシステム（onClear導出+triage bonus）,未着手,TASK-009,docs/tasks/TASK-010-score-system.md
