@@ -110,6 +110,32 @@ test.describe('/game トライアル', () => {
     await expect(page.getByTestId('game-host')).toHaveAttribute('data-phase', 'running')
   })
 
+  test('HUD: 横向き（landscape）でも破綻せず、アクションバーは広告より下、safe-area 対応（TASK-016）', async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true })
+    const page = await ctx.newPage()
+    await page.goto(url())
+    const bar = page.getByTestId('action-bar')
+    await expect(bar).toBeVisible()
+    const barBox = (await bar.boundingBox())!
+    expect(barBox.y + barBox.height).toBeLessThanOrEqual(390 + 1)
+    // 5 つのアクションが親指で届く（幅 844 で全部見えている）
+    for (const name of ['SMASH', 'DODGE', 'FOCUS', 'REPORT', 'ESCAPE']) {
+      const b = page.getByRole('button', { name: new RegExp(name) })
+      const box = (await b.boundingBox())!
+      expect(box.height).toBeGreaterThanOrEqual(44)
+      expect(box.x + box.width).toBeLessThanOrEqual(844 + 1)
+    }
+    // 横スクロールが発生しない
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+    // z 順: 広告（popup）は HUD（sticky）より前面
+    const close = page.locator('[data-instance][data-lifecycle="closable"] [data-target="close"]').first()
+    await expect(close).toBeVisible({ timeout: 15000 })
+    const zAd = await close.locator('xpath=ancestor::*[@data-instance]').evaluate((el) => Number(getComputedStyle(el).zIndex))
+    const zHud = await page.getByTestId('hud').evaluate((el) => Number(getComputedStyle(el).zIndex))
+    expect(zAd).toBeGreaterThan(zHud)
+    await ctx.close()
+  })
+
   test('reduced-motion でも同じように遊べる（TASK-014 / SAFE-07）', async ({ browser }) => {
     const ctx = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 390, height: 844 } })
     const page = await ctx.newPage()

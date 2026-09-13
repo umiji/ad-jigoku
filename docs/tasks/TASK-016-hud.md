@@ -64,3 +64,26 @@ apps/web/src/game/hud/ActionBar.tsx        SMASH / DODGE / FOCUS / REPORT / ESCA
 
 - acceptance criteria を全て満たす
 - `DESIGN.md §23` のコンプライアンスパス実施済み
+
+---
+
+## 進捗記録
+
+- 状態: 完了（2026-09-14）
+
+### 決定ログ
+
+#### 2026-09-13 ActionBar は広告の語彙（PR / CTA / ×）を一切使わない
+- 決定: 記号ラベル + 数字キーで「ゲーム UI」と分かる見た目にし、sticky 広告と混同させない。テストで語彙不使用を固定
+- 出典: TASK-016 要件 3 / GAME §15
+
+#### 2026-09-13 使えるアクションは state + カタログから導出（availableActions）
+- 決定: SMASH は closable がある時、REPORT は correctInaction パターンがある時、DODGE / FOCUS / ESCAPE はパターンの playerActions にある時のみ有効
+- 出典: GAME §6
+
+### 証拠
+
+```text
+$ pnpm --filter @ad-jigoku/web test → hud.test.tsx 4 tests
+$ e2e「HUD: 横向きでも破綻せず、アクションバーは広告より下、safe-area 対応」→ 5 アクション全て 44px 以上・画面内、横スクロールなし、z(広告) > z(HUD)
+```
