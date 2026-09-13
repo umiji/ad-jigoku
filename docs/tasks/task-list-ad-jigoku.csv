@@ -1,0 +1,60 @@
+ID,作成日,更新日,タスク名,状態,依存タスク,ドキュメント
+TASK-001,2026-09-12,2026-09-13,monorepo基盤とツールチェーン,未着手,無し,docs/tasks/TASK-001-monorepo-foundation.md
+TASK-002,2026-09-12,2026-09-12,デザイントークンとDESIGN.md強制lint,未着手,TASK-001,docs/tasks/TASK-002-design-tokens.md
+TASK-003,2026-09-12,2026-09-12,パターンスキーマとバリデータ,未着手,TASK-001,docs/tasks/TASK-003-pattern-schema.md
+TASK-004,2026-09-12,2026-09-12,カタログMarkdown→JSON変換（全パターン）,未着手,TASK-003,docs/tasks/TASK-004-catalog-data.md
+TASK-005,2026-09-12,2026-09-12,決定論プリミティブ（RNG/固定ステップ/state hash）,未着手,TASK-001,docs/tasks/TASK-005-deterministic-primitives.md
+TASK-006,2026-09-12,2026-09-12,GameStateとstep() reducer骨格,未着手,"TASK-004, TASK-005",docs/tasks/TASK-006-game-state-reducer.md
+TASK-007,2026-09-12,2026-09-13,BehaviorRegistry + ShellRegistryとViewState契約,未着手,TASK-006,docs/tasks/TASK-007-simulator-registry.md
+TASK-008,2026-09-12,2026-09-13,ステージ生成器（エンカウンターテンプレート+R1-R8）,未着手,TASK-007,docs/tasks/TASK-008-stage-generator.md
+TASK-009,2026-09-12,2026-09-13,Progress/Patience/勝敗判定/threat計算,未着手,TASK-006,docs/tasks/TASK-009-progress-patience.md
+TASK-010,2026-09-12,2026-09-13,スコアシステム（onClear導出+triage bonus）,未着手,TASK-009,docs/tasks/TASK-010-score-system.md
+TASK-011,2026-09-12,2026-09-12,コンボとRAGE,未着手,TASK-010,docs/tasks/TASK-011-combo-rage.md
+TASK-012,2026-09-12,2026-09-12,リプレイ記録・再生と決定論回帰テスト,未着手,"TASK-008, TASK-011",docs/tasks/TASK-012-replay-determinism.md
+TASK-013,2026-09-12,2026-09-13,canonical広告コンポーネント基盤（parts）,未着手,TASK-002,docs/tasks/TASK-013-ad-components.md
+TASK-013A,2026-09-13,2026-09-13,Shell: popup/interstitial/stickyBanner/inlineRect,未着手,TASK-013,docs/tasks/TASK-013A-shell-generic.md
+TASK-013B,2026-09-13,2026-09-13,Shell: videoPlayer/densityStack,未着手,TASK-013,docs/tasks/TASK-013B-shell-media.md
+TASK-013C,2026-09-13,2026-09-13,Shell: fakeDownload/fakePlay（専用デザイン）,未着手,TASK-013,docs/tasks/TASK-013C-shell-deceptive.md
+TASK-013D,2026-09-13,2026-09-13,Creativeデータ基盤（数百件+実在ブランドNG検査）,未着手,TASK-004,docs/tasks/TASK-013D-creative-data.md
+TASK-014,2026-09-12,2026-09-12,ゲームホスト（rAF/ViewState→DOM/入力→Intent）,未着手,"TASK-007, TASK-013",docs/tasks/TASK-014-game-host.md
+TASK-014A,2026-09-13,2026-09-13,BrowserFrame（偽ブラウザ枠）,未着手,TASK-014,docs/tasks/TASK-014A-browser-frame.md
+TASK-015,2026-09-12,2026-09-12,偽記事コンテンツ面と読了・設問メカニクス,未着手,TASK-014,docs/tasks/TASK-015-content-surface.md
+TASK-016,2026-09-12,2026-09-12,HUD（patience/progress/time/combo）,未着手,TASK-014,docs/tasks/TASK-016-hud.md
+TASK-017,2026-09-12,2026-09-13,spawn/surface behavior（INT-01, OBS-01）,未着手,"TASK-014, TASK-013A",docs/tasks/TASK-017-sim-overlay.md
+TASK-018,2026-09-12,2026-09-13,close slot behavior（CLS-01/03/05）,未着手,"TASK-017, TASK-013A",docs/tasks/TASK-018-sim-close-friction.md
+TASK-019,2026-09-12,2026-09-13,deception/hitbox slot behavior（CLS-11, DEC-02, DEC-03）,未着手,"TASK-017, TASK-013A, TASK-013C",docs/tasks/TASK-019-sim-deception.md
+TASK-020,2026-09-12,2026-09-13,persist/attention slot behavior（OBS-03, OBS-06, ATT-01, ATT-02）,未着手,"TASK-017, TASK-013B",docs/tasks/TASK-020-sim-sticky-attention.md
+TASK-021,2026-09-12,2026-09-13,persist slot behavior: respawn/multi-layer（PER-01, PER-02）,未着手,"TASK-017, TASK-013B",docs/tasks/TASK-021-sim-persistence.md
+TASK-022,2026-09-12,2026-09-13,instability slot behavior（LAY-01、transform方式）,未着手,"TASK-017, TASK-013B",docs/tasks/TASK-022-sim-instability.md
+TASK-023,2026-09-12,2026-09-12,SMASHとカタルシス演出,未着手,TASK-017〜022,docs/tasks/TASK-023-smash-catharsis.md
+TASK-024,2026-09-12,2026-09-13,結果画面と教育表示（+EscapeCard）,未着手,"TASK-012, TASK-023",docs/tasks/TASK-024-results-screen.md
+TASK-024A,2026-09-13,2026-09-13,escape技法ライブラリ+/patterns/[id]図鑑ページ,未着手,"TASK-004, TASK-024",docs/tasks/TASK-024A-escape-library.md
+TASK-024B,2026-09-13,2026-09-13,面白さゲート（プレイテスト実施・判定）,未着手,"TASK-024, TASK-024A",docs/tasks/TASK-024B-fun-gate.md
+TASK-025,2026-09-12,2026-09-12,プレイアブルチュートリアル,未着手,TASK-024,docs/tasks/TASK-025-tutorial.md
+TASK-026,2026-09-12,2026-09-12,Stage 1-5のデータとプログレッション,未着手,"TASK-008, TASK-024",docs/tasks/TASK-026-stage-progression.md
+TASK-027,2026-09-12,2026-09-12,Endlessモード,未着手,TASK-026,docs/tasks/TASK-027-endless-mode.md
+TASK-028,2026-09-12,2026-09-12,共有サマリ（seed URL/テキスト/OG画像）,未着手,TASK-024,docs/tasks/TASK-028-share-summary.md
+TASK-029,2026-09-12,2026-09-13,Safety Invariantsテストスイート（SAFE-01..13）,未着手,"TASK-022, TASK-016, TASK-014A",docs/tasks/TASK-029-safety-invariants.md
+TASK-030,2026-09-12,2026-09-12,アクセシビリティとreduced-motion対応,未着手,TASK-029,docs/tasks/TASK-030-a11y-reduced-motion.md
+TASK-031,2026-09-12,2026-09-12,オプトイン音声と効果音,未着手,TASK-023,docs/tasks/TASK-031-audio-opt-in.md
+TASK-032,2026-09-12,2026-09-13,性能予算のCI強制（Phase1完成=024B通過が前提）,未着手,TASK-029,docs/tasks/TASK-032-performance-budget.md
+TASK-033,2026-09-12,2026-09-12,LPシェルとHero、LpFlowステートマシン,未着手,TASK-013,docs/tasks/TASK-033-lp-shell-hero.md
+TASK-034,2026-09-12,2026-09-12,エスカレーション段階01-07,未着手,TASK-033,docs/tasks/TASK-034-lp-escalation.md
+TASK-035,2026-09-12,2026-09-12,Escape/Game・Audit導線/デスクトップ構成,未着手,TASK-034,docs/tasks/TASK-035-lp-escape-cta.md
+TASK-036,2026-09-12,2026-09-12,DESIGN.md準拠QAと視覚回帰,未着手,"TASK-035, TASK-029",docs/tasks/TASK-036-lp-design-qa.md
+TASK-037,2026-09-12,2026-09-12,Evidenceスキーマと保存（Cloudflare R2）,未着手,TASK-004,docs/tasks/TASK-037-evidence-schema.md
+TASK-038,2026-09-12,2026-09-13,Probe runner（Playwright/シナリオ実行、GitHub Actionsワーカー）,未着手,TASK-037,docs/tasks/TASK-038-probe-runner.md
+TASK-039,2026-09-12,2026-09-12,Hell Generator（フィクスチャ+期待値）,未着手,"TASK-004, TASK-038",docs/tasks/TASK-039-hell-generator.md
+TASK-040,2026-09-12,2026-09-12,検出器1: 幾何・占有・密度,未着手,TASK-039,docs/tasks/TASK-040-detectors-geometry.md
+TASK-041,2026-09-12,2026-09-12,検出器2: タイミング・閉じる摩擦・再発,未着手,TASK-039,docs/tasks/TASK-041-detectors-timing.md
+TASK-042,2026-09-12,2026-09-12,検出器3: メディア・レイアウト・複合,未着手,TASK-039,docs/tasks/TASK-042-detectors-media-compound.md
+TASK-043,2026-09-12,2026-09-12,スコアラーとバージョニング,未着手,TASK-040〜042,docs/tasks/TASK-043-scorer.md
+TASK-044,2026-09-12,2026-09-12,検出精度ハーネス（precision/recall CI）,未着手,TASK-043,docs/tasks/TASK-044-accuracy-harness.md
+TASK-045,2026-09-12,2026-09-13,監査ジョブパイプラインとAPI（GitHub Actions workflow_dispatch）,未着手,"TASK-043, TASK-038",docs/tasks/TASK-045-audit-pipeline.md
+TASK-046,2026-09-12,2026-09-13,監査UI（URL入力→進捗→レポート。AI判定は有料診断のみ）,未着手,TASK-045,docs/tasks/TASK-046-audit-ui.md
+TASK-046A,2026-09-13,2026-09-13,AdSlot+自己診断バッジ,未着手,TASK-046,docs/tasks/TASK-046A-adslot-self-audit.md
+TASK-047,2026-09-12,2026-09-12,詳細レポートと改善提案,未着手,TASK-046,docs/tasks/TASK-047-detailed-report.md
+TASK-048,2026-09-12,2026-09-12,再評価とBefore/After,未着手,TASK-047,docs/tasks/TASK-048-reaudit-before-after.md
+TASK-049,2026-09-12,2026-09-12,ランキングのデータモデルと公開ページ,未着手,TASK-048,docs/tasks/TASK-049-ranking.md
+TASK-050,2026-09-12,2026-09-12,異議申立て・訂正フロー,未着手,TASK-049,docs/tasks/TASK-050-appeals.md
+TASK-051,2026-09-12,2026-09-12,評価基準公開・方法論・ポリシー,未着手,TASK-049,docs/tasks/TASK-051-trust-pages.md
