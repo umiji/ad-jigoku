@@ -1,7 +1,10 @@
 /**
- * TASK-001 のプレースホルダ。LP は TASK-033 以降、ゲームは TASK-014 以降。
+ * TASK-001 のプレースホルダ。LP は TASK-033 以降。
+ * ゲーム本体（TASK-014 以降）は /game にあるので、そこへの導線だけ置く。
  * 中身は仮でも、暗い基盤とトークン（DESIGN.md §4,5,6）の上に置く。
  */
+import Link from 'next/link'
+
 export default function HomePage() {
   return (
     <main className="container-gutter mx-auto max-w-content py-96">
@@ -10,8 +13,11 @@ export default function HomePage() {
       <p className="text-body text-text-secondary mt-24">
         このサイトでは、広告を閉じないと先に進めません。
       </p>
+      <p className="text-body mt-24">
+        <Link href="/game">ゲームを試す → /game</Link>
+      </p>
       <p className="text-ad-legal text-text-secondary mt-16">
-        ※ LP は TASK-033 以降、ゲームは TASK-014 以降で実装。トークン一覧は /dev/tokens。
+        ※ LP は TASK-033 以降で実装。トークン一覧は /dev/tokens、シェル一覧は /dev/shells。
       </p>
     </main>
   )
