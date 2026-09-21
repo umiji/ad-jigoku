@@ -58,3 +58,6 @@ TASK-048,2026-09-12,2026-09-12,再評価とBefore/After,未着手,TASK-047,docs/
 TASK-049,2026-09-12,2026-09-12,ランキングのデータモデルと公開ページ,未着手,TASK-048,docs/tasks/TASK-049-ranking.md
 TASK-050,2026-09-12,2026-09-12,異議申立て・訂正フロー,未着手,TASK-049,docs/tasks/TASK-050-appeals.md
 TASK-051,2026-09-12,2026-09-12,評価基準公開・方法論・ポリシー,未着手,TASK-049,docs/tasks/TASK-051-trust-pages.md
+TASK-052,2026-09-14,2026-09-14,広告リアリティ方針の要件改訂（ADR-013確定）,未着手,無し,docs/tasks/TASK-052-ad-realism-requirements-revision.md
+TASK-053,2026-09-14,2026-09-14,実広告の観測とAD_ANATOMY.md作成,未着手,TASK-052,docs/tasks/TASK-053-ad-anatomy-observation.md
+TASK-054,2026-09-14,2026-09-14,Creative providerの継ぎ目（本物への差し替え口）,未着手,"TASK-052, TASK-053",docs/tasks/TASK-054-creative-provider-seam.md
