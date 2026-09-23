@@ -1,5 +1,5 @@
-import styles from './content.module.css'
-import type { ArticleQuestion } from './articles/types'
+import styles from './content.module.css';
+import type { ArticleQuestion } from './articles/types';
 
 /**
  * 記事内の設問（OD-5 / TASK-015 要件 3）。本文を実際に読んでいないと答えられない内容。
@@ -14,23 +14,34 @@ export function QuestionPrompt({
   onAnswer,
   children,
 }: {
-  question: ArticleQuestion
-  answered: boolean
+  question: ArticleQuestion;
+  answered: boolean;
   /** 直前に選んだ選択肢（誤答表示用） */
-  lastChoice?: number | undefined
-  disabled?: boolean
-  onAnswer?: (questionId: string, choice: number) => void
-  children?: React.ReactNode
+  lastChoice?: number | undefined;
+  disabled?: boolean;
+  onAnswer?: (questionId: string, choice: number) => void;
+  children?: React.ReactNode;
 }) {
   return (
-    <aside className={styles.question} data-target="content" data-content-id={`question:${question.id}`} data-testid={`question-${question.id}`} aria-labelledby={`q-${question.id}`}>
+    <aside
+      className={styles.question}
+      data-target="content"
+      data-content-id={`question:${question.id}`}
+      data-testid={`question-${question.id}`}
+      aria-labelledby={`q-${question.id}`}
+    >
       <div className={styles.questionLabel}>読者への設問</div>
       <p className={styles.questionPrompt} id={`q-${question.id}`}>
         {question.prompt}
       </p>
       <div className={styles.choices} role="group" aria-label="選択肢">
         {question.choices.map((choice, i) => {
-          const state = answered && i === question.correctChoice ? 'correct' : !answered && lastChoice === i ? 'wrong' : 'idle'
+          const state =
+            answered && i === question.correctChoice
+              ? 'correct'
+              : !answered && lastChoice === i
+                ? 'wrong'
+                : 'idle';
           return (
             <button
               key={i}
@@ -44,11 +55,13 @@ export function QuestionPrompt({
             >
               {choice}
             </button>
-          )
+          );
         })}
       </div>
-      {answered && <div className={styles.questionDone}>正解。読み進めてください。</div>}
+      {answered && (
+        <div className={styles.questionDone}>正解。読み進めてください。</div>
+      )}
       {children}
     </aside>
-  )
+  );
 }

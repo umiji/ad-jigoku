@@ -1,4 +1,4 @@
-import { xmur3 } from '../core/rng'
+import { xmur3 } from '../core/rng';
 
 /**
  * rendezvous (HRW) hashing（GAME_ENGINE_DESIGN.md §8.4）。
@@ -6,8 +6,13 @@ import { xmur3 } from '../core/rng'
  * 配列インデックス抽選と違い、カタログにパターンを追加しても「新パターンの w が上位に入った場合」しか
  * 既存 seed の結果が変わらない。共有された Seed Challenge を壊さないための仕組み。
  */
-export function rendezvousWeight(seed: string, stream: string, key: string, candidateId: string): number {
-  return xmur3(`${seed}:${stream}:${key}:${candidateId}`)() / 4294967296
+export function rendezvousWeight(
+  seed: string,
+  stream: string,
+  key: string,
+  candidateId: string,
+): number {
+  return xmur3(`${seed}:${stream}:${key}:${candidateId}`)() / 4294967296;
 }
 
 export function rendezvousPick<T>(
@@ -19,16 +24,16 @@ export function rendezvousPick<T>(
   /** 候補ごとの重み（>0）。重み付き rendezvous: w' = -ln(u) / weight（小さいほど優先） */
   weightOf: (c: T) => number = () => 1,
 ): T | undefined {
-  let best: T | undefined
-  let bestScore = Infinity
+  let best: T | undefined;
+  let bestScore = Infinity;
   for (const c of candidates) {
-    const u = rendezvousWeight(seed, stream, key, idOf(c))
-    const w = Math.max(1e-9, weightOf(c))
-    const score = -Math.log(Math.max(u, 1e-12)) / w
+    const u = rendezvousWeight(seed, stream, key, idOf(c));
+    const w = Math.max(1e-9, weightOf(c));
+    const score = -Math.log(Math.max(u, 1e-12)) / w;
     if (score < bestScore) {
-      bestScore = score
-      best = c
+      bestScore = score;
+      best = c;
     }
   }
-  return best
+  return best;
 }

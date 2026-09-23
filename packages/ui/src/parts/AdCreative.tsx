@@ -1,15 +1,21 @@
-import { AdBody } from './AdBody'
-import { AdCountdown } from './AdCountdown'
-import { AdCTA } from './AdCTA'
-import { AdHeadline } from './AdHeadline'
-import { AdLegal } from './AdLegal'
-import { AdMeta } from './AdMeta'
-import { adThemeClass } from './adTheme'
-import { adCopy } from './copy'
-import { CreativeGraphic, graphicVariant } from './creativeGraphic'
-import { cx } from './cx'
-import styles from './AdCreative.module.css'
-import { resolvePartState, type AdPart, type AdPartState, type Countdown, type CreativeContent } from './types'
+import { AdBody } from './AdBody';
+import { AdCountdown } from './AdCountdown';
+import { AdCTA } from './AdCTA';
+import { AdHeadline } from './AdHeadline';
+import { AdLegal } from './AdLegal';
+import { AdMeta } from './AdMeta';
+import { adThemeClass } from './adTheme';
+import { adCopy } from './copy';
+import { CreativeGraphic, graphicVariant } from './creativeGraphic';
+import { cx } from './cx';
+import styles from './AdCreative.module.css';
+import {
+  resolvePartState,
+  type AdPart,
+  type AdPartState,
+  type Countdown,
+  type CreativeContent,
+} from './types';
 
 /**
  * 架空の広告素材ひとつ分（DESIGN.md §8 anatomy）。
@@ -23,19 +29,19 @@ import { resolvePartState, type AdPart, type AdPartState, type Countdown, type C
  * `parts` は engine の `ViewState.parts` をそのまま渡せる（types.ts は sim/view.ts の写し）。
  */
 export type AdCreativeProps = {
-  readonly creative: CreativeContent
+  readonly creative: CreativeContent;
   /** engine の ViewState.parts。未指定の部位は「見える / 押せる / 通常」 */
-  readonly parts?: readonly AdPartState[]
+  readonly parts?: readonly AdPartState[];
   /** 残り待機時間。渡されたら必ず表示される（GAME §15.4） */
-  readonly countdown?: Countdown
-  readonly instanceId?: string
-  readonly onPartActivate?: (part: AdPart) => void
-  readonly className?: string
-}
+  readonly countdown?: Countdown;
+  readonly instanceId?: string;
+  readonly onPartActivate?: (part: AdPart) => void;
+  readonly className?: string;
+};
 
 /** ブランドのイニシャル。日本語でも英字でも先頭 2 文字（ロゴは作らない） */
 function brandInitials(brand: string): string {
-  return [...brand].slice(0, 2).join('')
+  return [...brand].slice(0, 2).join('');
 }
 
 export function AdCreative({
@@ -46,11 +52,11 @@ export function AdCreative({
   onPartActivate,
   className,
 }: AdCreativeProps) {
-  const label = resolvePartState(parts, 'label')
-  const media = resolvePartState(parts, 'media')
-  const body = resolvePartState(parts, 'body')
-  const cta = resolvePartState(parts, 'cta')
-  const variant = graphicVariant(creative.id)
+  const label = resolvePartState(parts, 'label');
+  const media = resolvePartState(parts, 'media');
+  const body = resolvePartState(parts, 'body');
+  const cta = resolvePartState(parts, 'cta');
+  const variant = graphicVariant(creative.id);
 
   return (
     <article
@@ -77,7 +83,11 @@ export function AdCreative({
       </div>
 
       {media.visible ? (
-        <div className={styles.media} data-target="media" data-instance={instanceId}>
+        <div
+          className={styles.media}
+          data-target="media"
+          data-instance={instanceId}
+        >
           <CreativeGraphic variant={variant} />
           <span className={styles['media-tag']}>{adCopy.label.limited}</span>
         </div>
@@ -88,10 +98,15 @@ export function AdCreative({
         （消すと「何も言っていない広告」になる）。`body` が制御するのは補足コピー側。
         クリックの intent はどちらも `body` 部位にマップされる（data-target）。
       */}
-      <AdHeadline {...(instanceId === undefined ? {} : { instanceId })}>{creative.headline}</AdHeadline>
+      <AdHeadline {...(instanceId === undefined ? {} : { instanceId })}>
+        {creative.headline}
+      </AdHeadline>
 
       {creative.body === undefined ? null : (
-        <AdBody visible={body.visible} {...(instanceId === undefined ? {} : { instanceId })}>
+        <AdBody
+          visible={body.visible}
+          {...(instanceId === undefined ? {} : { instanceId })}
+        >
           {creative.body}
         </AdBody>
       )}
@@ -110,12 +125,14 @@ export function AdCreative({
           enabled={cta.enabled}
           emphasis={cta.emphasis}
           {...(instanceId === undefined ? {} : { instanceId })}
-          {...(onPartActivate === undefined ? {} : { onActivate: () => onPartActivate('cta') })}
+          {...(onPartActivate === undefined
+            ? {}
+            : { onActivate: () => onPartActivate('cta') })}
         />
         <AdLegal {...(instanceId === undefined ? {} : { instanceId })}>
           {creative.legal ?? adCopy.legal.fiction}
         </AdLegal>
       </div>
     </article>
-  )
+  );
 }

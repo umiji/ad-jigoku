@@ -1,5 +1,5 @@
-import styles from './adTheme.module.css'
-import type { CreativeTheme } from './types'
+import styles from './adTheme.module.css';
+import type { CreativeTheme } from './types';
 
 /**
  * `CreativeTheme` → 広告面のローカル変数を宣言するクラス（adTheme.module.css）。
@@ -10,8 +10,8 @@ const THEME_CLASS: Record<CreativeTheme, string> = {
   popupDark: 'popup-dark',
   danger: 'danger',
   warning: 'warning',
-}
+};
 
 export function adThemeClass(theme: CreativeTheme): string | undefined {
-  return styles[THEME_CLASS[theme]]
+  return styles[THEME_CLASS[theme]];
 }

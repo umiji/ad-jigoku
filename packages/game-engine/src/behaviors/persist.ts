@@ -1,4 +1,4 @@
-import { noChange, type Behavior } from '../sim/types'
+import { noChange, type Behavior } from '../sim/types';
 
 /**
  * persist スロット: 「閉じた後どうなるか／どう居座るか」。
@@ -11,7 +11,14 @@ export const persistSticky: Behavior<null> = {
   slot: 'persist',
   friction: 0,
   load: 1,
-  init: () => ({ sim: null, view: { surface: 'sticky-bottom', sizeHint: 'small', motion: ['enter-slide', 'sticky-track'] } }),
+  init: () => ({
+    sim: null,
+    view: {
+      surface: 'sticky-bottom',
+      sizeHint: 'small',
+      motion: ['enter-slide', 'sticky-track'],
+    },
+  }),
   onTick: (sim) => noChange(sim),
   onIntent: (sim) => noChange(sim),
-}
+};

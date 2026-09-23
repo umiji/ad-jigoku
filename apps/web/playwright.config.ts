@@ -1,4 +1,4 @@
-import { defineConfig } from '@playwright/test'
+import { defineConfig } from '@playwright/test';
 
 /**
  * Playwright（TASK-013 test requirements: 当たり判定の実測 / axe / 視覚回帰）。
@@ -12,8 +12,8 @@ import { defineConfig } from '@playwright/test'
  *
  * mobile が主（DESIGN.md §3 MUST 1 / §19「Mobile is the primary composition」）。
  */
-const PORT = 3100
-const BASE_URL = `http://127.0.0.1:${PORT}`
+const PORT = 3100;
+const BASE_URL = `http://127.0.0.1:${PORT}`;
 
 export default defineConfig({
   testDir: './e2e',
@@ -60,4 +60,4 @@ export default defineConfig({
     stdout: 'ignore',
     stderr: 'pipe',
   },
-})
+});

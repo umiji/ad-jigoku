@@ -1,5 +1,9 @@
-import { z } from 'zod'
-import { CREATIVE_TEXT_FIELDS, type Creative, type CreativeTextField } from './schema'
+import { z } from 'zod';
+import {
+  CREATIVE_TEXT_FIELDS,
+  type Creative,
+  type CreativeTextField,
+} from './schema';
 
 /**
  * 実在ブランド混入検査（TASK-013D 要件 3 / DESIGN.md §3 MUST NOT 9）。
@@ -13,9 +17,9 @@ import { CREATIVE_TEXT_FIELDS, type Creative, type CreativeTextField } from './s
  */
 
 /** ひらがな（U+3041..U+3096）→ カタカナ。表記ゆれ「あまぞん」を「アマゾン」に寄せる */
-const HIRAGANA_RE = /[ぁ-ゖ]/g
+const HIRAGANA_RE = /[ぁ-ゖ]/g;
 /** 空白・句読点・記号。「ア・マ・ゾ・ン」「a m a z o n」のような分割回避を潰す */
-const NOISE_RE = /[\s\p{P}\p{S}\p{C}]/gu
+const NOISE_RE = /[\s\p{P}\p{S}\p{C}]/gu;
 
 /**
  * NG 判定用の正規化。両辺（NG ワード / Creative のテキスト）に同じものを掛ける。
@@ -32,41 +36,47 @@ export function normalizeForBrandCheck(input: string): string {
   return input
     .normalize('NFKC')
     .toLowerCase()
-    .replace(HIRAGANA_RE, (ch) => String.fromCodePoint((ch.codePointAt(0) ?? 0) + 0x60))
-    .replace(NOISE_RE, '')
+    .replace(HIRAGANA_RE, (ch) =>
+      String.fromCodePoint((ch.codePointAt(0) ?? 0) + 0x60),
+    )
+    .replace(NOISE_RE, '');
 }
 
 export type BrandViolation = {
-  id: string
-  field: CreativeTextField
+  id: string;
+  field: CreativeTextField;
   /** 一致した NG ワード（正規化後の形） */
-  term: string
+  term: string;
   /** 元の値。何を直せばいいか分かるように原文を返す */
-  value: string
-}
+  value: string;
+};
 
 /**
  * Creative 群から NG ワードに部分一致するものを全部返す。純粋関数。
  * 「最初の 1 件で止める」ことはしない。1 回の CI 実行で全件直せるようにするため。
  */
-export function findBrandViolations(creatives: readonly Creative[], ngWords: readonly string[]): BrandViolation[] {
+export function findBrandViolations(
+  creatives: readonly Creative[],
+  ngWords: readonly string[],
+): BrandViolation[] {
   const terms = ngWords
     .map((w) => normalizeForBrandCheck(w))
-    .filter((w) => w.length > 0)
-  if (terms.length === 0) return []
+    .filter((w) => w.length > 0);
+  if (terms.length === 0) return [];
 
-  const violations: BrandViolation[] = []
+  const violations: BrandViolation[] = [];
   for (const creative of creatives) {
     for (const field of CREATIVE_TEXT_FIELDS) {
-      const value = creative[field]
-      if (value === undefined) continue
-      const haystack = normalizeForBrandCheck(value)
+      const value = creative[field];
+      if (value === undefined) continue;
+      const haystack = normalizeForBrandCheck(value);
       for (const term of terms) {
-        if (haystack.includes(term)) violations.push({ id: creative.id, field, term, value })
+        if (haystack.includes(term))
+          violations.push({ id: creative.id, field, term, value });
       }
     }
   }
-  return violations
+  return violations;
 }
 
 /** `data/ng-words/brands.json` の形。1 行 1 語で増やせる構造にしておく（TASK-013D 要件 3） */
@@ -74,11 +84,12 @@ export const ngWordListSchema = z.object({
   version: z.number().int().positive(),
   updated: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'updated は YYYY-MM-DD'),
   terms: z.array(z.string().min(1)).min(1),
-})
-export type NgWordList = z.infer<typeof ngWordListSchema>
+});
+export type NgWordList = z.infer<typeof ngWordListSchema>;
 
 export function parseNgWordList(raw: unknown): NgWordList {
-  const result = ngWordListSchema.safeParse(raw)
-  if (!result.success) throw new Error(`ng-words: 形式が不正\n${z.prettifyError(result.error)}`)
-  return result.data
+  const result = ngWordListSchema.safeParse(raw);
+  if (!result.success)
+    throw new Error(`ng-words: 形式が不正\n${z.prettifyError(result.error)}`);
+  return result.data;
 }

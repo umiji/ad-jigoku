@@ -1,16 +1,16 @@
-import acc from '../data/patterns/acc.json'
-import att from '../data/patterns/att.json'
-import cls from '../data/patterns/cls.json'
-import com from '../data/patterns/com.json'
-import dec from '../data/patterns/dec.json'
-import int from '../data/patterns/int.json'
-import lay from '../data/patterns/lay.json'
-import mob from '../data/patterns/mob.json'
-import obs from '../data/patterns/obs.json'
-import per from '../data/patterns/per.json'
-import time from '../data/patterns/time.json'
-import { parseCatalog } from './load'
-import type { PatternDefinition } from './schema/pattern'
+import acc from '../data/patterns/acc.json';
+import att from '../data/patterns/att.json';
+import cls from '../data/patterns/cls.json';
+import com from '../data/patterns/com.json';
+import dec from '../data/patterns/dec.json';
+import int from '../data/patterns/int.json';
+import lay from '../data/patterns/lay.json';
+import mob from '../data/patterns/mob.json';
+import obs from '../data/patterns/obs.json';
+import per from '../data/patterns/per.json';
+import time from '../data/patterns/time.json';
+import { parseCatalog } from './load';
+import type { PatternDefinition } from './schema/pattern';
 
 /**
  * カタログ本体を静的 import で束ねる（TASK-004 要件 7）。
@@ -29,20 +29,20 @@ const CATALOG_FILES: readonly { source: string; raw: unknown }[] = [
   { source: 'data/patterns/obs.json', raw: obs },
   { source: 'data/patterns/per.json', raw: per },
   { source: 'data/patterns/time.json', raw: time },
-]
+];
 
-let cached: PatternDefinition[] | undefined
+let cached: PatternDefinition[] | undefined;
 
 /**
  * 全パターンを返す。zod parse は初回のみ（2回目以降は同一配列を返す）。
  * parse に失敗した場合は CatalogParseError を投げる（黙って部分的なカタログを返さない）。
  */
 export function loadCatalog(): PatternDefinition[] {
-  cached ??= parseCatalog(CATALOG_FILES)
-  return cached
+  cached ??= parseCatalog(CATALOG_FILES);
+  return cached;
 }
 
 /** テスト用: メモ化を捨てる。プロダクションコードから呼ばない */
 export function resetCatalogCache(): void {
-  cached = undefined
+  cached = undefined;
 }

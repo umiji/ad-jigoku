@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react'
-import { cx } from './cx'
-import styles from './AdText.module.css'
-import type { PartViewProps } from './types'
+import type { ReactNode } from 'react';
+import { cx } from './cx';
+import styles from './AdText.module.css';
+import type { PartViewProps } from './types';
 
 /**
  * 極小の注意書き（DESIGN.md §5 `ad_legal` / §8 anatomy / DESIGN_REQ §3.3）。
@@ -10,11 +10,17 @@ import type { PartViewProps } from './types'
  * （DESIGN_REQ §22 Trust: 本物の広告ではないことが明確）。
  */
 export type AdLegalProps = PartViewProps & {
-  readonly children: ReactNode
-}
+  readonly children: ReactNode;
+};
 
-export function AdLegal({ children, emphasis = 1, visible = true, instanceId, className }: AdLegalProps) {
-  if (!visible) return null
+export function AdLegal({
+  children,
+  emphasis = 1,
+  visible = true,
+  instanceId,
+  className,
+}: AdLegalProps) {
+  if (!visible) return null;
 
   return (
     <p
@@ -25,5 +31,5 @@ export function AdLegal({ children, emphasis = 1, visible = true, instanceId, cl
     >
       {children}
     </p>
-  )
+  );
 }

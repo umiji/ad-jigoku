@@ -3,14 +3,22 @@
  * TASK-003 acceptance「11 カテゴリすべてを表現できる」の実証データ。TASK-004 の投入テンプレートでもある。
  * 値は AD_UX_PATTERN_CATALOG.md の表と一致させている。
  */
-import type { ImproveFacet } from '../src/schema/improve'
-import type { PatternDefinition } from '../src/schema/pattern'
+import type { ImproveFacet } from '../src/schema/improve';
+import type { PatternDefinition } from '../src/schema/pattern';
 
 const baseImprove: ImproveFacet = {
   whyItHurts: { ja: 'ユーザーの操作を妨げ、離脱を招く。' },
-  recommendations: [{ ja: '閉じるボタンを 44px 以上にし、常に視認できるようにする。', effort: 'low', expectedSeverityReduction: 3 }],
-  adFriendlyAlternative: { ja: '広告枠は維持しつつ、閉じる操作を標準的な位置・サイズに揃える。' },
-}
+  recommendations: [
+    {
+      ja: '閉じるボタンを 44px 以上にし、常に視認できるようにする。',
+      effort: 'low',
+      expectedSeverityReduction: 3,
+    },
+  ],
+  adFriendlyAlternative: {
+    ja: '広告枠は維持しつつ、閉じる操作を標準的な位置・サイズに揃える。',
+  },
+};
 
 export const SAMPLE_CLS_11: PatternDefinition = {
   id: 'CLS-11',
@@ -37,7 +45,9 @@ export const SAMPLE_CLS_11: PatternDefinition = {
     comboTags: ['popup', 'fake-close'],
     incompatibleWith: [],
     patienceEffect: { onSpawn: 5, onMistake: 25, perSecondAlive: 0 },
-    education: { ja: '閉じるためのUIに見せかけて別の操作を誘導するパターン。本物の×は小さく端にある。' },
+    education: {
+      ja: '閉じるためのUIに見せかけて別の操作を誘導するパターン。本物の×は小さく端にある。',
+    },
   },
   detect: {
     layer: 2,
@@ -47,9 +57,16 @@ export const SAMPLE_CLS_11: PatternDefinition = {
     scoreContributing: true,
   },
   improve: baseImprove,
-  escape: { techniques: ['tap-backdrop', 'browser-back-once'], note: { ja: '×が2つ見えたら、小さいほうが本物であることが多い。' } },
-  fixture: { builderId: 'fake-close-popup', expected: { detected: true }, negativeCases: ['plain-popup'] },
-}
+  escape: {
+    techniques: ['tap-backdrop', 'browser-back-once'],
+    note: { ja: '×が2つ見えたら、小さいほうが本物であることが多い。' },
+  },
+  fixture: {
+    builderId: 'fake-close-popup',
+    expected: { detected: true },
+    negativeCases: ['plain-popup'],
+  },
+};
 
 export const SAMPLE_COM_12: PatternDefinition = {
   id: 'COM-12',
@@ -59,7 +76,12 @@ export const SAMPLE_COM_12: PatternDefinition = {
   severity: 20,
   severitySource: 'hypothesis',
   gameDifficulty: 5,
-  dimensions: { persistence: 3, interruption: 3, cumulativeEffect: 3, timeCost: 2 },
+  dimensions: {
+    persistence: 3,
+    interruption: 3,
+    cumulativeEffect: 3,
+    timeCost: 2,
+  },
   composedOf: ['PER-01', 'PER-02', 'INT-01'],
   game: {
     // COM-* は専用 shell / behaviors を持たない。composedOf を生成器が同時起動する（GAME_ENGINE_DESIGN §7.1）
@@ -72,11 +94,13 @@ export const SAMPLE_COM_12: PatternDefinition = {
     comboTags: ['respawn', 'multi-layer', 'popup'],
     incompatibleWith: [],
     patienceEffect: { onSpawn: 4, onMistake: 10, perSecondAlive: 2 },
-    education: { ja: '閉じても閉じても次が出る。1つずつ確実に処理し、慌てて偽×を押さないことが唯一の脱出路。' },
+    education: {
+      ja: '閉じても閉じても次が出る。1つずつ確実に処理し、慌てて偽×を押さないことが唯一の脱出路。',
+    },
     maxCloseDelayMsOverride: 6000,
   },
   improve: baseImprove,
-}
+};
 
 const simple = (
   id: PatternDefinition['id'],
@@ -94,13 +118,16 @@ const simple = (
   severitySource: 'hypothesis',
   gameDifficulty,
   dimensions: { interruption: 1 },
-})
+});
 
 export const SAMPLE_INT_01: PatternDefinition = {
   ...simple('INT-01', 'INT', '即時ポップアップ', 'Immediate Popup', 10, 2),
   game: {
     shell: 'popup',
-    behaviors: { spawn: { id: 'spawn:immediate' }, close: { id: 'close:instant' } },
+    behaviors: {
+      spawn: { id: 'spawn:immediate' },
+      close: { id: 'close:instant' },
+    },
     playerActions: ['CLOSE', 'SMASH'],
     failureCondition: { kind: 'patience-zero' },
     warning: 'none',
@@ -112,22 +139,50 @@ export const SAMPLE_INT_01: PatternDefinition = {
     patienceEffect: { onSpawn: 5, onMistake: 5, perSecondAlive: 0.5 },
     education: { ja: 'ページを開いた瞬間に出るポップアップ。' },
   },
-}
+};
 
-export const SAMPLE_PER_01: PatternDefinition = simple('PER-01', 'PER', '再出現広告', 'Respawning Ad', 13, 4)
-export const SAMPLE_PER_02: PatternDefinition = simple('PER-02', 'PER', '多層ポップアップ', 'Multi-layer Popup', 15, 5)
+export const SAMPLE_PER_01: PatternDefinition = simple(
+  'PER-01',
+  'PER',
+  '再出現広告',
+  'Respawning Ad',
+  13,
+  4,
+);
+export const SAMPLE_PER_02: PatternDefinition = simple(
+  'PER-02',
+  'PER',
+  '多層ポップアップ',
+  'Multi-layer Popup',
+  15,
+  5,
+);
 
 export const SAMPLES_ALL_CATEGORIES: PatternDefinition[] = [
   SAMPLE_CLS_11,
   SAMPLE_INT_01,
   simple('OBS-01', 'OBS', '全画面オーバーレイ', 'Fullscreen Overlay', 12, 2),
-  simple('ACC-04', 'ACC', '見えないクリック領域', 'Invisible Click Zone', 15, 4),
+  simple(
+    'ACC-04',
+    'ACC',
+    '見えないクリック領域',
+    'Invisible Click Zone',
+    15,
+    4,
+  ),
   simple('DEC-02', 'DEC', '偽ダウンロード', 'Fake Download', 16, 4),
   simple('ATT-02', 'ATT', '自動音声再生', 'Auto-play Sound', 13, 3),
-  simple('TIME-01', 'TIME', '閉じるまでカウントダウン', 'Countdown Before Close', 9, 2),
+  simple(
+    'TIME-01',
+    'TIME',
+    '閉じるまでカウントダウン',
+    'Countdown Before Close',
+    9,
+    2,
+  ),
   SAMPLE_PER_01,
   SAMPLE_PER_02,
   simple('LAY-01', 'LAY', 'レイアウトシフト', 'Layout Shift', 10, 3),
   simple('MOB-01', 'MOB', 'ビューポート占有', 'Viewport Dominance', 12, 2),
   SAMPLE_COM_12,
-]
+];

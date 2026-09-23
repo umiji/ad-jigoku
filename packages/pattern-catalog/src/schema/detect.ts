@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 /** DetectFacet — PATTERN_SCHEMA.md §4 */
 
@@ -24,9 +24,9 @@ export const SIGNAL_REFS = [
   'interaction.clickOutcome',
   'interaction.hitboxMap',
   'scroll.positionTimeline',
-] as const
-export type SignalRef = (typeof SIGNAL_REFS)[number]
-export const signalRefSchema = z.enum(SIGNAL_REFS)
+] as const;
+export type SignalRef = (typeof SIGNAL_REFS)[number];
+export const signalRefSchema = z.enum(SIGNAL_REFS);
 
 export const detectFacetSchema = z.object({
   /** CATALOG §5 のどの層で判定するか */
@@ -38,5 +38,5 @@ export const detectFacetSchema = z.object({
   /** スコアに算入するか。vision は MVP では false（ARCHITECTURE §9.3） */
   scoreContributing: z.boolean(),
   thresholds: z.record(z.string(), z.number()).optional(),
-})
-export type DetectFacet = z.infer<typeof detectFacetSchema>
+});
+export type DetectFacet = z.infer<typeof detectFacetSchema>;

@@ -11,7 +11,7 @@
  */
 
 /** z-index に直接書ける唯一の値は 0 と auto。それ以外の整数は禁止 */
-const NON_ZERO_INTEGER = '/^-?\\d*[1-9]\\d*$/'
+const NON_ZERO_INTEGER = '/^-?\\d*[1-9]\\d*$/';
 
 /** Tailwind v4 の CSS-first 構文（OD-1） */
 const TAILWIND_AT_RULES = [
@@ -24,7 +24,7 @@ const TAILWIND_AT_RULES = [
   'reference',
   'plugin',
   'config',
-]
+];
 
 module.exports = {
   extends: ['stylelint-config-standard'],
@@ -42,7 +42,17 @@ module.exports = {
   rules: {
     'color-no-hex': true,
     'color-named': 'never',
-    'function-disallowed-list': ['rgb', 'rgba', 'hsl', 'hsla', 'hwb', 'lab', 'lch', 'oklab', 'oklch'],
+    'function-disallowed-list': [
+      'rgb',
+      'rgba',
+      'hsl',
+      'hsla',
+      'hwb',
+      'lab',
+      'lch',
+      'oklab',
+      'oklch',
+    ],
     'declaration-property-value-disallowed-list': {
       'z-index': [NON_ZERO_INTEGER],
     },
@@ -64,9 +74,12 @@ module.exports = {
       rules: {
         'selector-class-pattern': [
           '^[a-z][a-zA-Z0-9-]*$',
-          { message: 'CSS Modules のクラス名は camelCase か kebab-case（styles.fooBar / styles["foo-bar"]）' },
+          {
+            message:
+              'CSS Modules のクラス名は camelCase か kebab-case（styles.fooBar / styles["foo-bar"]）',
+          },
         ],
       },
     },
   ],
-}
+};

@@ -1,8 +1,16 @@
-import { AdBody, AdCountdown, AdCTA, AdHeadline, AdMeta, CloseButton, resolvePartState } from '../../parts/index'
-import { adThemeClass } from '../../parts/adTheme'
-import { cx } from '../../parts/cx'
-import styles from './stickyBanner.module.css'
-import type { ShellProps } from '../types'
+import {
+  AdBody,
+  AdCountdown,
+  AdCTA,
+  AdHeadline,
+  AdMeta,
+  CloseButton,
+  resolvePartState,
+} from '../../parts/index';
+import { adThemeClass } from '../../parts/adTheme';
+import { cx } from '../../parts/cx';
+import styles from './stickyBanner.module.css';
+import type { ShellProps } from '../types';
 
 /**
  * stickyBanner — 画面下に貼り付く帯（DESIGN.md §9 Sticky Ad / persistence）。
@@ -12,10 +20,10 @@ import type { ShellProps } from '../types'
  * モバイルで本文を潰さないよう 1 行に詰める（DESIGN.md §19: 同時に出た広告でページを使用不能にしない）。
  */
 export function StickyBanner(p: ShellProps) {
-  const label = resolvePartState(p.parts, 'label')
-  const body = resolvePartState(p.parts, 'body')
-  const cta = resolvePartState(p.parts, 'cta')
-  const close = resolvePartState(p.parts, 'close')
+  const label = resolvePartState(p.parts, 'label');
+  const body = resolvePartState(p.parts, 'body');
+  const cta = resolvePartState(p.parts, 'cta');
+  const close = resolvePartState(p.parts, 'close');
 
   return (
     <div
@@ -29,23 +37,36 @@ export function StickyBanner(p: ShellProps) {
     >
       <div className={cx(styles.copy)}>
         <div className={cx(styles.line)}>
-          <AdMeta visible={label.visible} emphasis={label.emphasis} instanceId={p.instanceId} />
+          <AdMeta
+            visible={label.visible}
+            emphasis={label.emphasis}
+            instanceId={p.instanceId}
+          />
           <AdHeadline className={cx(styles.headline)} instanceId={p.instanceId}>
             {p.creative.headline}
           </AdHeadline>
         </div>
 
         {p.creative.body === undefined ? null : (
-          <AdBody visible={body.visible} instanceId={p.instanceId} className={cx(styles.note)}>
+          <AdBody
+            visible={body.visible}
+            instanceId={p.instanceId}
+            className={cx(styles.note)}
+          >
             {p.creative.body}
           </AdBody>
         )}
 
         {p.countdown === undefined ? null : (
-          <AdCountdown remainingMs={p.countdown.remainingMs} instanceId={p.instanceId} />
+          <AdCountdown
+            remainingMs={p.countdown.remainingMs}
+            instanceId={p.instanceId}
+          />
         )}
 
-        {p.badge === undefined ? null : <p className={cx(styles.badge)}>{p.badge}</p>}
+        {p.badge === undefined ? null : (
+          <p className={cx(styles.badge)}>{p.badge}</p>
+        )}
       </div>
 
       <AdCTA
@@ -63,8 +84,10 @@ export function StickyBanner(p: ShellProps) {
         emphasis={close.emphasis}
         hitboxScale={close.hitboxScale}
         instanceId={p.instanceId}
-        {...(close.anchor === undefined ? { placement: 'flow' } : { anchor: close.anchor })}
+        {...(close.anchor === undefined
+          ? { placement: 'flow' }
+          : { anchor: close.anchor })}
       />
     </div>
-  )
+  );
 }

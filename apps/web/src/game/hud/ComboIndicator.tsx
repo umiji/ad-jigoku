@@ -1,4 +1,4 @@
-import styles from './hud.module.css'
+import styles from './hud.module.css';
 
 /**
  * コンボ表示（TASK-016 要件 4）。
@@ -6,7 +6,17 @@ import styles from './hud.module.css'
  * - プレイヤー側 chain は「決まっている」表現（success）。混同しない
  * - RAGE 発動中は warning
  */
-export function ComboIndicator({ chain, namedCombo, rageActive, rageLevel }: { chain: number; namedCombo?: string | undefined; rageActive: boolean; rageLevel: number }) {
+export function ComboIndicator({
+  chain,
+  namedCombo,
+  rageActive,
+  rageLevel,
+}: {
+  chain: number;
+  namedCombo?: string | undefined;
+  rageActive: boolean;
+  rageLevel: number;
+}) {
   return (
     <div className={styles.combo} aria-live="polite" data-testid="combo">
       {namedCombo && (
@@ -27,5 +37,5 @@ export function ComboIndicator({ chain, namedCombo, rageActive, rageLevel }: { c
         </span>
       )}
     </div>
-  )
+  );
 }

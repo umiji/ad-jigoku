@@ -8,12 +8,12 @@ import {
   CloseButton,
   adCopy,
   resolvePartState,
-} from '../../parts/index'
-import { adThemeClass } from '../../parts/adTheme'
-import { cx } from '../../parts/cx'
-import styles from './interstitial.module.css'
-import type { CreativeTheme } from '../../parts/types'
-import type { ShellProps } from '../types'
+} from '../../parts/index';
+import { adThemeClass } from '../../parts/adTheme';
+import { cx } from '../../parts/cx';
+import styles from './interstitial.module.css';
+import type { CreativeTheme } from '../../parts/types';
+import type { ShellProps } from '../types';
 
 /**
  * interstitial — 本文を全部覆う割り込み（DESIGN.md §9 Fullscreen / interruption）。
@@ -30,15 +30,15 @@ const DARK_VARIANT: Readonly<Record<CreativeTheme, CreativeTheme>> = {
   popupDark: 'popupDark',
   warning: 'danger',
   danger: 'danger',
-}
+};
 
 export function Interstitial(p: ShellProps) {
-  const theme = DARK_VARIANT[p.creative.theme]
-  const label = resolvePartState(p.parts, 'label')
-  const media = resolvePartState(p.parts, 'media')
-  const body = resolvePartState(p.parts, 'body')
-  const cta = resolvePartState(p.parts, 'cta')
-  const close = resolvePartState(p.parts, 'close')
+  const theme = DARK_VARIANT[p.creative.theme];
+  const label = resolvePartState(p.parts, 'label');
+  const media = resolvePartState(p.parts, 'media');
+  const body = resolvePartState(p.parts, 'body');
+  const cta = resolvePartState(p.parts, 'cta');
+  const close = resolvePartState(p.parts, 'close');
 
   return (
     <div
@@ -48,14 +48,26 @@ export function Interstitial(p: ShellProps) {
       data-lifecycle={p.lifecycle}
       data-testid={`shell-${p.instanceId}`}
     >
-      <div className={cx(styles.card)} data-target="body" data-instance={p.instanceId}>
+      <div
+        className={cx(styles.card)}
+        data-target="body"
+        data-instance={p.instanceId}
+      >
         <div className={cx(styles.head)}>
-          <AdMeta visible={label.visible} emphasis={label.emphasis} instanceId={p.instanceId} />
+          <AdMeta
+            visible={label.visible}
+            emphasis={label.emphasis}
+            instanceId={p.instanceId}
+          />
           <span className={cx(styles.brand)}>{p.creative.brand}</span>
         </div>
 
         {media.visible ? (
-          <div className={cx(styles.media)} data-target="media" data-instance={p.instanceId}>
+          <div
+            className={cx(styles.media)}
+            data-target="media"
+            data-instance={p.instanceId}
+          >
             <span className={cx(styles.beam)} aria-hidden="true" />
             <span className={cx(styles.tag)}>{adCopy.label.limited}</span>
           </div>
@@ -72,10 +84,15 @@ export function Interstitial(p: ShellProps) {
         )}
 
         {p.countdown === undefined ? null : (
-          <AdCountdown remainingMs={p.countdown.remainingMs} instanceId={p.instanceId} />
+          <AdCountdown
+            remainingMs={p.countdown.remainingMs}
+            instanceId={p.instanceId}
+          />
         )}
 
-        {p.badge === undefined ? null : <p className={cx(styles.badge)}>{p.badge}</p>}
+        {p.badge === undefined ? null : (
+          <p className={cx(styles.badge)}>{p.badge}</p>
+        )}
 
         <AdCTA
           label={p.creative.cta}
@@ -86,7 +103,9 @@ export function Interstitial(p: ShellProps) {
           className={cx(styles.cta)}
         />
 
-        <AdLegal instanceId={p.instanceId}>{p.creative.legal ?? adCopy.legal.fiction}</AdLegal>
+        <AdLegal instanceId={p.instanceId}>
+          {p.creative.legal ?? adCopy.legal.fiction}
+        </AdLegal>
 
         <CloseButton
           visible={close.visible}
@@ -98,5 +117,5 @@ export function Interstitial(p: ShellProps) {
         />
       </div>
     </div>
-  )
+  );
 }

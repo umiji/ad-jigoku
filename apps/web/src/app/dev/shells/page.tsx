@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { loadCreatives, type Creative } from '@ad-jigoku/pattern-catalog'
+import { loadCreatives, type Creative } from '@ad-jigoku/pattern-catalog';
 import {
   DensityStack,
   InlineRect,
@@ -11,8 +11,8 @@ import {
   type AdPartState,
   type Emphasis,
   type ShellProps,
-} from '@ad-jigoku/ui'
-import styles from './page.module.css'
+} from '@ad-jigoku/ui';
+import styles from './page.module.css';
 
 /**
  * `/dev/shells` — シェル（TASK-013A / 013B）の Storybook 相当。
@@ -25,29 +25,42 @@ import styles from './page.module.css'
  *
  * 素材は本番の Creative データ（TASK-013D）から決定論的に 2 件引く。乱数は使わない。
  */
-const CREATIVES = loadCreatives()
+const CREATIVES = loadCreatives();
 
 function pickCreative(theme: Creative['theme']): Creative {
-  const found = CREATIVES.find((c) => c.theme === theme) ?? CREATIVES[0]
-  if (found === undefined) throw new Error('Creative データが空（TASK-013D）')
-  return found
+  const found = CREATIVES.find((c) => c.theme === theme) ?? CREATIVES[0];
+  if (found === undefined) throw new Error('Creative データが空（TASK-013D）');
+  return found;
 }
 
-const PAPER = pickCreative('popup')
-const DARK = pickCreative('popupDark')
+const PAPER = pickCreative('popup');
+const DARK = pickCreative('popupDark');
 
-const ALL_PARTS = ['label', 'body', 'media', 'cta', 'legal', 'close'] as const
+const ALL_PARTS = ['label', 'body', 'media', 'cta', 'legal', 'close'] as const;
 
-function part(name: AdPartState['part'], overrides: Partial<Omit<AdPartState, 'part'>> = {}): AdPartState {
-  return { part: name, visible: true, enabled: true, emphasis: 1, hitboxScale: 1, ...overrides }
+function part(
+  name: AdPartState['part'],
+  overrides: Partial<Omit<AdPartState, 'part'>> = {},
+): AdPartState {
+  return {
+    part: name,
+    visible: true,
+    enabled: true,
+    emphasis: 1,
+    hitboxScale: 1,
+    ...overrides,
+  };
 }
 
 function defaultParts(): AdPartState[] {
-  return ALL_PARTS.map((name) => part(name))
+  return ALL_PARTS.map((name) => part(name));
 }
 
 /** どのシェルにも同じ形で props を渡す。挙動は無い（シェルは props のとおりに描くだけ） */
-function shellProps(instanceId: string, overrides: Partial<ShellProps> = {}): ShellProps {
+function shellProps(
+  instanceId: string,
+  overrides: Partial<ShellProps> = {},
+): ShellProps {
   return {
     instanceId,
     lifecycle: 'closable',
@@ -61,22 +74,34 @@ function shellProps(instanceId: string, overrides: Partial<ShellProps> = {}): Sh
     reducedMotion: false,
     ageMs: 0,
     ...overrides,
-  }
+  };
 }
 
 /** close だけ状態を差し替えた parts（他の部位は既定のまま） */
-function partsWithClose(overrides: Partial<Omit<AdPartState, 'part'>>): AdPartState[] {
-  return ALL_PARTS.map((name) => (name === 'close' ? part(name, overrides) : part(name)))
+function partsWithClose(
+  overrides: Partial<Omit<AdPartState, 'part'>>,
+): AdPartState[] {
+  return ALL_PARTS.map((name) =>
+    name === 'close' ? part(name, overrides) : part(name),
+  );
 }
 
 function partsWithEmphasis(emphasis: Emphasis): AdPartState[] {
-  return ALL_PARTS.map((name) => part(name, { emphasis }))
+  return ALL_PARTS.map((name) => part(name, { emphasis }));
 }
 
-const NOTE = 'text-ad-legal text-text-secondary'
-const SECTION_LABEL = 'text-ad-meta uppercase text-text-secondary'
+const NOTE = 'text-ad-legal text-text-secondary';
+const SECTION_LABEL = 'text-ad-meta uppercase text-text-secondary';
 
-function Section({ title, source, children }: { title: string; source: string; children: React.ReactNode }) {
+function Section({
+  title,
+  source,
+  children,
+}: {
+  title: string;
+  source: string;
+  children: React.ReactNode;
+}) {
   return (
     <section className="border-t border-border-subtle pt-24 pb-32">
       <p className={SECTION_LABEL}>{source}</p>
@@ -85,7 +110,7 @@ function Section({ title, source, children }: { title: string; source: string; c
         {children}
       </ul>
     </section>
-  )
+  );
 }
 
 /**
@@ -97,27 +122,31 @@ function Case({
   size = 'popup',
   children,
 }: {
-  label: string
-  size?: 'popup' | 'mobile' | 'wide' | 'full'
-  children: React.ReactNode
+  label: string;
+  size?: 'popup' | 'mobile' | 'wide' | 'full';
+  children: React.ReactNode;
 }) {
   return (
     <li className={styles.case}>
       <p className={NOTE}>{label}</p>
       <div className={`${styles.frame} ${styles[size]}`}>{children}</div>
     </li>
-  )
+  );
 }
 
 export default function DevShellsPage() {
   return (
     <main className="container-gutter mx-auto max-w-content py-48">
-      <p className={SECTION_LABEL}>DEV ONLY — DESIGN.md §8 / §9 / §16 / §19 / §23</p>
+      <p className={SECTION_LABEL}>
+        DEV ONLY — DESIGN.md §8 / §9 / §16 / §19 / §23
+      </p>
       <h1 className="text-h1">広告の面（shells）</h1>
       <p className="text-body text-text-secondary mt-16">
-        シェルは独立モジュール（DECISIONS_v0.2 §1.3）。共通の土台は無く、共有するのは
-        <code>/dev/components</code> にある部位だけ。ここにあるのは全部 presentational で、
-        閉じるタイミングも移動も再出現も持たない。位置・z 順・出入りのモーションは宿主のスロットが持つので、
+        シェルは独立モジュール（DECISIONS_v0.2
+        §1.3）。共通の土台は無く、共有するのは
+        <code>/dev/components</code> にある部位だけ。ここにあるのは全部
+        presentational で、 閉じるタイミングも移動も再出現も持たない。位置・z
+        順・出入りのモーションは宿主のスロットが持つので、
         このページでは「箱の中身」だけが見える。
       </p>
 
@@ -141,10 +170,14 @@ export default function DevShellsPage() {
           />
         </Case>
         <Case label="emphasis 0（気配だけ）">
-          <Popup {...shellProps('popup-quiet', { parts: partsWithEmphasis(0) })} />
+          <Popup
+            {...shellProps('popup-quiet', { parts: partsWithEmphasis(0) })}
+          />
         </Case>
         <Case label="emphasis 2（押させたい）">
-          <Popup {...shellProps('popup-loud', { parts: partsWithEmphasis(2) })} />
+          <Popup
+            {...shellProps('popup-loud', { parts: partsWithEmphasis(2) })}
+          />
         </Case>
         <Case label="creative 2 件目（暗い広告）">
           <Popup {...shellProps('popup-dark', { creative: DARK })} />
@@ -163,7 +196,12 @@ export default function DevShellsPage() {
 
       <Section title="interstitial" source="DESIGN.md §9 Fullscreen / §19">
         <Case label="全画面（紙色の素材でも暗い面に倒す）" size="full">
-          <Interstitial {...shellProps('interstitial-visible', { surface: 'fullscreen', sizeHint: 'fullscreen' })} />
+          <Interstitial
+            {...shellProps('interstitial-visible', {
+              surface: 'fullscreen',
+              sizeHint: 'fullscreen',
+            })}
+          />
         </Case>
         <Case label="close: enabled=false / countdown 2700ms" size="full">
           <Interstitial
@@ -187,13 +225,26 @@ export default function DevShellsPage() {
           />
         </Case>
         <Case label="モバイル幅（390px）" size="mobile">
-          <Interstitial {...shellProps('interstitial-mobile', { surface: 'fullscreen', sizeHint: 'fullscreen' })} />
+          <Interstitial
+            {...shellProps('interstitial-mobile', {
+              surface: 'fullscreen',
+              sizeHint: 'fullscreen',
+            })}
+          />
         </Case>
       </Section>
 
-      <Section title="stickyBanner" source="DESIGN.md §9 Sticky Ad / §16.1 shadow.sticky">
+      <Section
+        title="stickyBanner"
+        source="DESIGN.md §9 Sticky Ad / §16.1 shadow.sticky"
+      >
         <Case label="lifecycle: closable" size="wide">
-          <StickyBanner {...shellProps('sticky-closable', { surface: 'sticky-bottom', sizeHint: 'small' })} />
+          <StickyBanner
+            {...shellProps('sticky-closable', {
+              surface: 'sticky-bottom',
+              sizeHint: 'small',
+            })}
+          />
         </Case>
         <Case label="close: enabled=false / countdown 2700ms" size="wide">
           <StickyBanner
@@ -217,20 +268,39 @@ export default function DevShellsPage() {
           />
         </Case>
         <Case label="モバイル幅（390px。96px を超えない）" size="mobile">
-          <StickyBanner {...shellProps('sticky-mobile', { surface: 'sticky-bottom', sizeHint: 'small' })} />
+          <StickyBanner
+            {...shellProps('sticky-mobile', {
+              surface: 'sticky-bottom',
+              sizeHint: 'small',
+            })}
+          />
         </Case>
       </Section>
 
       <Section title="inlineRect" source="DESIGN.md §9 Layout Shift / ADR-006">
         <Case label="lifecycle: visible">
-          <InlineRect {...shellProps('rect-visible', { surface: 'inline', lifecycle: 'visible' })} />
+          <InlineRect
+            {...shellProps('rect-visible', {
+              surface: 'inline',
+              lifecycle: 'visible',
+            })}
+          />
         </Case>
         <Case label="offset -14%（transform だけ。document flow は変えない）">
-          <InlineRect {...shellProps('rect-offset', { surface: 'inline', offset: { yPercent: -14 } })} />
+          <InlineRect
+            {...shellProps('rect-offset', {
+              surface: 'inline',
+              offset: { yPercent: -14 },
+            })}
+          />
         </Case>
         <Case label="creative 2 件目 / emphasis 2">
           <InlineRect
-            {...shellProps('rect-dark', { surface: 'inline', creative: DARK, parts: partsWithEmphasis(2) })}
+            {...shellProps('rect-dark', {
+              surface: 'inline',
+              creative: DARK,
+              parts: partsWithEmphasis(2),
+            })}
           />
         </Case>
         <Case label="モバイル幅（390px）" size="mobile">
@@ -238,13 +308,25 @@ export default function DevShellsPage() {
         </Case>
       </Section>
 
-      <Section title="videoPlayer" source="TASK-013B / DESIGN.md §20 NEVER autoplay sound">
+      <Section
+        title="videoPlayer"
+        source="TASK-013B / DESIGN.md §20 NEVER autoplay sound"
+      >
         <Case label="通常（映像は CSS だけ。動画も音源も読まない）">
-          <VideoPlayer {...shellProps('video-normal', { surface: 'corner', creative: DARK })} />
+          <VideoPlayer
+            {...shellProps('video-normal', {
+              surface: 'corner',
+              creative: DARK,
+            })}
+          />
         </Case>
         <Case label="reducedMotion: true（静止フレーム）">
           <VideoPlayer
-            {...shellProps('video-reduced', { surface: 'corner', creative: DARK, reducedMotion: true })}
+            {...shellProps('video-reduced', {
+              surface: 'corner',
+              creative: DARK,
+              reducedMotion: true,
+            })}
           />
         </Case>
         <Case label="badge（偽の音声表示）+ countdown 2700ms">
@@ -261,11 +343,19 @@ export default function DevShellsPage() {
         </Case>
         <Case label="creative 2 件目（紙色）/ emphasis 2">
           <VideoPlayer
-            {...shellProps('video-paper', { surface: 'corner', parts: partsWithEmphasis(2) })}
+            {...shellProps('video-paper', {
+              surface: 'corner',
+              parts: partsWithEmphasis(2),
+            })}
           />
         </Case>
         <Case label="モバイル幅（390px）" size="mobile">
-          <VideoPlayer {...shellProps('video-mobile', { surface: 'corner', creative: DARK })} />
+          <VideoPlayer
+            {...shellProps('video-mobile', {
+              surface: 'corner',
+              creative: DARK,
+            })}
+          />
         </Case>
       </Section>
 
@@ -274,7 +364,9 @@ export default function DevShellsPage() {
           <DensityStack {...shellProps('stack-0', { stackIndex: 0 })} />
         </Case>
         <Case label="stackIndex 1（別の素材）">
-          <DensityStack {...shellProps('stack-1', { stackIndex: 1, creative: DARK })} />
+          <DensityStack
+            {...shellProps('stack-1', { stackIndex: 1, creative: DARK })}
+          />
         </Case>
         <Case label="stackIndex 2 / close: enabled=false / countdown 2700ms">
           <DensityStack
@@ -289,8 +381,18 @@ export default function DevShellsPage() {
         <Case label="3 層（エンジンが別インスタンスとして出す形。下敷きは装飾）">
           <div className={styles.layers}>
             <DensityStack {...shellProps('stack-layer-0', { stackIndex: 0 })} />
-            <DensityStack {...shellProps('stack-layer-1', { stackIndex: 1, creative: DARK })} />
-            <DensityStack {...shellProps('stack-layer-2', { stackIndex: 2, parts: partsWithEmphasis(2) })} />
+            <DensityStack
+              {...shellProps('stack-layer-1', {
+                stackIndex: 1,
+                creative: DARK,
+              })}
+            />
+            <DensityStack
+              {...shellProps('stack-layer-2', {
+                stackIndex: 2,
+                parts: partsWithEmphasis(2),
+              })}
+            />
           </div>
         </Case>
         <Case label="モバイル幅（390px）" size="mobile">
@@ -298,5 +400,5 @@ export default function DevShellsPage() {
         </Case>
       </Section>
     </main>
-  )
+  );
 }

@@ -9,6 +9,6 @@ export const shape = {
   popupRadius: '2px',
   buttonRadius: '2px',
   cardRadius: '6px',
-} as const
+} as const;
 
-export type ShapeToken = keyof typeof shape
+export type ShapeToken = keyof typeof shape;

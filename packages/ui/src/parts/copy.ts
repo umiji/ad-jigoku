@@ -9,11 +9,14 @@
  */
 
 /** `{seconds}` のような差し込みを埋める。テンプレートはデータ、埋めるのはここ */
-export function fillCopy(template: string, values: Readonly<Record<string, string | number>>): string {
+export function fillCopy(
+  template: string,
+  values: Readonly<Record<string, string | number>>,
+): string {
   return template.replace(/\{(\w+)\}/g, (whole, key: string) => {
-    const value = values[key]
-    return value === undefined ? whole : String(value)
-  })
+    const value = values[key];
+    return value === undefined ? whole : String(value);
+  });
 }
 
 export const adCopy = {
@@ -56,8 +59,9 @@ export const adCopy = {
 
   /** 極小の注意書き（DESIGN_REQ §22 Trust:「本物の広告ではないことが明確」） */
   legal: {
-    fiction: '※ これは架空の広告です。実在の企業・商品とは関係ありません。外部サイトへは移動しません。',
+    fiction:
+      '※ これは架空の広告です。実在の企業・商品とは関係ありません。外部サイトへは移動しません。',
   },
-} as const
+} as const;
 
-export type AdCopy = typeof adCopy
+export type AdCopy = typeof adCopy;

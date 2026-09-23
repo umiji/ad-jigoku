@@ -10,16 +10,20 @@
  *
  * CSS の中身の組み立ては css-vars.ts（純粋関数）が持つ。
  */
-import { readFileSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { buildTailwindThemeCss, buildTokensCss } from './css-vars'
+import { readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { buildTailwindThemeCss, buildTokensCss } from './css-vars';
 
 /**
  * 生成物の置き場。`import.meta.url` を文字列のまま `fileURLToPath` に渡す
  * （jsdom 環境の `URL` を経由すると壊れるため）。
  */
-const STYLES_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', 'styles')
+const STYLES_DIR = join(
+  dirname(fileURLToPath(import.meta.url)),
+  '..',
+  'styles',
+);
 
 export const GENERATED_CSS_OUTPUTS = [
   {
@@ -32,41 +36,46 @@ export const GENERATED_CSS_OUTPUTS = [
     absolutePath: join(STYLES_DIR, 'tailwind-theme.css'),
     build: buildTailwindThemeCss,
   },
-] as const
+] as const;
 
 // ---- CLI -----------------------------------------------------------------
 
 function readIfExists(path: string): string | null {
   try {
-    return readFileSync(path, 'utf8')
+    return readFileSync(path, 'utf8');
   } catch {
-    return null
+    return null;
   }
 }
 
 function runCli(checkOnly: boolean): void {
-  const stale: string[] = []
+  const stale: string[] = [];
   for (const output of GENERATED_CSS_OUTPUTS) {
-    const next = output.build()
+    const next = output.build();
     if (!checkOnly) {
-      writeFileSync(output.absolutePath, next, 'utf8')
-      console.log(`tokens:build: wrote ${output.relativePath}`)
-      continue
+      writeFileSync(output.absolutePath, next, 'utf8');
+      console.log(`tokens:build: wrote ${output.relativePath}`);
+      continue;
     }
-    if (readIfExists(output.absolutePath) !== next) stale.push(output.relativePath)
+    if (readIfExists(output.absolutePath) !== next)
+      stale.push(output.relativePath);
   }
-  if (!checkOnly) return
+  if (!checkOnly) return;
   if (stale.length > 0) {
     for (const path of stale) {
-      console.error(`tokens:check: ${path} が tokens/*.ts と一致しません（手編集されていませんか）`)
+      console.error(
+        `tokens:check: ${path} が tokens/*.ts と一致しません（手編集されていませんか）`,
+      );
     }
-    console.error('tokens:check: `pnpm --filter @ad-jigoku/ui tokens:build` を実行してコミットしてください')
-    process.exit(1)
+    console.error(
+      'tokens:check: `pnpm --filter @ad-jigoku/ui tokens:build` を実行してコミットしてください',
+    );
+    process.exit(1);
   }
-  console.log('tokens:check: OK (生成物は tokens/*.ts と一致しています)')
+  console.log('tokens:check: OK (生成物は tokens/*.ts と一致しています)');
 }
 
-const entry = process.argv[1]?.replace(/\\/g, '/') ?? ''
+const entry = process.argv[1]?.replace(/\\/g, '/') ?? '';
 if (entry.endsWith('tokens/build-css.ts')) {
-  runCli(process.argv.includes('--check'))
+  runCli(process.argv.includes('--check'));
 }

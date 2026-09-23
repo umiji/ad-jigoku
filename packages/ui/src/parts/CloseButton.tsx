@@ -1,6 +1,11 @@
-import { adCopy } from './copy'
-import { glyphBoxClassName, glyphClassName, glyphStyle, type CloseGlyphLayout } from './closeGlyph'
-import type { PartViewProps } from './types'
+import { adCopy } from './copy';
+import {
+  glyphBoxClassName,
+  glyphClassName,
+  glyphStyle,
+  type CloseGlyphLayout,
+} from './closeGlyph';
+import type { PartViewProps } from './types';
 
 /**
  * 本物の閉じるボタン（DESIGN.md §8 anatomy / §19 / §20 / DESIGN_REQ §5.3）。
@@ -14,10 +19,10 @@ import type { PartViewProps } from './types'
  */
 export type CloseButtonProps = PartViewProps &
   CloseGlyphLayout & {
-    readonly onActivate?: () => void
+    readonly onActivate?: () => void;
     /** 支援技術向けラベルの差し替え。既定（広告を閉じる）から嘘の方向へ変えない */
-    readonly ariaLabel?: string
-  }
+    readonly ariaLabel?: string;
+  };
 
 export function CloseButton({
   onActivate,
@@ -32,7 +37,7 @@ export function CloseButton({
   instanceId,
   className,
 }: CloseButtonProps) {
-  if (!visible) return null
+  if (!visible) return null;
 
   const layout: CloseGlyphLayout = {
     ...(visualScale === undefined ? {} : { visualScale }),
@@ -41,7 +46,7 @@ export function CloseButton({
     ...(placement === undefined ? {} : { placement }),
     emphasis,
     enabled,
-  }
+  };
 
   return (
     <button
@@ -60,5 +65,5 @@ export function CloseButton({
         ×
       </span>
     </button>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-import { adCopy } from './copy'
-import { cx } from './cx'
-import styles from './AdMeta.module.css'
-import type { Emphasis, PartViewProps } from './types'
+import { adCopy } from './copy';
+import { cx } from './cx';
+import styles from './AdMeta.module.css';
+import type { Emphasis, PartViewProps } from './types';
 
 /**
  * `PR` / `Sponsored` の広告ラベル（DESIGN.md §8 anatomy / §13 microcopy）。
@@ -11,14 +11,14 @@ import type { Emphasis, PartViewProps } from './types'
  */
 export type AdMetaProps = PartViewProps & {
   /** 既定は `PR`。語彙は adCopy.label（DESIGN.md §13）から選ぶ */
-  readonly label?: string
-}
+  readonly label?: string;
+};
 
 const EMPHASIS_CLASS: Record<Emphasis, string | undefined> = {
   0: styles.quiet,
   1: undefined,
   2: styles.loud,
-}
+};
 
 export function AdMeta({
   label = adCopy.label.pr,
@@ -27,7 +27,7 @@ export function AdMeta({
   instanceId,
   className,
 }: AdMetaProps) {
-  if (!visible) return null
+  if (!visible) return null;
 
   return (
     <span
@@ -38,5 +38,5 @@ export function AdMeta({
     >
       {label}
     </span>
-  )
+  );
 }

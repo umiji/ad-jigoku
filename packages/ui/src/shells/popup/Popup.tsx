@@ -1,10 +1,10 @@
-import { AdCreative, CloseButton, resolvePartState } from '../../parts/index'
-import { adThemeClass } from '../../parts/adTheme'
-import { cx } from '../../parts/cx'
-import styles from './popup.module.css'
-import type { Creative } from '@ad-jigoku/pattern-catalog'
-import type { CreativeContent } from '../../parts/types'
-import type { ShellProps } from '../types'
+import { AdCreative, CloseButton, resolvePartState } from '../../parts/index';
+import { adThemeClass } from '../../parts/adTheme';
+import { cx } from '../../parts/cx';
+import styles from './popup.module.css';
+import type { Creative } from '@ad-jigoku/pattern-catalog';
+import type { CreativeContent } from '../../parts/types';
+import type { ShellProps } from '../types';
 
 /**
  * `Creative`（013D）→ `CreativeContent`（部位が受け取る表示用ビュー）。
@@ -21,7 +21,7 @@ function toCreativeContent(creative: Creative): CreativeContent {
     theme: creative.theme,
     ...(creative.body === undefined ? {} : { body: creative.body }),
     ...(creative.legal === undefined ? {} : { legal: creative.legal }),
-  }
+  };
 }
 
 /**
@@ -33,7 +33,7 @@ function toCreativeContent(creative: Creative): CreativeContent {
  * 影（`shadow-popup`）だけはシェルの責務（DESIGN.md §16.1「浮いている面」）。
  */
 export function Popup(p: ShellProps) {
-  const close = resolvePartState(p.parts, 'close')
+  const close = resolvePartState(p.parts, 'close');
 
   return (
     <div
@@ -52,7 +52,9 @@ export function Popup(p: ShellProps) {
       />
 
       {/* エンジンが渡した偽の表示（ATT-02 等）。文言はここで作らない */}
-      {p.badge === undefined ? null : <p className={cx(styles.badge)}>{p.badge}</p>}
+      {p.badge === undefined ? null : (
+        <p className={cx(styles.badge)}>{p.badge}</p>
+      )}
 
       <CloseButton
         visible={close.visible}
@@ -63,5 +65,5 @@ export function Popup(p: ShellProps) {
         {...(close.anchor === undefined ? {} : { anchor: close.anchor })}
       />
     </div>
-  )
+  );
 }

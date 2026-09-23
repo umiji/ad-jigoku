@@ -1,5 +1,5 @@
-import { SLOTS, type Slot } from '@ad-jigoku/pattern-catalog'
-import { noChange, type Behavior, type Shell } from './types'
+import { SLOTS, type Slot } from '@ad-jigoku/pattern-catalog';
+import { noChange, type Behavior, type Shell } from './types';
 
 /**
  * テスト用のダミー shell + behavior（TASK-007）。
@@ -11,7 +11,7 @@ export const noopShell: Shell = {
   supports: [...SLOTS],
   surface: 'overlay',
   sizeHint: 'medium',
-}
+};
 
 export function noopBehavior(slot: Slot): Behavior<null> {
   return {
@@ -22,5 +22,5 @@ export function noopBehavior(slot: Slot): Behavior<null> {
     init: () => noChange(null),
     onTick: (sim) => noChange(sim),
     onIntent: (sim) => noChange(sim),
-  }
+  };
 }

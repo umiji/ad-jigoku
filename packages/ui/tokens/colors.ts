@@ -33,6 +33,6 @@ export const colors = {
     subtle: 'rgba(255,255,255,0.12)',
     popup: 'rgba(0,0,0,0.18)',
   },
-} as const
+} as const;
 
-export type Colors = typeof colors
+export type Colors = typeof colors;

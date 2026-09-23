@@ -12,6 +12,6 @@ export const zIndex = {
   popupStack: 600,
   critical: 800,
   system: 1000,
-} as const
+} as const;
 
-export type ZIndexLayer = keyof typeof zIndex
+export type ZIndexLayer = keyof typeof zIndex;

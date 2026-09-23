@@ -1,18 +1,18 @@
-import type { ComponentType } from 'react'
-import type { ShellId } from '@ad-jigoku/pattern-catalog'
-import { DensityStack } from './densityStack/DensityStack'
-import { densityStackDescriptor } from './densityStack/descriptor'
-import { InlineRect } from './inlineRect/InlineRect'
-import { inlineRectDescriptor } from './inlineRect/descriptor'
-import { Interstitial } from './interstitial/Interstitial'
-import { interstitialDescriptor } from './interstitial/descriptor'
-import { Popup } from './popup/Popup'
-import { popupDescriptor } from './popup/descriptor'
-import { StickyBanner } from './stickyBanner/StickyBanner'
-import { stickyBannerDescriptor } from './stickyBanner/descriptor'
-import { VideoPlayer } from './videoPlayer/VideoPlayer'
-import { videoPlayerDescriptor } from './videoPlayer/descriptor'
-import type { ShellDescriptor, ShellProps } from './types'
+import type { ComponentType } from 'react';
+import type { ShellId } from '@ad-jigoku/pattern-catalog';
+import { DensityStack } from './densityStack/DensityStack';
+import { densityStackDescriptor } from './densityStack/descriptor';
+import { InlineRect } from './inlineRect/InlineRect';
+import { inlineRectDescriptor } from './inlineRect/descriptor';
+import { Interstitial } from './interstitial/Interstitial';
+import { interstitialDescriptor } from './interstitial/descriptor';
+import { Popup } from './popup/Popup';
+import { popupDescriptor } from './popup/descriptor';
+import { StickyBanner } from './stickyBanner/StickyBanner';
+import { stickyBannerDescriptor } from './stickyBanner/descriptor';
+import { VideoPlayer } from './videoPlayer/VideoPlayer';
+import { videoPlayerDescriptor } from './videoPlayer/descriptor';
+import type { ShellDescriptor, ShellProps } from './types';
 
 /**
  * シェルの登録（TASK-013A req.5）。**起動時に 1 回。重複 ID は作らない。**
@@ -31,13 +31,15 @@ export const SHELL_DESCRIPTORS: readonly ShellDescriptor[] = [
   inlineRectDescriptor,
   videoPlayerDescriptor,
   densityStackDescriptor,
-]
+];
 
-export const SHELL_COMPONENTS: Readonly<Record<ShellId, ComponentType<ShellProps>>> = {
+export const SHELL_COMPONENTS: Readonly<
+  Record<ShellId, ComponentType<ShellProps>>
+> = {
   popup: Popup,
   interstitial: Interstitial,
   stickyBanner: StickyBanner,
   inlineRect: InlineRect,
   videoPlayer: VideoPlayer,
   densityStack: DensityStack,
-}
+};

@@ -1,4 +1,4 @@
-import type { Article } from './types'
+import type { Article } from './types';
 
 export const articleTetsudoJikoku: Article = {
   id: 'a3-tetsudo-jikoku',
@@ -31,4 +31,4 @@ export const articleTetsudoJikoku: Article = {
       correctChoice: 1,
     },
   ],
-}
+};

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 /**
  * Creative = 広告の「中身」（DECISIONS_v0.2 §1.4 / TASK-013D）。
@@ -26,9 +26,9 @@ export const CREATIVE_KINDS = [
   'news',
   'survey',
   'subscription',
-] as const
-export type CreativeKind = (typeof CREATIVE_KINDS)[number]
-export const creativeKindSchema = z.enum(CREATIVE_KINDS)
+] as const;
+export type CreativeKind = (typeof CREATIVE_KINDS)[number];
+export const creativeKindSchema = z.enum(CREATIVE_KINDS);
 
 /**
  * タグの統制語彙。`CreativeSelector.tags` は「この全部を持つ Creative」を意味する（⊆ 判定）。
@@ -51,20 +51,27 @@ export const CREATIVE_TAGS = [
   'mobile', // 小さい画面前提の体裁
   'desktop', // 広い画面前提の体裁
   'loud', // 派手・うるさい絵作り
-] as const
-export type CreativeTag = (typeof CREATIVE_TAGS)[number]
-export const creativeTagSchema = z.enum(CREATIVE_TAGS)
+] as const;
+export type CreativeTag = (typeof CREATIVE_TAGS)[number];
+export const creativeTagSchema = z.enum(CREATIVE_TAGS);
 
 /** DESIGN.md §4 の surface / accent 役割名。生の色は UI 側（tokens）が持つ */
-export const CREATIVE_THEMES = ['popup', 'popupDark', 'danger', 'warning'] as const
-export type CreativeTheme = (typeof CREATIVE_THEMES)[number]
-export const creativeThemeSchema = z.enum(CREATIVE_THEMES)
+export const CREATIVE_THEMES = [
+  'popup',
+  'popupDark',
+  'danger',
+  'warning',
+] as const;
+export type CreativeTheme = (typeof CREATIVE_THEMES)[number];
+export const creativeThemeSchema = z.enum(CREATIVE_THEMES);
 
 /** `cr-<kind>-<連番4桁>` */
-export const CREATIVE_ID_RE = /^cr-[a-z]+-\d{4}$/
+export const CREATIVE_ID_RE = /^cr-[a-z]+-\d{4}$/;
 
 export const creativeSchema = z.object({
-  id: z.string().regex(CREATIVE_ID_RE, 'id は cr-<kind>-<4桁> の形（例: cr-sale-0012）'),
+  id: z
+    .string()
+    .regex(CREATIVE_ID_RE, 'id は cr-<kind>-<4桁> の形（例: cr-sale-0012）'),
   kind: creativeKindSchema,
   tags: z.array(creativeTagSchema).min(1).max(5),
   /** 架空のブランド / 商品名。2..14 文字 */
@@ -74,9 +81,15 @@ export const creativeSchema = z.object({
   cta: z.string().min(1).max(12),
   legal: z.string().min(1).max(60).optional(),
   theme: creativeThemeSchema,
-})
-export type Creative = z.infer<typeof creativeSchema>
+});
+export type Creative = z.infer<typeof creativeSchema>;
 
 /** NG 検査と UI 描画の対象になるテキスト列。ここに増やすと検査対象も自動的に増える */
-export const CREATIVE_TEXT_FIELDS = ['brand', 'headline', 'body', 'cta', 'legal'] as const
-export type CreativeTextField = (typeof CREATIVE_TEXT_FIELDS)[number]
+export const CREATIVE_TEXT_FIELDS = [
+  'brand',
+  'headline',
+  'body',
+  'cta',
+  'legal',
+] as const;
+export type CreativeTextField = (typeof CREATIVE_TEXT_FIELDS)[number];

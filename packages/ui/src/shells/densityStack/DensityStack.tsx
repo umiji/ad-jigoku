@@ -1,8 +1,16 @@
-import { AdBody, AdCountdown, AdCTA, AdHeadline, AdMeta, CloseButton, resolvePartState } from '../../parts/index'
-import { adThemeClass } from '../../parts/adTheme'
-import { cx } from '../../parts/cx'
-import styles from './densityStack.module.css'
-import type { ShellProps } from '../types'
+import {
+  AdBody,
+  AdCountdown,
+  AdCTA,
+  AdHeadline,
+  AdMeta,
+  CloseButton,
+  resolvePartState,
+} from '../../parts/index';
+import { adThemeClass } from '../../parts/adTheme';
+import { cx } from '../../parts/cx';
+import styles from './densityStack.module.css';
+import type { ShellProps } from '../types';
 
 /**
  * densityStack — 積み上がる広告（DESIGN.md §9 Layered Ad / chaos。PER-01 / PER-02 の見た目）。
@@ -12,13 +20,13 @@ import type { ShellProps } from '../types'
  * 装飾側には操作先（data-target）もフォーカスできる要素も持たせない（aria-hidden）。
  * シェルが保証するのは「積めること」だけで、何層積むかは決めない（TASK-013B req.2）。
  */
-const DECORATION_COUNT = 2
+const DECORATION_COUNT = 2;
 
 export function DensityStack(p: ShellProps) {
-  const label = resolvePartState(p.parts, 'label')
-  const body = resolvePartState(p.parts, 'body')
-  const cta = resolvePartState(p.parts, 'cta')
-  const close = resolvePartState(p.parts, 'close')
+  const label = resolvePartState(p.parts, 'label');
+  const body = resolvePartState(p.parts, 'body');
+  const cta = resolvePartState(p.parts, 'cta');
+  const close = resolvePartState(p.parts, 'close');
 
   return (
     <div
@@ -30,12 +38,25 @@ export function DensityStack(p: ShellProps) {
       data-testid={`shell-${p.instanceId}`}
     >
       {Array.from({ length: DECORATION_COUNT }, (_unused, depth) => (
-        <span key={depth} className={cx(styles.under)} data-stack-decoration={String(depth + 1)} aria-hidden="true" />
+        <span
+          key={depth}
+          className={cx(styles.under)}
+          data-stack-decoration={String(depth + 1)}
+          aria-hidden="true"
+        />
       ))}
 
-      <div className={cx(styles.card)} data-target="body" data-instance={p.instanceId}>
+      <div
+        className={cx(styles.card)}
+        data-target="body"
+        data-instance={p.instanceId}
+      >
         <div className={cx(styles.head)}>
-          <AdMeta visible={label.visible} emphasis={label.emphasis} instanceId={p.instanceId} />
+          <AdMeta
+            visible={label.visible}
+            emphasis={label.emphasis}
+            instanceId={p.instanceId}
+          />
           <span className={cx(styles.brand)}>{p.creative.brand}</span>
         </div>
 
@@ -50,10 +71,15 @@ export function DensityStack(p: ShellProps) {
         )}
 
         {p.countdown === undefined ? null : (
-          <AdCountdown remainingMs={p.countdown.remainingMs} instanceId={p.instanceId} />
+          <AdCountdown
+            remainingMs={p.countdown.remainingMs}
+            instanceId={p.instanceId}
+          />
         )}
 
-        {p.badge === undefined ? null : <p className={cx(styles.badge)}>{p.badge}</p>}
+        {p.badge === undefined ? null : (
+          <p className={cx(styles.badge)}>{p.badge}</p>
+        )}
 
         <AdCTA
           label={p.creative.cta}
@@ -74,5 +100,5 @@ export function DensityStack(p: ShellProps) {
         />
       </div>
     </div>
-  )
+  );
 }

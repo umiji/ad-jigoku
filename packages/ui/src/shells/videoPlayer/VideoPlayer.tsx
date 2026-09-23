@@ -1,8 +1,14 @@
-import { AdCTA, AdCountdown, AdMeta, CloseButton, resolvePartState } from '../../parts/index'
-import { adThemeClass } from '../../parts/adTheme'
-import { cx } from '../../parts/cx'
-import styles from './videoPlayer.module.css'
-import type { ShellProps } from '../types'
+import {
+  AdCTA,
+  AdCountdown,
+  AdMeta,
+  CloseButton,
+  resolvePartState,
+} from '../../parts/index';
+import { adThemeClass } from '../../parts/adTheme';
+import { cx } from '../../parts/cx';
+import styles from './videoPlayer.module.css';
+import type { ShellProps } from '../types';
 
 /**
  * videoPlayer — 隅に居座る偽の動画プレイヤー（ATT-01 / ATT-02 / OBS-06 の見た目）。
@@ -16,14 +22,15 @@ import type { ShellProps } from '../types'
  */
 const COPY = {
   /** 押しても再生も停止もしない。だから支援技術には「実際には再生されない」と言う */
-  controlAriaLabel: '広告の動画のコントロール（実際には再生も音声もされません）',
-} as const
+  controlAriaLabel:
+    '広告の動画のコントロール（実際には再生も音声もされません）',
+} as const;
 
 export function VideoPlayer(p: ShellProps) {
-  const label = resolvePartState(p.parts, 'label')
-  const media = resolvePartState(p.parts, 'media')
-  const cta = resolvePartState(p.parts, 'cta')
-  const close = resolvePartState(p.parts, 'close')
+  const label = resolvePartState(p.parts, 'label');
+  const media = resolvePartState(p.parts, 'media');
+  const cta = resolvePartState(p.parts, 'cta');
+  const close = resolvePartState(p.parts, 'close');
 
   return (
     <div
@@ -35,12 +42,20 @@ export function VideoPlayer(p: ShellProps) {
       data-testid={`shell-${p.instanceId}`}
     >
       <div className={cx(styles.head)}>
-        <AdMeta visible={label.visible} emphasis={label.emphasis} instanceId={p.instanceId} />
+        <AdMeta
+          visible={label.visible}
+          emphasis={label.emphasis}
+          instanceId={p.instanceId}
+        />
         <span className={cx(styles.brand)}>{p.creative.brand}</span>
       </div>
 
       {media.visible ? (
-        <div className={cx(styles.screen)} data-target="media" data-instance={p.instanceId}>
+        <div
+          className={cx(styles.screen)}
+          data-target="media"
+          data-instance={p.instanceId}
+        >
           <span className={cx(styles.bars)} aria-hidden="true" />
           <p className={cx(styles.title)}>{p.creative.headline}</p>
 
@@ -62,10 +77,15 @@ export function VideoPlayer(p: ShellProps) {
       ) : null}
 
       {p.countdown === undefined ? null : (
-        <AdCountdown remainingMs={p.countdown.remainingMs} instanceId={p.instanceId} />
+        <AdCountdown
+          remainingMs={p.countdown.remainingMs}
+          instanceId={p.instanceId}
+        />
       )}
 
-      {p.badge === undefined ? null : <p className={cx(styles.badge)}>{p.badge}</p>}
+      {p.badge === undefined ? null : (
+        <p className={cx(styles.badge)}>{p.badge}</p>
+      )}
 
       <AdCTA
         label={p.creative.cta}
@@ -85,5 +105,5 @@ export function VideoPlayer(p: ShellProps) {
         {...(close.anchor === undefined ? {} : { anchor: close.anchor })}
       />
     </div>
-  )
+  );
 }

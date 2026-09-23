@@ -1,9 +1,9 @@
-import { AdCTA, AdMeta, adCopy, resolvePartState } from '../../parts/index'
-import { adThemeClass } from '../../parts/adTheme'
-import { cx } from '../../parts/cx'
-import styles from './inlineRect.module.css'
-import type { CSSProperties } from 'react'
-import type { ShellProps } from '../types'
+import { AdCTA, AdMeta, adCopy, resolvePartState } from '../../parts/index';
+import { adThemeClass } from '../../parts/adTheme';
+import { cx } from '../../parts/cx';
+import styles from './inlineRect.module.css';
+import type { CSSProperties } from 'react';
+import type { ShellProps } from '../types';
 
 /**
  * inlineRect — 本文中のレクタングル広告（DESIGN.md §9 Layout Shift / instability）。
@@ -15,11 +15,13 @@ import type { ShellProps } from '../types'
  * 本文が実際に動くのはスロット側（ArticleSurface）の仕事で、ここが自分で動くのは見た目だけ。
  */
 export function InlineRect(p: ShellProps) {
-  const label = resolvePartState(p.parts, 'label')
-  const media = resolvePartState(p.parts, 'media')
-  const cta = resolvePartState(p.parts, 'cta')
+  const label = resolvePartState(p.parts, 'label');
+  const media = resolvePartState(p.parts, 'media');
+  const cta = resolvePartState(p.parts, 'cta');
   const style =
-    p.offset === undefined ? undefined : ({ '--ad-offset-y': `${p.offset.yPercent}%` } as CSSProperties)
+    p.offset === undefined
+      ? undefined
+      : ({ '--ad-offset-y': `${p.offset.yPercent}%` } as CSSProperties);
 
   return (
     <div
@@ -31,7 +33,11 @@ export function InlineRect(p: ShellProps) {
       {...(style === undefined ? {} : { style })}
     >
       {media.visible ? (
-        <div className={cx(styles.media)} data-target="media" data-instance={p.instanceId}>
+        <div
+          className={cx(styles.media)}
+          data-target="media"
+          data-instance={p.instanceId}
+        >
           <span className={cx(styles.grid)} aria-hidden="true" />
           <span className={cx(styles.burst)} aria-hidden="true" />
           <p className={cx(styles.headline)}>{p.creative.headline}</p>
@@ -40,7 +46,11 @@ export function InlineRect(p: ShellProps) {
       ) : null}
 
       <div className={cx(styles.foot)}>
-        <AdMeta visible={label.visible} emphasis={label.emphasis} instanceId={p.instanceId} />
+        <AdMeta
+          visible={label.visible}
+          emphasis={label.emphasis}
+          instanceId={p.instanceId}
+        />
         <AdCTA
           label={p.creative.cta}
           visible={cta.visible}
@@ -51,7 +61,9 @@ export function InlineRect(p: ShellProps) {
         />
       </div>
 
-      {p.badge === undefined ? null : <p className={cx(styles.badge)}>{p.badge}</p>}
+      {p.badge === undefined ? null : (
+        <p className={cx(styles.badge)}>{p.badge}</p>
+      )}
     </div>
-  )
+  );
 }

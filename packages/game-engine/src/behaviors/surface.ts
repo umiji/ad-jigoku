@@ -1,4 +1,4 @@
-import { noChange, type Behavior } from '../sim/types'
+import { noChange, type Behavior } from '../sim/types';
 
 /**
  * surface スロット（TASK-017）。「どこに・どの大きさで」。
@@ -11,7 +11,14 @@ export const surfaceFullscreen: Behavior<null> = {
   slot: 'surface',
   friction: 0,
   load: 2,
-  init: () => ({ sim: null, view: { surface: 'fullscreen', sizeHint: 'fullscreen', motion: ['enter-scale'] } }),
+  init: () => ({
+    sim: null,
+    view: {
+      surface: 'fullscreen',
+      sizeHint: 'fullscreen',
+      motion: ['enter-scale'],
+    },
+  }),
   onTick: (sim) => noChange(sim),
   onIntent: (sim) => noChange(sim),
-}
+};

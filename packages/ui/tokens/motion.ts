@@ -10,15 +10,15 @@ export const motion = {
   normal: '240ms',
   dramatic: '420ms',
   escalation: '700ms',
-} as const
+} as const;
 
-export type MotionDuration = keyof typeof motion
+export type MotionDuration = keyof typeof motion;
 
 /** DESIGN.md §14.1。standard=通常 / abrupt=割り込み / exit=閉じる */
 export const easing = {
   standard: 'cubic-bezier(0.2, 0, 0, 1)',
   abrupt: 'cubic-bezier(0.4, 0, 1, 1)',
   exit: 'cubic-bezier(0.4, 0, 0.2, 1)',
-} as const
+} as const;
 
-export type MotionEasing = keyof typeof easing
+export type MotionEasing = keyof typeof easing;

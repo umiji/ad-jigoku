@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 /** ImproveFacet — PATTERN_SCHEMA.md §5。PRODUCT §10 の Problem → Evidence → Why → Change → Impact を型にする */
 export const improveFacetSchema = z.object({
@@ -15,5 +15,5 @@ export const improveFacetSchema = z.object({
     .min(1),
   /** 「広告を消せ」ではなく「こうすれば広告を出しつつ改善できる」を必ず1つ以上持つ（V-09 / PRODUCT §31） */
   adFriendlyAlternative: z.object({ ja: z.string().min(1) }),
-})
-export type ImproveFacet = z.infer<typeof improveFacetSchema>
+});
+export type ImproveFacet = z.infer<typeof improveFacetSchema>;

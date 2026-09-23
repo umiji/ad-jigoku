@@ -1,5 +1,5 @@
-import { SHELL_COMPONENTS as UI_SHELL_COMPONENTS } from '@ad-jigoku/ui'
-import type { ShellComponentMap } from './AdLayer'
+import { SHELL_COMPONENTS as UI_SHELL_COMPONENTS } from '@ad-jigoku/ui';
+import type { ShellComponentMap } from './AdLayer';
 
 /**
  * shellId → Shell コンポーネント。実体は packages/ui/src/shells（TASK-013A / 013B）。
@@ -11,4 +11,4 @@ import type { ShellComponentMap } from './AdLayer'
  * まだ UI 実装が無い shellId（fakeDownload / fakePlay。TASK-013C）は
  * AdLayer の fallback（GenericShell）で描かれる。
  */
-export const SHELL_COMPONENTS: ShellComponentMap = UI_SHELL_COMPONENTS
+export const SHELL_COMPONENTS: ShellComponentMap = UI_SHELL_COMPONENTS;

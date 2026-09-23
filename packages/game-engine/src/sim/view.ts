@@ -1,5 +1,5 @@
-import type { ShellId } from '@ad-jigoku/pattern-catalog'
-import type { AdPart } from '../state/intent'
+import type { ShellId } from '@ad-jigoku/pattern-catalog';
+import type { AdPart } from '../state/intent';
 
 /**
  * ViewState — 宿主が描画するための宣言的記述（TASK-007 要件 2）。
@@ -19,8 +19,14 @@ import type { AdPart } from '../state/intent'
  * - offset        … 見た目の移動量（LAY-01 の transform 用、%）。document flow は変えない（ADR-006）
  * - badge         … 「🔊 音声が再生されています」等の偽表示（ATT-02。実際には鳴らさない）
  */
-export type Surface = 'overlay' | 'sticky-bottom' | 'sticky-top' | 'inline' | 'corner' | 'fullscreen'
-export type SizeHint = 'small' | 'medium' | 'large' | 'fullscreen'
+export type Surface =
+  | 'overlay'
+  | 'sticky-bottom'
+  | 'sticky-top'
+  | 'inline'
+  | 'corner'
+  | 'fullscreen';
+export type SizeHint = 'small' | 'medium' | 'large' | 'fullscreen';
 
 /** DESIGN.md §14 の語彙 + §8 lifecycle に対応するモーション */
 export type MotionCue =
@@ -32,38 +38,46 @@ export type MotionCue =
   | 'close-collapse'
   | 'shake'
   | 'drift'
-  | 'pulse'
+  | 'pulse';
 
 export type AdPartState = {
-  part: AdPart
-  visible: boolean
-  enabled: boolean
+  part: AdPart;
+  visible: boolean;
+  enabled: boolean;
   /** 0 = 目立たない … 1 = 通常 … 2 = 強調 */
-  emphasis: 0 | 1 | 2
+  emphasis: 0 | 1 | 2;
   /** 見た目に対する当たり判定の倍率。pointerPrecision: 'coarse' のとき最小 44px を保証するために使う */
-  hitboxScale: number
+  hitboxScale: number;
   /** 部位の相対位置（%）。moving close 等で更新される */
-  anchor?: { xPercent: number; yPercent: number }
-}
+  anchor?: { xPercent: number; yPercent: number };
+};
 
-export type CreativeRef = { index: number; kind?: string }
+export type CreativeRef = { index: number; kind?: string };
 
 export type ViewState = {
-  shellId: ShellId
-  surface: Surface
-  anchor?: { xPercent: number; yPercent: number }
-  sizeHint: SizeHint
-  creative: CreativeRef
-  parts: AdPartState[]
-  motion: MotionCue[]
-  countdown?: { remainingMs: number }
-  stackIndex: number
-  offset?: { yPercent: number }
-  badge?: string
-}
+  shellId: ShellId;
+  surface: Surface;
+  anchor?: { xPercent: number; yPercent: number };
+  sizeHint: SizeHint;
+  creative: CreativeRef;
+  parts: AdPartState[];
+  motion: MotionCue[];
+  countdown?: { remainingMs: number };
+  stackIndex: number;
+  offset?: { yPercent: number };
+  badge?: string;
+};
 
-export const DEFAULT_PART_STATE: Omit<AdPartState, 'part'> = { visible: true, enabled: true, emphasis: 1, hitboxScale: 1 }
+export const DEFAULT_PART_STATE: Omit<AdPartState, 'part'> = {
+  visible: true,
+  enabled: true,
+  emphasis: 1,
+  hitboxScale: 1,
+};
 
-export function partState(part: AdPart, overrides: Partial<Omit<AdPartState, 'part'>> = {}): AdPartState {
-  return { part, ...DEFAULT_PART_STATE, ...overrides }
+export function partState(
+  part: AdPart,
+  overrides: Partial<Omit<AdPartState, 'part'>> = {},
+): AdPartState {
+  return { part, ...DEFAULT_PART_STATE, ...overrides };
 }

@@ -6,16 +6,16 @@
  *
  * 部位はすべて presentational。挙動（閉じるタイミング・移動・再出現）は持たない。
  */
-export { AdBody, type AdBodyProps } from './AdBody'
-export { AdCountdown, type AdCountdownProps } from './AdCountdown'
-export { AdCreative, type AdCreativeProps } from './AdCreative'
-export { AdCTA, type AdCTAProps } from './AdCTA'
-export { AdHeadline, type AdHeadlineProps } from './AdHeadline'
-export { AdLegal, type AdLegalProps } from './AdLegal'
-export { AdMeta, type AdMetaProps } from './AdMeta'
-export { CloseButton, type CloseButtonProps } from './CloseButton'
-export { FakeCloseButton, type FakeCloseButtonProps } from './FakeCloseButton'
-export { adCopy, fillCopy, type AdCopy } from './copy'
+export { AdBody, type AdBodyProps } from './AdBody';
+export { AdCountdown, type AdCountdownProps } from './AdCountdown';
+export { AdCreative, type AdCreativeProps } from './AdCreative';
+export { AdCTA, type AdCTAProps } from './AdCTA';
+export { AdHeadline, type AdHeadlineProps } from './AdHeadline';
+export { AdLegal, type AdLegalProps } from './AdLegal';
+export { AdMeta, type AdMetaProps } from './AdMeta';
+export { CloseButton, type CloseButtonProps } from './CloseButton';
+export { FakeCloseButton, type FakeCloseButtonProps } from './FakeCloseButton';
+export { adCopy, fillCopy, type AdCopy } from './copy';
 export {
   resolvePartState,
   type AdPart,
@@ -27,4 +27,4 @@ export {
   type MotionCue,
   type PartAnchor,
   type PartViewProps,
-} from './types'
+} from './types';

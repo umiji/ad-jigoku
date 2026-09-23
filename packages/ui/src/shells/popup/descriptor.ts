@@ -1,4 +1,4 @@
-import type { ShellDescriptor } from '../types'
+import type { ShellDescriptor } from '../types';
 
 /**
  * popup — 中央に浮く「ブラウザ広告のウィンドウ」（DESIGN.md §8 の canonical anatomy）。
@@ -8,4 +8,4 @@ export const popupDescriptor: ShellDescriptor = {
   id: 'popup',
   parts: ['label', 'body', 'media', 'cta', 'legal', 'close'],
   supports: ['spawn', 'close', 'deception', 'hitbox'],
-}
+};

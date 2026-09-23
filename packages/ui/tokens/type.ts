@@ -7,7 +7,7 @@
  */
 export const fontFamily = {
   sans: "'M PLUS 2 Variable', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', Meiryo, system-ui, sans-serif",
-} as const
+} as const;
 
 export const type = {
   display: {
@@ -47,7 +47,7 @@ export const type = {
     weight: 400,
     lineHeight: 1.35,
   },
-} as const
+} as const;
 
-export type TypeScale = typeof type
-export type TypeScaleName = keyof TypeScale
+export type TypeScale = typeof type;
+export type TypeScaleName = keyof TypeScale;

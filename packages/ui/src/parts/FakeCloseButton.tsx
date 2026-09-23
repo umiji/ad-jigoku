@@ -1,6 +1,11 @@
-import { adCopy } from './copy'
-import { glyphBoxClassName, glyphClassName, glyphStyle, type CloseGlyphLayout } from './closeGlyph'
-import type { PartViewProps } from './types'
+import { adCopy } from './copy';
+import {
+  glyphBoxClassName,
+  glyphClassName,
+  glyphStyle,
+  type CloseGlyphLayout,
+} from './closeGlyph';
+import type { PartViewProps } from './types';
 
 /**
  * 偽の閉じるボタン（TASK-013 implementation requirement 4 / SAFE-05）。
@@ -13,9 +18,9 @@ import type { PartViewProps } from './types'
  */
 export type FakeCloseButtonProps = PartViewProps &
   CloseGlyphLayout & {
-    readonly variant?: 'fake-close' | 'decoy'
-    readonly onActivate?: () => void
-  }
+    readonly variant?: 'fake-close' | 'decoy';
+    readonly onActivate?: () => void;
+  };
 
 export function FakeCloseButton({
   variant = 'fake-close',
@@ -30,7 +35,7 @@ export function FakeCloseButton({
   instanceId,
   className,
 }: FakeCloseButtonProps) {
-  if (!visible) return null
+  if (!visible) return null;
 
   const layout: CloseGlyphLayout = {
     ...(visualScale === undefined ? {} : { visualScale }),
@@ -39,14 +44,18 @@ export function FakeCloseButton({
     ...(placement === undefined ? {} : { placement }),
     emphasis,
     enabled,
-  }
+  };
 
   return (
     <button
       type="button"
       className={glyphClassName(layout, className)}
       style={glyphStyle(layout)}
-      aria-label={variant === 'decoy' ? adCopy.fakeClose.decoyAriaLabel : adCopy.fakeClose.ariaLabel}
+      aria-label={
+        variant === 'decoy'
+          ? adCopy.fakeClose.decoyAriaLabel
+          : adCopy.fakeClose.ariaLabel
+      }
       aria-disabled={enabled ? undefined : true}
       data-target={variant}
       data-instance={instanceId}
@@ -58,5 +67,5 @@ export function FakeCloseButton({
         ×
       </span>
     </button>
-  )
+  );
 }

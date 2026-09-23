@@ -5,6 +5,6 @@
 //   shells/  … 広告の面（DESIGN.md §8 / §9）。各シェルは独立モジュール（DECISIONS_v0.2 §1.3）
 //
 // fakeDownload / fakePlay の 2 シェルは TASK-013C で追加される。
-export * from '../tokens/index'
-export * from './parts/index'
-export * from './shells/index'
+export * from '../tokens/index';
+export * from './parts/index';
+export * from './shells/index';

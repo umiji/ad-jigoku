@@ -1,4 +1,4 @@
-import { noChange, type Behavior } from '../sim/types'
+import { noChange, type Behavior } from '../sim/types';
 
 /**
  * spawn スロット（TASK-017）。「いつ出るか」。
@@ -15,14 +15,17 @@ export const spawnImmediate: Behavior<null> = {
   init: () => ({ sim: null, view: { motion: ['enter-scale'] } }),
   onTick: (sim) => noChange(sim),
   onIntent: (sim) => noChange(sim),
-}
+};
 
 export const spawnDelayed: Behavior<null> = {
   id: 'spawn:delayed',
   slot: 'spawn',
   friction: 0,
   load: 1,
-  init: () => ({ sim: null, view: { motion: ['enter-slide', 'enter-delayed'] } }),
+  init: () => ({
+    sim: null,
+    view: { motion: ['enter-slide', 'enter-delayed'] },
+  }),
   onTick: (sim) => noChange(sim),
   onIntent: (sim) => noChange(sim),
-}
+};

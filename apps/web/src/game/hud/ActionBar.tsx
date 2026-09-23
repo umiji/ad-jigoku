@@ -1,5 +1,5 @@
-import type { PlayerAction } from '@ad-jigoku/pattern-catalog'
-import styles from './hud.module.css'
+import type { PlayerAction } from '@ad-jigoku/pattern-catalog';
+import styles from './hud.module.css';
 
 /**
  * 対抗アクションバー（OD-6 / TASK-016 要件 3）。画面下の thumb-zone に固定。
@@ -9,19 +9,34 @@ import styles from './hud.module.css'
  *   （付けると宿主の click 委譲と二重に dispatch される）
  * - sticky 広告と混同されないよう、広告の語彙（PR / CTA / ×）を一切使わない
  */
-export const ACTIONS: readonly { action: PlayerAction; label: string; key: string; primary?: boolean }[] = [
+export const ACTIONS: readonly {
+  action: PlayerAction;
+  label: string;
+  key: string;
+  primary?: boolean;
+}[] = [
   { action: 'SMASH', label: 'SMASH', key: '1', primary: true },
   { action: 'DODGE', label: 'DODGE', key: '2' },
   { action: 'FOCUS', label: 'FOCUS', key: '3' },
   { action: 'REPORT', label: 'REPORT', key: '4' },
   { action: 'ESCAPE', label: 'ESCAPE', key: '5' },
-]
+];
 
-export function ActionBar({ available, onAction }: { available: ReadonlySet<PlayerAction>; onAction?: (action: PlayerAction) => void }) {
+export function ActionBar({
+  available,
+  onAction,
+}: {
+  available: ReadonlySet<PlayerAction>;
+  onAction?: (action: PlayerAction) => void;
+}) {
   return (
-    <nav className={styles.actionBar} aria-label="対抗アクション（ゲームUI。広告ではありません）" data-testid="action-bar">
+    <nav
+      className={styles.actionBar}
+      aria-label="対抗アクション（ゲームUI。広告ではありません）"
+      data-testid="action-bar"
+    >
       {ACTIONS.map(({ action, label, key, primary }) => {
-        const enabled = available.has(action)
+        const enabled = available.has(action);
         return (
           <button
             key={action}
@@ -38,8 +53,8 @@ export function ActionBar({ available, onAction }: { available: ReadonlySet<Play
               {key}
             </span>
           </button>
-        )
+        );
       })}
     </nav>
-  )
+  );
 }

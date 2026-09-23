@@ -1,4 +1,4 @@
-import type { Article } from './types'
+import type { Article } from './types';
 
 export const articleYakanKanko: Article = {
   id: 'a1-yakan-kanko',
@@ -20,15 +20,25 @@ export const articleYakanKanko: Article = {
       id: 'q1',
       afterParagraph: 2,
       prompt: '三つの対策のうち、この記事でもっとも効果があったのはどれ？',
-      choices: ['窓を五センチ開ける', 'ドアを開ける', '換気扇を回す', '加湿器をつける'],
+      choices: [
+        '窓を五センチ開ける',
+        'ドアを開ける',
+        '換気扇を回す',
+        '加湿器をつける',
+      ],
       correctChoice: 1,
     },
     {
       id: 'q2',
       afterParagraph: 5,
       prompt: 'センサーの値について、記事が「大事」だと言っているのは？',
-      choices: ['絶対値を正確に知ること', '高級な機種を使うこと', '自分の部屋の普段の値と対策後の値を比べること', '毎日記録を公開すること'],
+      choices: [
+        '絶対値を正確に知ること',
+        '高級な機種を使うこと',
+        '自分の部屋の普段の値と対策後の値を比べること',
+        '毎日記録を公開すること',
+      ],
       correctChoice: 2,
     },
   ],
-}
+};

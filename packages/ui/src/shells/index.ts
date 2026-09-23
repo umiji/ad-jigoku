@@ -6,17 +6,23 @@
  *
  * 挙動（いつ出るか / どう閉じにくいか / 再出現するか）はここには無い。Behavior 側の責務。
  */
-export { DensityStack } from './densityStack/DensityStack'
-export { densityStackDescriptor } from './densityStack/descriptor'
-export { InlineRect } from './inlineRect/InlineRect'
-export { inlineRectDescriptor } from './inlineRect/descriptor'
-export { Interstitial } from './interstitial/Interstitial'
-export { interstitialDescriptor } from './interstitial/descriptor'
-export { Popup } from './popup/Popup'
-export { popupDescriptor } from './popup/descriptor'
-export { StickyBanner } from './stickyBanner/StickyBanner'
-export { stickyBannerDescriptor } from './stickyBanner/descriptor'
-export { VideoPlayer } from './videoPlayer/VideoPlayer'
-export { videoPlayerDescriptor } from './videoPlayer/descriptor'
-export { SHELL_COMPONENTS, SHELL_DESCRIPTORS } from './registry'
-export type { Lifecycle, ShellDescriptor, ShellProps, SizeHint, Surface } from './types'
+export { DensityStack } from './densityStack/DensityStack';
+export { densityStackDescriptor } from './densityStack/descriptor';
+export { InlineRect } from './inlineRect/InlineRect';
+export { inlineRectDescriptor } from './inlineRect/descriptor';
+export { Interstitial } from './interstitial/Interstitial';
+export { interstitialDescriptor } from './interstitial/descriptor';
+export { Popup } from './popup/Popup';
+export { popupDescriptor } from './popup/descriptor';
+export { StickyBanner } from './stickyBanner/StickyBanner';
+export { stickyBannerDescriptor } from './stickyBanner/descriptor';
+export { VideoPlayer } from './videoPlayer/VideoPlayer';
+export { videoPlayerDescriptor } from './videoPlayer/descriptor';
+export { SHELL_COMPONENTS, SHELL_DESCRIPTORS } from './registry';
+export type {
+  Lifecycle,
+  ShellDescriptor,
+  ShellProps,
+  SizeHint,
+  Surface,
+} from './types';

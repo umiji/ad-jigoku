@@ -1,7 +1,11 @@
-export * from './types'
-export * from './view'
-export { ShellRegistry } from './shell-registry'
-export { BehaviorRegistry } from './behavior-registry'
-export { createRegistries, defaultRegistries, type Registries } from './registries'
-export { noopShell, noopBehavior } from './noop'
-export { instantiateAd, mergeView, ENTER_STEPS, CLOSING_STEPS } from './spawn'
+export * from './types';
+export * from './view';
+export { ShellRegistry } from './shell-registry';
+export { BehaviorRegistry } from './behavior-registry';
+export {
+  createRegistries,
+  defaultRegistries,
+  type Registries,
+} from './registries';
+export { noopShell, noopBehavior } from './noop';
+export { instantiateAd, mergeView, ENTER_STEPS, CLOSING_STEPS } from './spawn';

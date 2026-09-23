@@ -15,24 +15,35 @@
  * `legal` は TASK-013A で追加（engine 側には最初からあり、写しだけが欠けていた。
  * popup / interstitial の `parts` 宣言が engine と一致しないと R2 シェル互換検証が通らない）。
  */
-export type AdPart = 'close' | 'fake-close' | 'cta' | 'body' | 'media' | 'label' | 'legal' | 'decoy'
+export type AdPart =
+  | 'close'
+  | 'fake-close'
+  | 'cta'
+  | 'body'
+  | 'media'
+  | 'label'
+  | 'legal'
+  | 'decoy';
 
 /** 0 = 目立たない / 1 = 通常 / 2 = 強調 */
-export type Emphasis = 0 | 1 | 2
+export type Emphasis = 0 | 1 | 2;
 
 /** 部位の相対位置（%）。moving close 等で更新される */
-export type PartAnchor = { readonly xPercent: number; readonly yPercent: number }
+export type PartAnchor = {
+  readonly xPercent: number;
+  readonly yPercent: number;
+};
 
 /** engine: sim/view.ts の AdPartState と同一 */
 export type AdPartState = {
-  readonly part: AdPart
-  readonly visible: boolean
-  readonly enabled: boolean
-  readonly emphasis: Emphasis
+  readonly part: AdPart;
+  readonly visible: boolean;
+  readonly enabled: boolean;
+  readonly emphasis: Emphasis;
   /** 見た目に対する当たり判定の倍率。1 未満でも 44px は下回らない（DESIGN §19） */
-  readonly hitboxScale: number
-  readonly anchor?: PartAnchor
-}
+  readonly hitboxScale: number;
+  readonly anchor?: PartAnchor;
+};
 
 /** engine: sim/view.ts の MotionCue と同一（DESIGN.md §14 の語彙） */
 export type MotionCue =
@@ -44,10 +55,10 @@ export type MotionCue =
   | 'close-collapse'
   | 'shake'
   | 'drift'
-  | 'pulse'
+  | 'pulse';
 
 /** engine: sim/view.ts の ViewState['countdown'] と同一 */
-export type Countdown = { readonly remainingMs: number }
+export type Countdown = { readonly remainingMs: number };
 
 /**
  * どのトークン面で描くか。**生の色は受け取らない**（DESIGN.md §4）。
@@ -57,34 +68,39 @@ export type Countdown = { readonly remainingMs: number }
  * - `danger`    … 暗い広告 + accent.danger（警告・割り込み）
  * - `warning`   … 紙色の広告 + accent.warning（偽の緊急性・カウントダウン）
  */
-export type CreativeTheme = 'popup' | 'popupDark' | 'danger' | 'warning'
+export type CreativeTheme = 'popup' | 'popupDark' | 'danger' | 'warning';
 
 /**
  * 架空の広告素材（TASK-013D が供給する）。実在ブランドは入れない（DESIGN §3 MUST NOT 9）。
  * `kind` は 013D のカテゴリ語彙（'sale' | 'notice' | 'download' | 'video' | 'app' …）。
  */
 export type CreativeContent = {
-  readonly id: string
-  readonly kind: string
-  readonly brand: string
-  readonly headline: string
-  readonly body?: string
-  readonly cta: string
-  readonly legal?: string
-  readonly theme: CreativeTheme
-}
+  readonly id: string;
+  readonly kind: string;
+  readonly brand: string;
+  readonly headline: string;
+  readonly body?: string;
+  readonly cta: string;
+  readonly legal?: string;
+  readonly theme: CreativeTheme;
+};
 
 /** 部位が共通で受け取るもの。ViewState.parts の 1 要素をばらして渡す形 */
 export type PartViewProps = {
   /** false なら何も描かない（ViewState.parts[].visible） */
-  readonly visible?: boolean
-  readonly emphasis?: Emphasis
+  readonly visible?: boolean;
+  readonly emphasis?: Emphasis;
   /** TASK-014 が data-instance から広告インスタンスを引く */
-  readonly instanceId?: string
-  readonly className?: string
-}
+  readonly instanceId?: string;
+  readonly className?: string;
+};
 
-const DEFAULT_PART_STATE = { visible: true, enabled: true, emphasis: 1, hitboxScale: 1 } as const
+const DEFAULT_PART_STATE = {
+  visible: true,
+  enabled: true,
+  emphasis: 1,
+  hitboxScale: 1,
+} as const;
 
 /**
  * `ViewState.parts` から 1 部位の状態を引く。未指定の部位は既定値（見える / 押せる / 通常）。
@@ -94,5 +110,5 @@ export function resolvePartState(
   parts: readonly AdPartState[] | undefined,
   part: AdPart,
 ): Omit<AdPartState, 'part'> {
-  return parts?.find((state) => state.part === part) ?? DEFAULT_PART_STATE
+  return parts?.find((state) => state.part === part) ?? DEFAULT_PART_STATE;
 }

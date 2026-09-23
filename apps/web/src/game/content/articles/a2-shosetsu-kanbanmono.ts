@@ -1,4 +1,4 @@
-import type { Article } from './types'
+import type { Article } from './types';
 
 export const articleKanbanmono: Article = {
   id: 'a2-shosetsu-kanbanmono',
@@ -20,15 +20,25 @@ export const articleKanbanmono: Article = {
       id: 'q1',
       afterParagraph: 2,
       prompt: '店主が猫の紹介を断るようになった理由は？',
-      choices: ['猫が引っ越したから', '写真と一緒に住所まで広まり、猫が落ち着かなくなるから', '新聞社が取材をやめたから', '猫アレルギーの客が増えたから'],
+      choices: [
+        '猫が引っ越したから',
+        '写真と一緒に住所まで広まり、猫が落ち着かなくなるから',
+        '新聞社が取材をやめたから',
+        '猫アレルギーの客が増えたから',
+      ],
       correctChoice: 1,
     },
     {
       id: 'q2',
       afterParagraph: 5,
       prompt: '記事の結論として、三十年分の数字が映していたのは？',
-      choices: ['猫の実際の数', '商店街の売上', '何が語られたか', '図書館の利用者数'],
+      choices: [
+        '猫の実際の数',
+        '商店街の売上',
+        '何が語られたか',
+        '図書館の利用者数',
+      ],
       correctChoice: 2,
     },
   ],
-}
+};

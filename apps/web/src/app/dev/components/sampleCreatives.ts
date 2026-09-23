@@ -1,4 +1,4 @@
-import type { CreativeContent } from '@ad-jigoku/ui'
+import type { CreativeContent } from '@ad-jigoku/ui';
 
 /**
  * `/dev/components` 用の架空広告素材（DESIGN.md §3 MUST NOT 9: 実在ブランドを使わない）。
@@ -18,7 +18,7 @@ export const SALE_CREATIVE: CreativeContent = {
   body: '在庫はあと3点です。',
   cta: '今すぐ受け取る',
   theme: 'popup',
-}
+};
 
 export const VIDEO_CREATIVE: CreativeContent = {
   id: 'cr-video-0004',
@@ -28,7 +28,7 @@ export const VIDEO_CREATIVE: CreativeContent = {
   body: '最後まで無料で見られます。',
   cta: '再生する',
   theme: 'popupDark',
-}
+};
 
 export const APP_CREATIVE: CreativeContent = {
   id: 'cr-app-0005',
@@ -39,7 +39,7 @@ export const APP_CREATIVE: CreativeContent = {
   cta: 'インストール',
   legal: '※ 架空のアプリです。ダウンロードは発生しません。',
   theme: 'danger',
-}
+};
 
 export const DOWNLOAD_CREATIVE: CreativeContent = {
   id: 'cr-download-0003',
@@ -49,19 +49,21 @@ export const DOWNLOAD_CREATIVE: CreativeContent = {
   body: 'ワンタップで軽くなります。',
   cta: 'ダウンロード',
   theme: 'warning',
-}
+};
 
 export const SAMPLE_CREATIVES: readonly CreativeContent[] = [
   SALE_CREATIVE,
   VIDEO_CREATIVE,
   APP_CREATIVE,
   DOWNLOAD_CREATIVE,
-]
+];
 
 /** 同じ素材を別のテーマで並べて見比べるための対応表（4 素材 × 2 テーマ） */
-export const ALTERNATE_THEMES: Readonly<Record<CreativeContent['theme'], CreativeContent['theme']>> = {
+export const ALTERNATE_THEMES: Readonly<
+  Record<CreativeContent['theme'], CreativeContent['theme']>
+> = {
   popup: 'popupDark',
   popupDark: 'popup',
   danger: 'warning',
   warning: 'danger',
-}
+};

@@ -1,6 +1,6 @@
-import { cx } from './cx'
-import styles from './AdCTA.module.css'
-import type { Emphasis, PartViewProps } from './types'
+import { cx } from './cx';
+import styles from './AdCTA.module.css';
+import type { Emphasis, PartViewProps } from './types';
 
 /**
  * 広告の CTA（DESIGN.md §12 / §20 / SAFE-05）。
@@ -11,17 +11,17 @@ import type { Emphasis, PartViewProps } from './types'
  * - 文言（`label`）は Creative データから来る。ここにハードコードしない（OD-9）
  */
 export type AdCTAProps = PartViewProps & {
-  readonly label: string
-  readonly variant?: 'primary' | 'secondary'
-  readonly enabled?: boolean
-  readonly onActivate?: () => void
-}
+  readonly label: string;
+  readonly variant?: 'primary' | 'secondary';
+  readonly enabled?: boolean;
+  readonly onActivate?: () => void;
+};
 
 const EMPHASIS_CLASS: Record<Emphasis, string | undefined> = {
   0: styles.quiet,
   1: undefined,
   2: styles.loud,
-}
+};
 
 export function AdCTA({
   label,
@@ -33,7 +33,7 @@ export function AdCTA({
   onActivate,
   className,
 }: AdCTAProps) {
-  if (!visible) return null
+  if (!visible) return null;
 
   return (
     <button
@@ -55,5 +55,5 @@ export function AdCTA({
     >
       {label}
     </button>
-  )
+  );
 }

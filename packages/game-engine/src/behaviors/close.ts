@@ -1,5 +1,5 @@
-import { STEP_MS } from '../core/clock'
-import { noChange, type Behavior } from '../sim/types'
+import { STEP_MS } from '../core/clock';
+import { noChange, type Behavior } from '../sim/types';
 
 /**
  * close スロット: 「どう閉じる／閉じにくいか」。
@@ -17,9 +17,9 @@ export const closeInstant: Behavior<null> = {
   init: () => noChange(null),
   onTick: (sim) => noChange(sim),
   onIntent: (sim) => noChange(sim),
-}
+};
 
-export type DelayedCloseSim = { delayMs: number }
+export type DelayedCloseSim = { delayMs: number };
 
 export const closeDelayed: Behavior<DelayedCloseSim> = {
   id: 'close:delayed',
@@ -28,15 +28,20 @@ export const closeDelayed: Behavior<DelayedCloseSim> = {
   load: 1,
   closeDelayMs: (params) => params['delayMs'] ?? 3000,
   init: (params) => {
-    const delayMs = params['delayMs'] ?? 3000
-    return { sim: { delayMs }, view: { countdown: { remainingMs: delayMs }, motion: ['enter-scale'] } }
+    const delayMs = params['delayMs'] ?? 3000;
+    return {
+      sim: { delayMs },
+      view: { countdown: { remainingMs: delayMs }, motion: ['enter-scale'] },
+    };
   },
   onTick: (sim, ctx) => {
-    const remaining = Math.max(0, (ctx.closableAtStep - ctx.step) * STEP_MS)
+    const remaining = Math.max(0, (ctx.closableAtStep - ctx.step) * STEP_MS);
     if (ctx.lifecycle === 'closable' || remaining <= 0) {
-      return ctx.view.countdown ? { sim, view: { countdown: { remainingMs: 0 } } } : noChange(sim)
+      return ctx.view.countdown
+        ? { sim, view: { countdown: { remainingMs: 0 } } }
+        : noChange(sim);
     }
-    return { sim, view: { countdown: { remainingMs: Math.round(remaining) } } }
+    return { sim, view: { countdown: { remainingMs: Math.round(remaining) } } };
   },
   onIntent: (sim) => noChange(sim),
-}
+};
